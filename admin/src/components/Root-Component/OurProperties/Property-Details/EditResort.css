@@ -1,0 +1,17 @@
+.editResortDeleteImg{
+    position: relative;
+}
+
+.editResortDeleteIcon{
+    padding-top: 0px;
+    position: absolute;
+    font-size: 22px;
+    background-color: red;
+    color: #FFF;
+    top: 45%;
+    left: 45%;
+}
+
+.editResortDeleteIcon:hover{
+    background-color: rgb(250, 51, 51);
+}
