@@ -439,3 +439,9 @@ color: gray;
     margin: auto;
     /* border: 1px solid black; */
 }
+
+@media screen and (max-width: 480px) {
+    .our-property-card-container{
+        width: 100%;
+    }
+}

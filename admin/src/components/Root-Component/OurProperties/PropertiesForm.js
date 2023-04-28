@@ -18,7 +18,7 @@ import swal from 'sweetalert';
 
 const PropertiesForm = ({ getPropertiesData }) => {
   const navigate = useNavigate()
-  const [saveRoomBtnActive, setsaveroomBtn] = useState(false)
+  const [saveRoomBtnActive, setSaveRoomBtn] = useState(false)
   const [visibleForm, setVisibleForm] = useState(false)
   const [resortForm, setResortForm] = useState({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "" })
   const [showSelectedImg, setShowSelectedImg] = useState("")
@@ -33,7 +33,10 @@ const PropertiesForm = ({ getPropertiesData }) => {
       .then((res) => {
         console.log(res)
         getPropertiesData()
-        setsaveroomBtn(false)
+        setResortForm({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "" })
+        setResortImage("")
+      setShowSelectedImg("");
+        setSaveRoomBtn(false)
         setVisibleForm(false)
         swal({
           title: "Good job!",
@@ -44,20 +47,20 @@ const PropertiesForm = ({ getPropertiesData }) => {
       })
       .catch((err) => {
         console.log(err)
-        setsaveroomBtn(false)
+        setSaveRoomBtn(false)
       })
   }
 
   const imgCloudUpload = async (e) => {
     e.preventDefault()
-    setsaveroomBtn(true)
+    setSaveRoomBtn(true)
     if (!resortForm.resortName || !resortForm.resortLocation || !resortForm.resortDescription) {
+      setSaveRoomBtn(false)
       return toast.error("Please fill all the Input Fields !")
-      setsaveroomBtn(false)
     }
     else if (!resortImage) {
+      setSaveRoomBtn(false)
       return toast.error("No Image Chosen !")
-      setsaveroomBtn(false)
     }
     const imgData = new FormData()
     imgData.append("file", resortImage)
@@ -70,7 +73,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
       })
       .catch((err) => {
         console.log(err)
-        setsaveroomBtn(false)
+        setSaveRoomBtn(false)
       })
   }
 
@@ -102,7 +105,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
           <ToastContainer
             autoClose={1500}
             limit={5}
-            theme={"dark"}
+            theme={"light"}
             pauseOnFocusLoss={false}
             position={"top-center"}
           />
@@ -119,13 +122,13 @@ const PropertiesForm = ({ getPropertiesData }) => {
             <CFormInput type="file" id="formFile" label="Upload resort image" onChange={onImageChange} />
           </div>
           <div className="mb-4">
-            <CFormInput label="Resort Name" maxLength={50} onChange={handleResortForm('resortName')} />
+            <CFormInput value={resortForm.resortName} label="Resort Name" maxLength={50} onChange={handleResortForm('resortName')} />
           </div>
           <div className="mb-4">
-            <CFormInput type="text" size="sm" maxLength={2000} label="Location" onChange={handleResortForm('resortLocation')} />
+            <CFormInput value={resortForm.resortLocation} type="text" size="sm" maxLength={2000} label="Location" onChange={handleResortForm('resortLocation')} />
           </div>
           <div>
-            <CFormTextarea label="Resort Info" maxLength={5000} onChange={handleResortForm('resortDescription')} />
+            <CFormTextarea value={resortForm.resortDescription} label="Resort Info" maxLength={5000} onChange={handleResortForm('resortDescription')} />
           </div>
 
         </CModalBody>

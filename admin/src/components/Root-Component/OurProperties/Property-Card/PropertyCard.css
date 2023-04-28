@@ -44,7 +44,7 @@
 
 .card-footer-lb>:nth-child(1){
     text-align: left;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .card-footer-lb>:nth-child(2){
@@ -104,7 +104,7 @@
 }
 
 .property-card-delete-icon{
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -171,18 +171,18 @@
     }
 
     .card-footer-rb>div>button{
-        padding-top: 5px;
+        padding: 0px;
         width: 100px;
         height: 30px;
         font-size: 11px;
     }
 
     .view-prop-card-details-btn{
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .property-card-delete-icon{
-         font-size: 13px;
+         font-size: 16px;
         /* background: hsla(0,3%,94%,.373); */
     }
     .property-card-container{
