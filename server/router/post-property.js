@@ -85,7 +85,7 @@ router.put("/hotelbook/:id", async (req, res) => {
 // delete a hotel Book
 router.delete("/hotelbook/:id", async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const hotelBook = await HotelBook.findByIdAndDelete(id, req.body);
     //we cannot find any product in database
     if (!hotelBook) {
