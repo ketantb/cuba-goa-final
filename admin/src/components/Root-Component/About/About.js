@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 import axios from "../../../helpers/axios"
 import AboutUsForm from './editAboutUs';
 
-const bannerimg = 'https://www.tusktravel.com/blog/wp-content/uploads/2021/07/Goa-open-for-tourist.jpg'
+// const bannerimg = 'https://www.tusktravel.com/blog/wp-content/uploads/2021/07/Goa-open-for-tourist.jpg'
 
 
 

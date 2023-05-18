@@ -42,7 +42,7 @@ const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFro
           console.log(err)
         })
     }
-    console.log(aboutUsData._id)
+    console.log(aboutUsData?._id)
     // fetchData()
     useEffect(() => {
       fetchData()

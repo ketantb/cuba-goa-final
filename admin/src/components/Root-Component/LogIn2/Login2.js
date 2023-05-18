@@ -19,13 +19,27 @@ const Login2 = ({ showLogin, setShowLogin }) => {
     setErr("")
   }
 
+  function ValidateEmail(input) {
+    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (input.match(validRegex)) {
+      console.log("Valid email address!");
+      return true;
+    } else {
+      console.log("Invalid email address!");
+      return false;
+    }
+  }
+
   const submitLogin = async (e) => {
     e.preventDefault()
     if (!loginForm.email || !loginForm.password) {
       return setErr("both the fields are required")
     }
+    if(ValidateEmail(loginForm.email) == false){
+      return setErr("Invaild Email Id")
+    }
     // await axios.post('https://cubagoa-server.onrender.com/login', loginForm)
-    await axios.post('https://cuba-goa-server.onrender.com/login', loginForm)
+    await axios.post('/login', loginForm)
       .then((response) => {
         console.log(response.data)
         // console.log(response.data.username)
@@ -63,10 +77,10 @@ const Login2 = ({ showLogin, setShowLogin }) => {
         <div>
           <button id='login-btn' type='submit' onClick={submitLogin} >Login</button>
         </div>
-        <p className="already-have-an-account">
+        {/* <p className="already-have-an-account">
           Don't have an account?
           <span className='regiser-span' onClick={() => setShowLogin(false)}> register</span>
-        </p>
+        </p> */}
       </form>
     </section>
   )
