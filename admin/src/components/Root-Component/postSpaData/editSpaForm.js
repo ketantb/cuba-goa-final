@@ -73,7 +73,7 @@ const EditSpa = ({ getSpaList, card }) => {
                 setSaveSpaBtnActive(false)
                 swal({
                     title: "Good job!",
-                    text: "Resort Edited Successfully!",
+                    text: "Spa Edited Successfully!",
                     icon: "success",
                     button: "OK!",
                 });
