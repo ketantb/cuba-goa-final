@@ -17,29 +17,32 @@ import {
 import swal from 'sweetalert';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
-const EditResort = ({ resort, getProperty }) => {
+const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEditResortForm }) => {
     // const navigate = useNavigate()
-    const [editResortForm, setEditResortForm] = useState({...resort})
+    // console.log("property => ", property)
+    const [editResortForm, setEditResortForm] = useState({
+        resortDescription: "", resortImgURL: "", resortLocation: "",
+        resortName: "", aboutUs: "", resortAddress: "", pincode: "",
+        resortPhoneNumber: "", resortEmail: "", cubaGoaHelpLineNumber: ""
+    })
+    const [updatedResortForm, setUpdatedResortForm] = useState(property)
     const [saveResortBtnActive, setSaveResortBtnActive] = useState(false)
-    const [visibleForm, setVisibleForm] = useState(false)
     const [roomImage, setRoomImage] = useState(false)
     const [roomImgUrl, setRoomImgUrl] = useState(false)
-    console.log('editResortForm => ', editResortForm);
     const handleEditResortForm = (params) => (e) => {
-        setEditResortForm({ ...editResortForm, [params]: e.target.value })
+        setUpdatedResortForm({ ...updatedResortForm, [params]: e.target.value })
     }
 
     const deleteImage = () => {
-        setEditResortForm({ ...editResortForm, resortImgURL: "" })
+        setUpdatedResortForm({ ...updatedResortForm, resortImgURL: "" })
     }
 
     const imgCloudUpload = async (e) => {
         e.preventDefault()
-        console.log(editResortForm)
-        return;
+        console.log(updatedResortForm)
         setSaveResortBtnActive(true)
         // console.log(updatedRoomData.imgUrl)
-        if (!editResortForm.resortName || !editResortForm.resortLocation || !editResortForm.resortDescription) {
+        if (!updatedResortForm.resortName || !updatedResortForm.resortLocation || !updatedResortForm.resortDescription) {
             return toast.error("Please fill all the Input Fields !")
             setSaveResortBtnActive(false)
         }
@@ -49,8 +52,8 @@ const EditResort = ({ resort, getProperty }) => {
             imgData.append("upload_preset", "ketanInstaClone")
             await axios.post("https://api.cloudinary.com/v1_1/ketantb/image/upload", imgData)
                 .then((res) => {
-                    // console.log(res)
-                    setRoomImage(res.data.secure_url)
+                    // console.log(res.data.url)
+                    setRoomImage(res.data.url)
                     // console.log(editResortForm)
                 })
                 .catch((err) => {
@@ -59,20 +62,26 @@ const EditResort = ({ resort, getProperty }) => {
                     console.log(err)
                 })
         }
-        setEditResortForm({ ...editResortForm, resortImgURL: roomImage })
-        // console.log(editResortForm)
         setRoomImgUrl(true)
     }
 
     const saveResort = async () => {
-        if (!resort) return
-        // await axios.put(`http://localhost:4001/hotelbook/${resort._id}`, editResortForm)
-        await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${resort._id}`, editResortForm)
+        if (!property) return
+        let data;
+        if (roomImage) {
+            data = { ...updatedResortForm, resortImgURL: roomImage, rooms: property.rooms }
+        }
+        else {
+            data = { ...updatedResortForm, resortImgURL: property.resortImgURL, rooms: property.rooms }
+        }
+        console.log(data)
+        await axios.put(`http://localhost:4001/entire-hotelbook/${property._id}`, data)
+            // await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${property._id}`, editResortForm)
             .then((res) => {
                 console.log(res)
                 setRoomImgUrl(false)
-                getProperty()
-                setVisibleForm(false)
+                getPropertiesData()
+                setShowEditResortForm(false)
                 setSaveResortBtnActive(false)
                 swal({
                     title: "Good job!",
@@ -89,6 +98,7 @@ const EditResort = ({ resort, getProperty }) => {
     }
 
     useEffect(() => {
+        console.log("before useEffect Ran")
         if (roomImgUrl) {
             saveResort()
             console.log("useEffect Ran")
@@ -97,14 +107,10 @@ const EditResort = ({ resort, getProperty }) => {
 
     return (
         <>
-            <CCol className='text-end px-4 py-3'>
-                <CButton className='mx-5' onClick={() => { setVisibleForm(true) }}>Edit Resort</CButton>
-            </CCol>
-
             <CModal
                 keyboard={false}
                 portal={false}
-                visible={visibleForm}
+                visible={showEditResortForm}
                 className='booking-form-p ' scrollable size='lg'>
                 <section style={{ zIndex: 100000, position: 'absolute' }}>
                     <ToastContainer
@@ -115,39 +121,73 @@ const EditResort = ({ resort, getProperty }) => {
                         position={"top-center"}
                     />
                 </section>
-                <CModalHeader onClick={() => { setVisibleForm(false) }}>
+                <CModalHeader onClick={() => { setShowEditResortForm(false) }}>
                     <CModalTitle><h4>Resort Info</h4></CModalTitle>
                 </CModalHeader>
                 <CModalBody >
-                    {editResortForm.resortImgURL ?
+                    {updatedResortForm.resortImgURL ?
                         <div className="mb-4 editResortDeleteImg" style={{ textAlign: 'center' }}>
-                            <CImage className='p-0 m-0' width={300} height={200} src={editResortForm.resortImgURL} />
+                            <CImage className='p-0 m-0' width={300} height={200} src={updatedResortForm.resortImgURL} />
                             <button onClick={deleteImage} className='editResortDeleteIcon'><RiDeleteBin5Fill /></button>
                         </div>
                         : null}
                     <div className="mb-4">
-                        <CFormInput type="file" id="formFile" label="Upload resort image" onChange={(e) => setRoomImage(e.target.files[0])} />
+                        <CFormInput type="file" id="formFile" label="Upload property image" onChange={(e) => setRoomImage(e.target.files[0])} />
                     </div>
                     <div className="mb-4">
-                        <CFormInput label="Resort Name" value={editResortForm.resortName} maxLength={50} onChange={handleEditResortForm('resortName')} />
+                        <CFormInput label="Resort Name" value={updatedResortForm.resortName} maxLength={50} onChange={handleEditResortForm('resortName')} />
                     </div>
                     <div className="mb-4">
-                        <CFormInput type="text" size="sm" maxLength={2000} label="Location" value={editResortForm.resortLocation} onChange={handleEditResortForm('resortLocation')} />
+                        <CFormInput type="text" size="sm" maxLength={2000} label="Resort Location" value={updatedResortForm.resortLocation} onChange={handleEditResortForm('resortLocation')} />
                     </div>
-                    <div>
-                        <CFormTextarea label="Resort Info" maxLength={5000} onChange={handleEditResortForm('resortDescription')} value={editResortForm.resortDescription} />
+                    <div className="mb-4">
+                        <CFormInput type="text" size="sm" maxLength={2000} label="Resort Address" value={updatedResortForm.resortAddress} onChange={handleEditResortForm('resortAddress')} />
                     </div>
+                    <div className="mb-4">
+                        <CFormInput type="text" size="sm" maxLength={2000} label="Pincode" value={updatedResortForm.pincode} onChange={handleEditResortForm('pincode')} />
+                    </div>
+
+                    <CCard className='mx-2 mt-4'>
+                        <CCardHeader className='text-center'>
+                            <h4>Additional Information</h4>
+                        </CCardHeader>
+                        <CCardBody className='p-4'>
+
+                            {/* <div className="mb-4">
+                                <CFormTextarea label="Resort Info" maxLength={5000} value={updatedResortForm.resortDescription} onChange={handleEditResortForm('resortDescription')} />
+                            </div> */}
+                            <div className="mb-4">
+                                <CFormTextarea label="About Us" maxLength={5000} value={updatedResortForm.aboutUs} onChange={handleEditResortForm('aboutUs')} />
+                            </div>
+                            <CCard className='mx-2 mt-4'>
+                                <CCardHeader className='text-center'>
+                                    <h4>Contact Us</h4>
+                                </CCardHeader>
+                                <CCardBody className='p-4'>
+                                    <div className="mb-4">
+                                        <CFormInput label="Resort Phone Number" maxLength={5000} value={updatedResortForm.resortPhoneNumber} onChange={handleEditResortForm('resortPhoneNumber')} />
+                                    </div>
+                                    <div className="mb-4">
+                                        <CFormInput label="Resort Email" maxLength={5000} value={updatedResortForm.resortEmail} onChange={handleEditResortForm('resortEmail')} />
+                                    </div>
+                                    <div className="mb-4">
+                                        <CFormInput label="Cuba Goa Helpline Number" maxLength={5000} value={updatedResortForm.cubaGoaHelpLineNumber} onChange={handleEditResortForm('cubaGoaHelpLineNumber')} />
+                                    </div>
+                                </CCardBody>
+                            </CCard>
+
+                        </CCardBody>
+                    </CCard>
 
                 </CModalBody>
 
                 <CModalFooter>
-                    <CButton color="secondary" onClick={() => setVisibleForm(false)}>
+                    <CButton color="secondary" onClick={() => setShowEditResortForm(false)}>
                         Close
                     </CButton>
                     <CButton color="primary" type='submit' disabled={saveResortBtnActive} onClick={imgCloudUpload}>Save Resort</CButton>
                 </CModalFooter>
             </CModal>
-            {console.log(editResortForm)}
         </>
     )
 }

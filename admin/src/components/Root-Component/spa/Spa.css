@@ -4,8 +4,17 @@ overflow-x: hidden;
 }
 .spa-parent{
   width: 100vw;
-
 }
+
+.spa-cards{
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .main-spa .banner {
   width: 100%;
 }

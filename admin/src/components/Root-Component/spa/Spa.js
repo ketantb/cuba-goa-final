@@ -6,6 +6,8 @@ import SpaCard from "./SpaCard";
 import { Row } from "react-bootstrap";
 import massageImg from '../../../assets/Massage.jpg'
 import { CButton } from "@coreui/react";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 const Spa = () => {
   const navigate = useNavigate();
@@ -26,6 +28,39 @@ const Spa = () => {
       console.log(err);
     }
   };
+
+  //delete spa funnction =>
+  function deleteSpa(id) {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='confirm-delete-alert'>
+            <h1>Delete Spa ?</h1>
+            <p>Are you sure you want to delete the selected Spa?</p>
+            <div>
+              <button onClick={onClose}>Cancel</button>
+              <button
+                onClick={() => {
+                  axios.delete(`http://localhost:4001/delete/spa/${id}`)
+                  // axios.delete(`https://cuba-goa-server.onrender.com/hotelbook/${id}`)
+                    .then((resp) => {
+                      console.log(resp)
+                      getSpaList()
+                        .catch((err) => {
+                          console.log(err)
+                        })
+                    })
+                  onClose();
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        );
+      }
+    });
+  }
 
   useEffect(() => {
     getSpaList();
@@ -82,19 +117,12 @@ const Spa = () => {
             ADD ON
           </CButton>
         </div>
-
-        <Row
-          className="spaListWrapper image-row image-card"
-          style={{
-            display: "flex",
-            marginTop: "2rem",
-            padding: "1rem 3rem",
-          }}
-        >
+        
+        <section className="spa-cards">
           {data.map((card, index) => {
-            return <SpaCard card={card} />;
+            return <SpaCard card={card} deleteSpa={deleteSpa} getSpaList={getSpaList}/>;
           })}
-        </Row>
+        </section>
 
         <section>
           <div className="spa-footer">

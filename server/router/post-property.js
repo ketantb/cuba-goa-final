@@ -21,6 +21,7 @@ const instance = new Razorpay({
 router.post("/hotelbook",async (req, res) => {
   try {
     const resortData = await HotelBook.create(req.body);
+    console.log(resortData)
     res.json({ success: true, data: resortData });
   } catch (error) {
     console.log(error.message);
@@ -61,13 +62,33 @@ router.get("/resort-details/:id", async (req, res) => {
 
 
 
-//to update hotelBook by id
+//to update only rooms by id
 router.put("/hotelbook/:id", async (req, res) => {
-  // console.log(req.params.id)
+  console.log(req.params.id)
   // res.json({message: req.body})
   try {
     const { id } = req.params;
     const hotelBook = await HotelBook.findByIdAndUpdate(id, {rooms: req.body.rooms});
+    //we cannot find any product in database
+    if (!hotelBook) {
+      return res
+        .status(404)
+        .json({ message: `cannot find any hotel Book with ${id}` });
+    }
+    const updatedHotelBook = await HotelBook.findById(id);
+    res.status(200).json(updatedHotelBook);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+//to update whole Resort by id
+router.put("/entire-hotelbook/:id", async (req, res) => {
+  // console.log(req.params.id)
+  // res.json({message: req.body})
+  try {
+    const { id } = req.params;
+    const hotelBook = await HotelBook.findByIdAndUpdate(id, req.body);
     //we cannot find any product in database
     if (!hotelBook) {
       return res

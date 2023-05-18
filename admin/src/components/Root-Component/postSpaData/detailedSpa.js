@@ -60,7 +60,6 @@ export default function DetailedSpa() {
               {details.benefits}
             </li>
           </ul>
-          {/* <button onClick={handleBooking}>Book Now</button> */}
         </div>
       </section>
 

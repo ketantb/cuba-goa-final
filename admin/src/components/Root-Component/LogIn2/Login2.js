@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react'
 import './Login2.css'
 import { useNavigate } from 'react-router'
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 
 const Login2 = ({ showLogin, setShowLogin }) => {
 
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const [loginForm, setLoginForm] = useState({ email: "", password: "" })
@@ -42,6 +41,14 @@ const Login2 = ({ showLogin, setShowLogin }) => {
 
   return (
     <section className='log-in' >
+      {/* <ClipLoader
+        color={color}
+        loading={true}
+        cssOverride={override}
+        size={150}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      /> */}
       <form className='login-form' onSubmit={(e) => {
         e.target.preventDefault()
       }}>

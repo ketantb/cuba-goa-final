@@ -2,19 +2,16 @@ const mongoose = require("mongoose");
 
 const PostPropertySchema = mongoose.Schema({
 
-    resortName: {
-        type: String,
-    },
-    resortLocation: {
-        type: String,
-    },
-    resortDescription: {
-        type: String,
-    },
-    resortImgURL:{
-      type:String
-    },
-
+    resortName: { type: String },
+    resortLocation: { type: String },
+    resortDescription: { type: String },
+    resortImgURL: { type:String },
+    aboutUs: { type:String },
+    resortAddress: { type:String },
+    pincode: { type:String },
+    resortPhoneNumber: { type:String },
+    resortEmail: { type:String },
+    cubaGoaHelpLineNumber: { type:String },
     rooms: [
         {
             imgUrl: [

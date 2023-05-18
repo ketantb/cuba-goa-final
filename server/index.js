@@ -2,11 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyparser = require("body-parser");
 const cookieParser = require("cookie-parser");
-require("dotenv").config();
 var cors = require("cors");
 const path=require('path')
 const port =  process.env.PORT || 4001
-
+require('dotenv').config();
 // const bcrypt = require('bcrypt');
 // const jwt = require('jsonwebtoken');
 

@@ -20,7 +20,9 @@ const PropertiesForm = ({ getPropertiesData }) => {
   const navigate = useNavigate()
   const [saveRoomBtnActive, setSaveRoomBtn] = useState(false)
   const [visibleForm, setVisibleForm] = useState(false)
-  const [resortForm, setResortForm] = useState({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "" })
+  const [resortForm, setResortForm] = useState({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "", 
+                                               aboutUs: "", resortAddress: "", pincode: "", resortPhoneNumber: "",
+                                               resortEmail: "", cubaGoaHelpLineNumber: "" })
   const [showSelectedImg, setShowSelectedImg] = useState("")
   const [resortImage, setResortImage] = useState("")
   const handleResortForm = (params) => (e) => {
@@ -28,8 +30,8 @@ const PropertiesForm = ({ getPropertiesData }) => {
   }
 
   const postPropertyForm = async () => {
-    await axios.post("https://cuba-goa-server.onrender.com/hotelbook", resortForm)
-    // await axios.post("http://localhost:4001/hotelbook", resortForm)
+    // await axios.post("https://cuba-goa-server.onrender.com/hotelbook", resortForm)
+    await axios.post("http://localhost:4001/hotelbook", resortForm)
       .then((res) => {
         console.log(res)
         getPropertiesData()
@@ -125,10 +127,28 @@ const PropertiesForm = ({ getPropertiesData }) => {
             <CFormInput value={resortForm.resortName} label="Resort Name" maxLength={50} onChange={handleResortForm('resortName')} />
           </div>
           <div className="mb-4">
-            <CFormInput value={resortForm.resortLocation} type="text" size="sm" maxLength={2000} label="Location" onChange={handleResortForm('resortLocation')} />
+            <CFormInput value={resortForm.resortLocation} type="text" size="sm" maxLength={2000} label="Resort Location" onChange={handleResortForm('resortLocation')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.resortAddress} label="Resort Address" maxLength={5000} onChange={handleResortForm('resortAddress')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.pincode} label="Pincode" maxLength={5000} onChange={handleResortForm('pincode')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.aboutUs} label="About Us" maxLength={5000} onChange={handleResortForm('aboutUs')} />
           </div>
           <div>
             <CFormTextarea value={resortForm.resortDescription} label="Resort Info" maxLength={5000} onChange={handleResortForm('resortDescription')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.resortPhoneNumber} label="Resort Phone Number" maxLength={5000} onChange={handleResortForm('resortPhoneNumber')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.resortEmail} label="Resort Email" maxLength={5000} onChange={handleResortForm('resortEmail')} />
+          </div>
+          <div>
+            <CFormTextarea value={resortForm.cubaGoaHelpLineNumber} label="Cuba Goa Helpline Number" maxLength={5000} onChange={handleResortForm('cubaGoaHelpLineNumber')} />
           </div>
 
         </CModalBody>

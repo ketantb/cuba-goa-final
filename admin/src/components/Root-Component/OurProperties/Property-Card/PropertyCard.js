@@ -12,6 +12,7 @@ import {
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom'
 import AddMoreRoomForm from '../AddMoreRoomForm';
+import EditResort from '../Property-Details/EditResort';
 
 
 const PropertyCard = ({ property, allProperties, getPropertiesData, key, deleteProperty }) => {
@@ -22,7 +23,8 @@ const PropertyCard = ({ property, allProperties, getPropertiesData, key, deleteP
         navigate(`/${resortname}/${id}/rooms`)
         console.log(resortname, id)
     }
-
+    
+    const [showEditResortForm, setShowEditResortForm] = useState(false)
     const [showRoomForm, setRoomForm] = useState(false)
     console.log("allProperties =>", allProperties)
     if (!allProperties) {
@@ -34,8 +36,8 @@ const PropertyCard = ({ property, allProperties, getPropertiesData, key, deleteP
         <>
             <div className='about-hotel'>
                 <div className="property-card-container" key={key}>
-                    <div className='properties-card-header' style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <div className='view-prop-card-details-btn'  onClick={() => viewRooms(property._id, property.resortName)}>View Details</div>
+                    <div className='properties-card-header' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div className='view-prop-card-details-btn' onClick={() => viewRooms(property._id, property.resortName)}>View Details</div>
                         <div className='property-card-delete-icon' onClick={() => deleteProperty(property._id)}><RiDeleteBin5Fill /></div>
                     </div>
                     <div id="property-card-img" key={key}>
@@ -51,8 +53,11 @@ const PropertyCard = ({ property, allProperties, getPropertiesData, key, deleteP
                             </div>
                         </div>
                         <div className="card-footer-rb">
-                            <div>
+                            <div className="card-footer-rb-r1">
                                 <button id='property-card-add-btn' onClick={() => setRoomForm(true)}>Add Rooms</button>
+                            </div>
+                            <div className="card-footer-rb-r2">
+                                <button onClick={() =>  setShowEditResortForm(true)}>Edit Resort</button>
                             </div>
                         </div>
                     </div>
@@ -62,6 +67,12 @@ const PropertyCard = ({ property, allProperties, getPropertiesData, key, deleteP
                 showRoomForm={showRoomForm}
                 property={property}
                 setRoomForm={setRoomForm}
+            />
+            <EditResort
+                getPropertiesData={getPropertiesData}
+                property={property}
+                showEditResortForm = {showEditResortForm}
+                setShowEditResortForm = {setShowEditResortForm}
             />
         </>
     )
