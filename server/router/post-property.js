@@ -21,7 +21,7 @@ const instance = new Razorpay({
 router.post("/hotelbook",async (req, res) => {
   try {
     const resortData = await HotelBook.create(req.body);
-    console.log(resortData)
+    // console.log(resortData)
     res.json({ success: true, data: resortData });
   } catch (error) {
     console.log(error.message);
