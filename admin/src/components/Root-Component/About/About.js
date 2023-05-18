@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './About.css'
 import Footer from '../Footer/Footer';
 import axios from "../../../helpers/axios"
+import AboutUsForm from './editAboutUs';
 
 const bannerimg = 'https://www.tusktravel.com/blog/wp-content/uploads/2021/07/Goa-open-for-tourist.jpg'
 
@@ -20,27 +21,32 @@ function About() {
   //     setActiveIndex(index);
   // };
 
-  const fetchData = () => {
-    axios.get("/http://localhost:4001/about-us")
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  const [aboutUsData, setAboutUsData] = useState();
+  const [showAboutUsForm, setShowAboutUsForm] = useState(false);
+
+  const fetchData = async () => {
+    await axios.get("/about-us")
+      .then((res) => {
+        console.log(res.data.data[0])
+        setAboutUsData(res.data.data[0])
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
-  fetchData()
-  // useEffect(() => {
-  //   fetchData()
-  // }, [])
+  console.log(aboutUsData)
+  // fetchData()
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <>
       <div className='aboutus-wrapper'>
         <h5 className='title'>
-          About Cuba Goa - Beach Huts, Bungalows & Resorts
+          {aboutUsData?.heading1}
           <br /><br /><br />
-          WHERE...TIME TAKES A BREAK!
+          {aboutUsData?.heading2}
         </h5>
         <section className='aboutus-body'>
           <div className="aboutus-lb">
@@ -61,17 +67,25 @@ function About() {
                         <p>{images[3].para}</p>
                     </div> */}
             <h4>
-              We Provide The Most Luxurious Hospitality Services
+              {aboutUsData?.heading3}
             </h4>
             <p style={{ paddingRight: '2rem' }}>
-              The land of sun, sand, and sea – Goa is synonymous with unhindered beauty and splendid recreation. Cuba Hotels Goa is a captivating paradise for unwinding and revelling, perfect for an idyllic family vacation and conducting important business meetings. Cocooned in the lap of nature, offering a medley of flavours through its world cuisine and regional specialities that are paired with exotic concoctions and cocktails in setting that are relaxing, Cuba Hotels Goa is an oasis of luxury covering Baga in North Goa to Palolem, and Patnem and Agonda in South Goa. Embrace the languid and laid-back life that is characteristic of Goa, while our service takes care of your needs round the clock. The unique bungalows and splendid beach huts with sun beds are certain to redefine the experience of a truly enjoyable holiday leaving you in a state of wonderment and awe. A buoyant haven for an unwinding retreat, Cuba Goa perfectly imbues Goa’s much anticipated laidback vibe. A vibrant concoction of colours & comfort, all five properties spread across South Goa make for the best suit for a relaxed chilling experience. Bridging the gap between luxury & rustic, our whimsical Beach huts, bungalows, & resorts at Palolem, Agonda, and Patnem are truly cocooned in the lap of nature. Grab a drink, feast on exotic seafood & other delicious delicacies and just chill by the golden sands and the waves; & we, at Cuba Goa, will ensure you the best staycations ever! We do entertain you with band performances, happy hours, & special requests too!                    </p>
+              {aboutUsData?.description}
+            </p>
           </div>
           <div className="aboutus-rb">
-            <img src={bannerimg} alt='aboutusimg' />
+            <img src={aboutUsData?.bannerImgUrl} alt='aboutusimg' />
             {/* <img src={aboutusimg} alt='aboutusimg'/> */}
           </div>
         </section>
-
+        <div>
+          <button onClick={() => setShowAboutUsForm(true)}>Edit About Us</button>
+        </div>
+        <AboutUsForm
+          showAboutUsForm={showAboutUsForm}
+          setShowAboutUsForm={setShowAboutUsForm}
+          dataFetchFunctionFromParent = {setAboutUsData}
+        />
       </div>
       <Footer />
 

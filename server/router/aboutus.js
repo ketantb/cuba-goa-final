@@ -24,7 +24,9 @@ router.get("/about-us", async(req, res) => {
     }
 })
 
-router.put("/about-us", async (req, res) => {
+router.put("/about-us/:id", async (req, res) => {
+    // console.log(req.params.id);
+    // res.send(req.body)
     try{
         const { id } = req.params
         const updatedAboutUs = await Aboutus.findByIdAndUpdate(id, req.body);
