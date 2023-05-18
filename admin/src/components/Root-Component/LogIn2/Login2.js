@@ -3,7 +3,7 @@ import { CForm, CFormInput, CCol, CButton, CCardHeader } from '@coreui/react'
 import { useState, useEffect } from 'react'
 import './Login2.css'
 import { useNavigate } from 'react-router'
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import ClipLoader from "react-spinners/ClipLoader";
 
 
