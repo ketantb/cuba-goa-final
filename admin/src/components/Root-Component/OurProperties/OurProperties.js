@@ -1,7 +1,7 @@
 import './OurProperties.css'
 import React, { useState, useEffect } from 'react'
 import PropertyList from './PropertyList'
-import axios from 'axios'
+import axios from '../../../helpers/axios'
 import Pagination from './Pagination'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
@@ -24,7 +24,7 @@ const OurProperties = () => {
   const currentList = allProperties.slice(firstPostIndex, lastPostIndex)
 
   const getPropertiesData = async () => {
-    await axios(`https://cuba-goa-server.onrender.com/hotelbook`)
+    await axios(`/hotelbook`)
     // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
@@ -54,7 +54,7 @@ const OurProperties = () => {
               <button
                 onClick={() => {
                   // axios.delete(`http://localhost:4001/hotelbook/${id}`)
-                  axios.delete(`https://cuba-goa-server.onrender.com/hotelbook/${id}`)
+                  axios.delete(`/hotelbook/${id}`)
                     .then((resp) => {
                       console.log(resp)
                       getPropertiesData()

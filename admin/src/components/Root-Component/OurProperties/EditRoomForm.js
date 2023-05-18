@@ -5,7 +5,7 @@ import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
 import { RiHotelLine } from 'react-icons/ri'
 import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -81,7 +81,7 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
         if (!resort) return
         resort.rooms.splice(index, 1, updatedRoomData)
         // await axios.put(`http://localhost:4001/hotelbook/${resort._id}`, resort)
-        await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${resort._id}`, resort)
+        await axios.put(`/hotelbook/${resort._id}`, resort)
             .then((res) => {
                 console.log(res)
                 setRoomImgUrl(false)

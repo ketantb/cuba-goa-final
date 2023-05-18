@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import './PostSpaData.css'
 
 function PostForm() {
@@ -22,7 +22,7 @@ function PostForm() {
   const postData = async () => {
     await axios
       // .post("https://cubagoa-server.onrender.com/addspa", form)
-      .post("https://cuba-goa-server.onrender.com/addspa", form)
+      .post("/addspa", form)
       .then((resp) => {
         console.log(resp);
       })

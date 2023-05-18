@@ -4,7 +4,7 @@ import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
 import { RiHotelLine } from 'react-icons/ri'
 import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -31,7 +31,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
 
   const postPropertyForm = async () => {
     // await axios.post("https://cuba-goa-server.onrender.com/hotelbook", resortForm)
-    await axios.post("http://localhost:4001/hotelbook", resortForm)
+    await axios.post("/hotelbook", resortForm)
       .then((res) => {
         console.log(res)
         getPropertiesData()
@@ -56,7 +56,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
   const imgCloudUpload = async (e) => {
     e.preventDefault()
     setSaveRoomBtn(true)
-    if (!resortForm.resortName || !resortForm.resortLocation || !resortForm.resortDescription) {
+    if (!resortForm.resortName || !resortForm.resortLocation) {
       setSaveRoomBtn(false)
       return toast.error("Please fill all the Input Fields !")
     }

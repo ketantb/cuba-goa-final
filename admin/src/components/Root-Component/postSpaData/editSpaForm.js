@@ -3,7 +3,7 @@ import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
 import { RiHotelLine } from 'react-icons/ri'
 import { useState, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from "axios";
+import axios from "../../../helpers/axios"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
@@ -63,8 +63,8 @@ const EditSpa = ({ getSpaList, card }) => {
     const saveSpa = async () => {
         if (!card) return
         let data = ({ ...updatedSpa, imgUrl: spaImage })
-        await axios.put(`http://localhost:4001/spa/${card._id}`, data)
-            // await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${card._id}`, editSpaForm)
+        // await axios.put(`http://localhost:4001/spa/${card._id}`, data)
+        await axios.put(`/spa/${card._id}`, data)
             .then((res) => {
                 console.log(res)
                 setSpaImgUrl(false)

@@ -3,7 +3,7 @@ import '../OurProperties.css'
 import './PropertyDetails.css'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios';
+import axios from '../../../../helpers/axios';
 import RoomCard from '../Room-Card/RoomCards';
 import RoomList from '../RoomList';
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -22,7 +22,7 @@ const ViewPropertyDetails = () => {
     const getProperty = async () => {
         try {
             // const response = await axios.get(`http://localhost:4001/resort-details/${id}`)
-            const response = await axios.get(`https://cuba-goa-server.onrender.com/resort-details/${id}`)
+            const response = await axios.get(`/resort-details/${id}`)
             // console.log('view details of resort', response.data.resortData)
             setResort(response.data.resortData[0])
         }
@@ -45,7 +45,7 @@ const ViewPropertyDetails = () => {
             // return
 
             // await axios.put(`http://localhost:4001/hotelbook/${resort._id}`, resort)
-            await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${resort._id}`, resort)
+            await axios.put(`/hotelbook/${resort._id}`, resort)
             .then((res) => {
               console.log(res);
               getProperty()

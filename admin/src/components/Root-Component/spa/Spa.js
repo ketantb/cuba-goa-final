@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Spa.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import SpaCard from "./SpaCard";
 import { Row } from "react-bootstrap";
 import massageImg from '../../../assets/Massage.jpg'
@@ -16,7 +16,7 @@ const Spa = () => {
   const getSpaList = async () => {
     try {
       // const response = await axios.get("http://localhost:4001/allSpaList");
-      const response = await axios.get("https://cuba-goa-server.onrender.com/allSpaList");
+      const response = await axios.get("/allSpaList");
       if (response.data.success) {
         console.log(response.data.data);
         setData(response.data.data);
@@ -41,7 +41,7 @@ const Spa = () => {
               <button onClick={onClose}>Cancel</button>
               <button
                 onClick={() => {
-                  axios.delete(`http://localhost:4001/delete/spa/${id}`)
+                  axios.delete(`/delete/spa/${id}`)
                   // axios.delete(`https://cuba-goa-server.onrender.com/hotelbook/${id}`)
                     .then((resp) => {
                       console.log(resp)

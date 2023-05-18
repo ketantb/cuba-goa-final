@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import Header from "../../Header/Header";
 import Footer from "../Footer/Footer";
 
@@ -15,7 +15,7 @@ export default function DetailedSpa() {
     try {
       const { data } = await axios.get(
         // "http://localhost:4001/spaDetails/" + id
-        "https://cuba-goa-server.onrender.com/spaDetails/" + id
+        "/spaDetails/" + id
       );
       console.log(data);
       if (data.success) {

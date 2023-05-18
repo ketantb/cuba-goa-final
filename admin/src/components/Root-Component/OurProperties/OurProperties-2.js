@@ -36,16 +36,16 @@ const OurProperties = () => {
 
 
   const getPropertiesData = async () => {
-    // await axios(`https://cubagoa-server.onrender.com/hotelbook`)
-    await axios(`http://localhost:4001/hotelbook`)
-    .then((res) => {
-       console.log(res.data)
-       setOurPropertiesData(res.data)
-       setSelectedVal([res.data[0].resortName, res.data[0]._id])
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    await axios(`/hotelbook`)
+      // await axios(`http://localhost:4001/hotelbook`)
+      .then((res) => {
+        console.log(res.data)
+        setOurPropertiesData(res.data)
+        setSelectedVal([res.data[0].resortName, res.data[0]._id])
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   useEffect(() => {
@@ -54,21 +54,16 @@ const OurProperties = () => {
 
 
   function deleteResost(id) {
-    // fetch(`https://cubagoa-server.onrender.com/hotelbook/${id}`, {
-    fetch(`http://localhost:4001/hotelbook/${id}`, {
-      method: "DELETE",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then((resp) => {
-      resp.json().then(() => {
-        alert("successfully submitted")
-        getPropertiesData()
-      }).catch((error) => {
-        console.log(error)
+    axios.delete(`/hotelbook/${id}`)
+      // axios.delete(`http://localhost:4001/hotelbook/${id}`)
+      .then((resp) => {
+        resp.json().then(() => {
+          alert("successfully submitted")
+          getPropertiesData()
+        }).catch((error) => {
+          console.log(error)
+        })
       })
-    })
   }
 
   function deleteRoom(id) {
@@ -77,23 +72,16 @@ const OurProperties = () => {
     // const newObject = obj?.rooms?.filter((el) => el._id !== id)
     // obj.rooms = newObject
     // fetch(`https://cubagoa-server.onrender.com/hotelbook/${obj._id}`, {
-    fetch(`http://localhost:4001/hotelbook/${obj._id}`, {
+    axios.put(`http://localhost:4001/hotelbook/${obj._id}`)
+      .then((resp) => {
+        resp.json().then(() => {
+          alert("successfully submitted")
 
-      method: "PUT",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(obj)
-    }).then((resp) => {
-      resp.json().then(() => {
-        alert("successfully submitted")
-
-        getPropertiesData()
-      }).catch((error) => {
-        console.log(error)
+          getPropertiesData()
+        }).catch((error) => {
+          console.log(error)
+        })
       })
-    })
   }
 
 
@@ -117,7 +105,7 @@ const OurProperties = () => {
           <div className='properties-to-book'>
 
             <div className='select-menu'>
-            
+
               <div className='select-btn' onClick={() => setList((val) => !val)}>
                 <span>{selectedValue[0]}</span>
                 {showList ? <AiOutlineDown /> : <AiOutlineUp />}
@@ -257,7 +245,7 @@ const OurProperties = () => {
 
         </div>
       </main>
-{/* { console.log("selectedValue:", selectedValue)} */}
+      {/* { console.log("selectedValue:", selectedValue)} */}
       <Footer />
 
     </>

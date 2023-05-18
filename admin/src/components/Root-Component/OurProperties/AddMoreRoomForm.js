@@ -9,7 +9,7 @@ import {
   CFormTextarea, CFormCheck, CCard, CCardHeader, CCardBody,
   CImage, CContainer, CFormLabel
 } from '@coreui/react'
-import axios from 'axios'
+import axios from '../../../helpers/axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import swal from 'sweetalert';
@@ -75,7 +75,7 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
     roomFormData.roomId = nanoid()
     property.rooms.push(roomFormData)
     // await axios.put(`http://localhost:4001/hotelbook/${property._id}`, property)
-    await axios.put(`https://cuba-goa-server.onrender.com/hotelbook/${property._id}`, property)
+    await axios.put(`/hotelbook/${property._id}`, property)
       .then((res) => {
         console.log(res)
         setRoomImgUrl(false)

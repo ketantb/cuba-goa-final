@@ -3,7 +3,7 @@ import '../LogIn2/Login2.css'
 import React from 'react'
 import { CForm, CFormInput, CCol, CButton } from '@coreui/react'
 import { useState, useEffect } from 'react'
-import axios from "axios";
+import axios from "../../../helpers/axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -22,7 +22,7 @@ const Register = ({ showLogin, setShowLogin }) => {
         if (!regForm.username || !regForm.email || !regForm.password) {
             return toast.error("All the fields are Mandatory!")
         }
-        await axios.post('https://cuba-goa-server.onrender.com/register', regForm)
+        await axios.post('/register', regForm)
         // await axios.post('http://localhost:4001/register', regForm)
             .then((response) => {
                 console.log(response.data)
