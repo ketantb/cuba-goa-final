@@ -1,5 +1,5 @@
 import React from 'react'
-import { CForm, CFormInput, CCol, CButton, CCardHeader } from '@coreui/react'
+import { CForm, CFormInput, CCol, CButton, CCardHeader, CSpinner } from '@coreui/react'
 import { useState, useEffect } from 'react'
 import './Login2.css'
 import { useNavigate } from 'react-router'
@@ -13,42 +13,47 @@ const Login2 = ({ showLogin, setShowLogin }) => {
 
   const [loginForm, setLoginForm] = useState({ email: "", password: "" })
   const [err, setErr] = useState("")
+  const [loading, setLoading] = useState(false)
   const handleLoginForm = (params) => (e) => {
     setLoginForm({ ...loginForm, [params]: e.target.value })
-    // console.log(e.target.value)
     setErr("")
   }
 
   function ValidateEmail(input) {
     var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (input.match(validRegex)) {
-      console.log("Valid email address!");
+      // console.log("Valid email address!");
       return true;
     } else {
-      console.log("Invalid email address!");
+      // console.log("Invalid email address!");
       return false;
     }
   }
 
   const submitLogin = async (e) => {
     e.preventDefault()
+    setLoading(true)
     if (!loginForm.email || !loginForm.password) {
+      setLoading(false)
       return setErr("both the fields are required")
     }
-    if(ValidateEmail(loginForm.email) == false){
+    if (ValidateEmail(loginForm.email) == false) {
+      setLoading(false)
       return setErr("Invaild Email Id")
     }
     // await axios.post('https://cubagoa-server.onrender.com/login', loginForm)
     await axios.post('/login', loginForm)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         // console.log(response.data.username)
         // console.log(response.data.token)
+        setLoading(false)
         localStorage.setItem('user-info', JSON.stringify(response.data))
         navigate('/')
       })
       .catch((err) => {
-        console.log(err.response)
+        setLoading(false)
+        // console.log(err.response)
         setErr(err.response.data.message)
       })
   }
@@ -75,7 +80,14 @@ const Login2 = ({ showLogin, setShowLogin }) => {
         </div>
         <p className='login-err'>{err}</p>
         <div>
-          <button id='login-btn' type='submit' onClick={submitLogin} >Login</button>
+          <button id='login-btn' type='submit' disabled={loading} onClick={submitLogin} >
+            <span style={{paddingRight: "5px"}}>
+              {loading ? <CSpinner component="span" size="sm" aria-hidden="true" /> : null}
+            </span>
+            <span style={{paddingLeft: "5px"}}>
+              {loading ? "Loading . . ." : "Login"}
+            </span>
+          </button>
         </div>
         {/* <p className="already-have-an-account">
           Don't have an account?

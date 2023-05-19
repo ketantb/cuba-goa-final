@@ -16,7 +16,7 @@ import swal from 'sweetalert';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
 const EditSpa = ({ getSpaList, card }) => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // console.log(card)
     const [updatedSpa, setUpdatedSpa] = useState(card)
     const [editSpaForm, setEditSpaForm] = useState({ name: "", imgUrl: "", details: "", benefits: "" })

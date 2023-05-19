@@ -7,6 +7,7 @@ import PostSpaData from "./components/Root-Component/postSpaData/PostSpaData";
 import SpaDetailes from "./components/Root-Component/postSpaData/detailedSpa";
 import BookingForm from "./components/Root-Component/BookingForm/BookingForm";
 import ViewPropertyDetails from './components/Root-Component/OurProperties/Property-Details/PropertyDetails';
+import ViewBooking from './components/Root-Component/Bookings/view-bookings';
 
 
 const Header = React.lazy(() => import('./components/Header/Header'))
@@ -41,6 +42,14 @@ function App() {
             <LandingPage />
           </Suspense>}>
           </Route>
+
+          <Route path='/bookings' element={
+              <Suspense fallback={<p>Loading....</p>}>
+                <>
+                  <ViewBooking/>
+                </>
+              </Suspense>
+            } />
 
 
           <Route path="" element={<Header />}>

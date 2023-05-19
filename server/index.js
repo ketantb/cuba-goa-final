@@ -33,6 +33,7 @@ app.use(require('./router/spaRouter'))
 app.use(require('./router/booking-form'))
 app.use(require('./router/rating'))
 app.use(require('./router/aboutus'))
+app.use(require("./router/adminBookingRoutes"))
 
 app.get("/", (req, res) => {
   try{

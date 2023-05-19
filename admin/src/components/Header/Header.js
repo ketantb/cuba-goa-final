@@ -50,6 +50,7 @@ navigate('/landing-page')
        </div>
         <nav className={hidenew?'main-nav deactive-nav':'main-nav'}>
             <NavLink to='/'  className={({ isActive }) => (isActive ? 'main-nav-active' : '')}><span>HOME</span></NavLink>
+            <NavLink to='/bookings' className={({ isActive }) => (isActive ? 'main-nav-active' : '')}><span>BOOKINGS</span></NavLink>
             {/* <NavLink to='/resorts' className={({ isActive }) => (isActive ? 'main-nav-active' : '')}><span>RESORTS</span></NavLink> */}
             <NavLink to='/our-properties'  className={({ isActive }) => (isActive ? 'main-nav-active' : '')}><span>OUR PROPERTIES </span></NavLink>
             {/* <NavLink to='/forSale'  className={({ isActive }) => (isActive ? 'main-nav-active' : '')}><span>FOR SALE</span></NavLink> */}

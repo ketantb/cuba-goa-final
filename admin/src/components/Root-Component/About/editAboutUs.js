@@ -16,7 +16,7 @@ import swal from 'sweetalert';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
 const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFromParent }) => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // const [editResortForm, setEditResortForm] = useState({
     //     bannerImgUrl: "", heading1: "", heading2: "", heading3: "",description: ""
     // })
@@ -102,6 +102,7 @@ const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFro
                     icon: "success",
                     button: "OK!",
                 });
+                navigate("/")
             })
             .catch((err) => {
                 alert("An error occoured please try after some time !")
