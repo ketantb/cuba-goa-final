@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Client = require('../models/clientModel')
 
+router.get('/get-all-clients', async (req, res) => {
+  try{
+    const allClients = await Client.find(); 
+    res.status(200).json({ data: allClients });
+  }
+  catch(err){
+    res.status(500).send(err);
+  }
+})
+
 router.get('/get-client-details/:id', async (req, res) => {
   console.log(req.params.id)
   try{
