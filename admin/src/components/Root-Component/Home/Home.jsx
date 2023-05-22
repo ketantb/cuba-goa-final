@@ -107,49 +107,17 @@ const Home = () => {
               <h3>New Phases of <br /> Development for 2023</h3>
               <p >This exciting opportunity allows owners to select their preferred lot and new <br />cottage model within the phase.</p>
               <p>&nbsp;</p>
-              <p>
+              {/* <p>
                 <Link className="learn-more" to='/leran-More' >Learn More</Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
 
 
         <section className='cottages-slide cottages-slide-2'>
-          {/* <h2 className='title-card-cottages'>OUR RESORTS ROOM</h2> */}
           <div className='add-new-cottages-parent'>
           </div>
-
-          {/* {ourRooms[0] && <Carousel variant="dark" breakPoints={breakPoints}  >
-
-            {ourRooms.map((el) =>
-              <div className='cottages-card' style={{ width: '300px' }}>
-                <div className='cottages-img-parent'>
-                  <img src={el.imgurl}></img>
-                </div>
-                <div className="info">
-                  <div className='cottages-content'>
-                    <h2 className="priceBox">Price  Rs {el.perRoom} </h2>
-                    <h3 className='room-title'>{el.title2}</h3>
-                    <div className="summaryPrices">
-                      <p>Max Capacity {el.roomcapacity.max}</p>
-                      <p>Min Capacity {el.roomcapacity.min}</p>
-                    </div>
-                    <div className='amminities'>
-                      <h5 style={{ fontSize: '17px' }}>Resort Name</h5>
-                      <p>{el.titlePr}</p>
-                    </div>
-                    <div className='button-parent'>
-                      {<button className='book-button-2' onClick={() => navigateToViewInfoRoom(el.id, el._id)} >View</button>}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-          </Carousel>} */}
-
-
         </section>
 
 
@@ -159,22 +127,9 @@ const Home = () => {
             <div className='comment-image'>
               <img src="" alt="" />
             </div>
-            {/* <div className='comment-box'>
-              <Carousel itemsToShow={1}>
-
-                <p className='comment-message'>{comments[0].comments}</p>
-                <p className='comment-message'>{comments[0].comments}</p>
-              </Carousel>
-            </div> */}
           </div>
         </section>
 
-        {/* <section className='greatbluesort'>
-   <h2 className='greatbluesort-title'>WHAT'S HAPPENING IN CUB GOA</h2>
-   <div className='greatbluesort-section'>
-    {ourRooms.map((el)=><div style={{background:`url(${el.imgurl})`,boxShadow:' 1px 1px 5px 4px rgba(51, 51, 90, 0.076)'}}></div>)}
-   </div>
- </section> */}
       </main >
       <Footer />
     </>

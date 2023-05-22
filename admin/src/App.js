@@ -24,7 +24,7 @@ const LogIn2 = React.lazy(() => import('./components/Root-Component/LogIn2/Login
 const LandingPage = React.lazy(() => import('./components/Landing-Page/LandingPage.js'))
 const ShowInfoOfRoomCart = React.lazy(() => import('./components/Root-Component/Home/ShowInfoOfRoomCart'))
 const LearnMore = React.lazy(() => import('./components/Root-Component/Home/LearnMore'))
-
+const ClientDetails = React.lazy(() => import('./components/Client/client-details'))
 
 function App() {
 
@@ -44,12 +44,12 @@ function App() {
           </Route>
 
           <Route path='/bookings' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <ViewBooking/>
-                </>
-              </Suspense>
-            } />
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <ViewBooking />
+              </>
+            </Suspense>
+          } />
 
 
           <Route path="" element={<Header />}>
@@ -96,7 +96,6 @@ function App() {
                   <Resorts />
                 </>
               </Suspense>
-
             } />
 
             <Route path='/our-properties' element={
@@ -105,7 +104,6 @@ function App() {
                   <OurProperties />
                 </>
               </Suspense>
-
             } />
 
             <Route path='/:resortname/:id/rooms' element={
@@ -114,7 +112,6 @@ function App() {
                   <ViewPropertyDetails />
                 </>
               </Suspense>
-
             } />
 
             <Route path='/contact-us' element={
@@ -124,7 +121,6 @@ function App() {
                   <Footer />
                 </>
               </Suspense>
-
             } />
 
             <Route path='/gallery' element={
@@ -141,16 +137,19 @@ function App() {
                   <ShowInfoOfRoomCart />
                 </Suspense>
               } />
+
             <Route path="/leran-More" element={
               <Suspense fallback={<p>Loading....</p>}>
                 <LearnMore />
               </Suspense>
             } />
+
             <Route path="/addSpa" element={
               <Suspense fallback={<p>Loading....</p>}>
                 <PostSpaData />
               </Suspense>
             } />
+
             <Route path="/spa-details/:id" element={
               <Suspense fallback={<p>Loading....</p>}>
                 <SpaDetailes />
@@ -163,6 +162,11 @@ function App() {
               </Suspense>
             } />
 
+            <Route path="/client-details/:clientId" element={
+              <Suspense fallback={<p>Loading....</p>}>
+                <ClientDetails/>
+              </Suspense>
+            } />
 
           </Route>
 

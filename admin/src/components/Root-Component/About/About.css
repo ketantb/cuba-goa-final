@@ -78,6 +78,13 @@
     font-family: 'candara';
 }
 
+.abt-us-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
 
 @media only screen and (max-width:900px) {
     .aboutus-wrapper {
@@ -88,14 +95,21 @@
     }
 
     .aboutus-body {
+        width: 100%;
         flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .aboutus-wrapper .aboutus-body .aboutus-lb p{
+        padding-left: 25px;
+        padding-right: 0px;
     }
 
     .aboutus-lb {
         width: 100%;
         height: fit-content;
         margin-top: 1rem;
-        /* border: 1px solid black; */
+        padding: 25px;
     }
 
     .aboutus-rb {
@@ -109,22 +123,12 @@
         /* border: 1px solid black; */
     }
 
-
     .aboutus-wrapper .title {
         margin-top: 5rem;
         font-family: 'alkatra';
         text-align: center;
         letter-spacing: 3px;
     }
-
-    .aboutus-wrapper .aboutus-lb {
-        position: relative;
-        width: 100%;
-        height: fit-content;
-        margin-top: 1rem;
-        /* border: 1px solid black; */
-    }
-
 
     .aboutus-wrapper .carousel-inner {
         position: relative;

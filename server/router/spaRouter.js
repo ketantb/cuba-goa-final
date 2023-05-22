@@ -32,7 +32,6 @@ router.get("/allSpaList", async (req, resp) => {
 
 router.get("/spaDetails/:id", async (req, resp) => {
   const id = req.params.id;
-  console.log(id);
   try {
     const dataDetails = await Spa.findOne({ _id: id });
     if (dataDetails) {
