@@ -26,6 +26,10 @@ const ViewBooking = () => {
         fetchBookingList()
     }, [])
 
+    const bgColorActive = { backgroundColor: "#2eb85c", color: "#ffff", width: "75px" };
+    const bgColorCancelled = { backgroundColor: "#e55353", color: "#ffff" };
+    const bgColorRejected = { backgroundColor: "#ced2d8", color: "black" };
+
     console.log("Booking List => ", bookingList)
 
     if (!bookingList) {
@@ -38,7 +42,6 @@ const ViewBooking = () => {
 
     return (
         <>
-            <Header />
             <div className="booking-list-container">
                 <CTable responsive>
                     <CTableHead color="dark" >
@@ -69,8 +72,12 @@ const ViewBooking = () => {
                                         <CTableDataCell>{item?.checkIn}</CTableDataCell>
                                         <CTableDataCell>{item?.checkOut}</CTableDataCell>
                                         <CTableDataCell>
-                                            <span className="booking-status">
-                                                Active
+                                            <span className="booking-status"
+                                                style={item.bookingStatus == "active" ? bgColorActive
+                                                    : item.bookingStatus == "cancelled" ? bgColorCancelled
+                                                        : bgColorRejected
+                                                }>
+                                                {item.bookingStatus}
                                             </span>
                                         </CTableDataCell>
                                         <CTableDataCell>
@@ -80,10 +87,9 @@ const ViewBooking = () => {
                                         </CTableDataCell>
                                     </CTableRow>
                                     <div>
-                                        <button   
-                                        onClick={() => { navigate("/client-details/" + item._id)} }
-                                        // onClick={() => { navigate("/spa-details/" + card._id) }}
-                                        >Client Settings</button>
+                                        <button
+                                        onClick={() => { navigate("/client-details/" + item.client) }}
+                                        >Client Details</button>
                                         <button>Delete</button>
                                     </div>
                                 </>

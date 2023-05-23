@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from '../../helpers/axios'
+import Header from "../Header/Header";
 
 const ClientDetails = () => {
     const [clientDetail, setClientDetail] = useState();
@@ -7,21 +9,27 @@ const ClientDetails = () => {
     const params = useParams();
     const userId = params.clientId;
 
-    const fetchClientDetail = () => {
-        fetch("/get-client-details")
-        .then((res) => res.json())
-        .then((data) => console.log(data)).
-        catch((err) => console.log(err))
+    const fetchClientDetail = async () => {
+        await axios.get(`/get-client-details/${userId}`)
+            .then((res) => {
+                console.log(res.data.data)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
     useEffect(() => {
-      fetchClientDetail()
+        fetchClientDetail()
     }, [])
     console.log(userId)
-    return(
-        <div style={{marginTop: '7rem'}}>
-           Client
-        </div>
+    return (
+        <>
+            <Header />
+            <div style={{ marginTop: '7rem' }}>
+                Client
+            </div>
+        </>
     )
 }
 

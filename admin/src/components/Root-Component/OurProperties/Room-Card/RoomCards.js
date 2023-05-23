@@ -10,7 +10,7 @@ import { ThreeDots } from 'react-loader-spinner'
 import EditRoomForm from '../EditRoomForm'
 
 const RoomCard = ({ room, resort, deleteRoom, index, getProperty }) => {
-    // console.log(room)
+    console.log("Room => ", room)
     const navigate = useNavigate()
     const handleBooking = () => {
     }
@@ -47,11 +47,18 @@ const RoomCard = ({ room, resort, deleteRoom, index, getProperty }) => {
                         <span style={{ fontWeight: 500 }}> Rs {room.ratePerNight}
                         </span>
                     </p> */}
-                    <p>Rate per night :
-                        <span style={{ marginLeft: '3px', fontWeight: 500 }}>
-                            Rs {room.ratePerNight}
-                        </span>
-                    </p>
+                    <div>
+                        <p>Week-Day rate per night :
+                            <span style={{ marginLeft: '3px', fontWeight: 500 }}>
+                                Rs {room.weekdayPerNightRate}
+                            </span>
+                        </p>
+                        <p>Week-End rate per night :
+                            <span style={{ marginLeft: '3px', fontWeight: 500 }}>
+                                Rs {room.weekendPerNightRate}
+                            </span>
+                        </p>
+                    </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <p>Adults Capacity :
                             <span style={{ marginLeft: '3px', fontWeight: 500 }}>
@@ -104,11 +111,11 @@ const RoomCard = ({ room, resort, deleteRoom, index, getProperty }) => {
                 <div>
                     {/* <button onClick={() => { }}>Edit Room</button> */}
                     <EditRoomForm
-                     getProperty={getProperty}
-                     room={room}
-                     resort={resort}
-                     index={index}
-                     />
+                        getProperty={getProperty}
+                        room={room}
+                        resort={resort}
+                        index={index}
+                    />
                 </div>
             </div>
         </div>

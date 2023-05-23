@@ -12,8 +12,8 @@
 }
 
 .booking-status{
-    color: #4f5d73;
-    background-color: #f9b115;
+    /* color: #4f5d73; */
+    /* background-color: #f9b115; */
     font-size: 13px;
     font-weight: 700;
     border-radius: 5px;
@@ -22,6 +22,9 @@
     background-color: #e55353;
     background-color: #ced2d8; */
 }
+
+
+
 
 .view-booking-show-btn{
     padding-top: 0px;

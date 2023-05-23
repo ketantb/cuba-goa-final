@@ -8,6 +8,7 @@ import SpaDetailes from "./components/Root-Component/postSpaData/detailedSpa";
 import BookingForm from "./components/Root-Component/BookingForm/BookingForm";
 import ViewPropertyDetails from './components/Root-Component/OurProperties/Property-Details/PropertyDetails';
 import ViewBooking from './components/Root-Component/Bookings/view-bookings';
+import ClientList from './components/Client/Client-List';
 
 
 const Header = React.lazy(() => import('./components/Header/Header'))
@@ -46,129 +47,143 @@ function App() {
           <Route path='/bookings' element={
             <Suspense fallback={<p>Loading....</p>}>
               <>
+                <Header />
                 <ViewBooking />
+                <Footer />
               </>
             </Suspense>
           } />
 
 
-          <Route path="" element={<Header />}>
+          {/* <Route path="" element={<Header />} /> */}
 
-            <Route path='/' element={
+          <Route path='/' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <Home />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+          <Route path="/about" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <About />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+          <Route path="/spa" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <Spa />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+
+          <Route path='/our-properties/:name/:id' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <BookingPage />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+          <Route path='/resorts' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Resorts />
+              </>
+            </Suspense>
+          } />
+
+          <Route path='/our-properties' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <OurProperties />
+              </>
+            </Suspense>
+          } />
+
+          <Route path='/:resortname/:id/rooms' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <ViewPropertyDetails />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+          <Route path='/contact-us' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Header />
+                <ContactUs />
+                <Footer />
+              </>
+            </Suspense>
+          } />
+
+          <Route path='/gallery' element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <>
+                <Gallery />
+                <Footer />
+              </>
+            </Suspense>} />
+
+          <Route path='/view-room-info/:id/:idChild'
+            element={
               <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <Home />
-                </>
+                <ShowInfoOfRoomCart />
               </Suspense>
             } />
 
-            <Route path="/about" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <About />
-                  <Footer />
-                </>
-              </Suspense>
-            } />
+          <Route path="/leran-More" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <LearnMore />
+            </Suspense>
+          } />
 
-            <Route path="/spa" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <Spa />
-                  <Footer />
-                </>
-              </Suspense>
-            } />
+          <Route path="/addSpa" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <PostSpaData />
+            </Suspense>
+          } />
 
+          <Route path="/spa-details/:id" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <SpaDetailes />
+            </Suspense>
+          } />
 
-            <Route path='/our-properties/:name/:id' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <BookingPage />
-                  <Footer />
-                </>
-              </Suspense>
-            } />
+          <Route path="/booking-form" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <BookingForm />
+            </Suspense>
+          } />
 
-            <Route path='/resorts' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <Resorts />
-                </>
-              </Suspense>
-            } />
+          <Route path="/client-details/:clientId" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <ClientDetails />
+            </Suspense>
+          } />
 
-            <Route path='/our-properties' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <OurProperties />
-                </>
-              </Suspense>
-            } />
-
-            <Route path='/:resortname/:id/rooms' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <ViewPropertyDetails />
-                </>
-              </Suspense>
-            } />
-
-            <Route path='/contact-us' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <ContactUs />
-                  <Footer />
-                </>
-              </Suspense>
-            } />
-
-            <Route path='/gallery' element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <>
-                  <Gallery />
-                  <Footer />
-                </>
-              </Suspense>} />
-
-            <Route path='/view-room-info/:id/:idChild'
-              element={
-                <Suspense fallback={<p>Loading....</p>}>
-                  <ShowInfoOfRoomCart />
-                </Suspense>
-              } />
-
-            <Route path="/leran-More" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <LearnMore />
-              </Suspense>
-            } />
-
-            <Route path="/addSpa" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <PostSpaData />
-              </Suspense>
-            } />
-
-            <Route path="/spa-details/:id" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <SpaDetailes />
-              </Suspense>
-            } />
-
-            <Route path="/booking-form" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <BookingForm />
-              </Suspense>
-            } />
-
-            <Route path="/client-details/:clientId" element={
-              <Suspense fallback={<p>Loading....</p>}>
-                <ClientDetails/>
-              </Suspense>
-            } />
-
-          </Route>
+          <Route path="/our-clients" element={
+            <Suspense fallback={<p>Loading....</p>}>
+              <ClientList />
+            </Suspense>
+          } />
 
 
         </Routes>

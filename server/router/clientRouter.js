@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Client = require('../models/clientModel')
+const Client = require('../models/client-registration')
 
 router.get('/get-all-clients', async (req, res) => {
   try{

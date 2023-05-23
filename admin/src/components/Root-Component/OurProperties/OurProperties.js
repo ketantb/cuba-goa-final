@@ -6,6 +6,7 @@ import Pagination from './Pagination'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import PropertiesForm from './PropertiesForm'
+import Header from '../../Header/Header'
 
 
 const Footer = React.lazy(() => import('../Footer/Footer'))
@@ -82,6 +83,7 @@ const OurProperties = () => {
 
   return (
     <>
+    <Header/>
       <main className='our-properties-main'>
         <div className='quba-goa-search'>
           <div className='banner'>

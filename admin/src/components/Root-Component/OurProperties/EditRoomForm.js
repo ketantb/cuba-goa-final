@@ -24,12 +24,13 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
     const [editRoomFormData, setEditRoomFormData] = useState({
         imgUrl: [], roomId: "",
         roomType: "", totalRooms: "", availableRooms: "",
-        adultCapacity: "", childrenCapacity: "", ratePerNight: "",
-
+        adultCapacity: "", childrenCapacity: "", weekdayPerNightRate: "",
+        weekendPerNightRate: "", occassionName: "", occassionStartDate: "", occassionEndDate: "", occassionPerNightRate: "",
         nonRefundable: false, wardrobe: false, bedsideTable: false, houseKeeping: false, balcony: false,
         breakfast: false, mosquitonet: false, Wifi: false, hotNcoldshower_24hrs: false,
         airconditioned: false, seaView: false, fitnessCenter: false, swimmingPool: false, spa: false
     })
+
     const [roomImages, setRoomImages] = useState([])
     const [roomImgUrl, setRoomImgUrl] = useState(false)
 
@@ -87,7 +88,7 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
                 setRoomImgUrl(false)
                 //         setRoomFormData({imgUrl: [], roomId: "",
                 //         roomType: "", totalRooms: "", availableRooms: "",
-                //         adultCapacity: "", childrenCapacity: "", ratePerNight: "",
+                //         adultCapacity: "", childrenCapacity: "", weekdayPerNightRate: "",
                 //         nonRefundable: false, wardrobe: false, bedsideTable: false, houseKeeping: false, balcony: false,
                 //         breakfast: false, mosquitonet: false, Wifi: false, hotNcoldshower_24hrs: false,
                 //         airconditioned: false, roomService: false, seaView: false, fitnessCenter: false, swimmingPool: false, spa: false})
@@ -186,10 +187,12 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
 
                     <CRow>
                         <CCol className='mt-3' lg={6}>
-                            <CFormInput value={updatedRoomData.ratePerNight} label='Room Per Night Charge' type='number' onChange={handleEditRoomForm('ratePerNight')} />
+                            <CFormInput value={updatedRoomData.weekdayPerNightRate} label='Week-Day Per Night Charge' type='number' onChange={handleEditRoomForm('weekdayPerNightRate')} />
+                        </CCol>
+                        <CCol className='mt-3' lg={6}>
+                            <CFormInput value={updatedRoomData.weekendPerNightRate} label='Week-End Per Night Charge' type='number' onChange={handleEditRoomForm('weekendPerNightRate')} />
                         </CCol>
                     </CRow>
-
 
 
                     <CCard className='mx-2 mt-4'>
@@ -274,6 +277,30 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
                                 </CCol>
                             </CRow>
 
+
+                            <CCard className='mx-2 mt-4'>
+                                <CCardHeader className='text-center'>
+                                    <h4>In Case Of Occassion</h4>
+                                </CCardHeader>
+                                <CCardBody className='p-4'>
+                                    <CRow>
+                                        <CCol className='mt-3' lg={6}>
+                                            <CFormInput label='Occassion Name' type='text' value={updatedRoomData.occassionName} onChange={handleEditRoomForm('occassionName')} />
+                                        </CCol>
+                                        <CCol className='mt-3' lg={6}>
+                                            <CFormInput label='Occassion Per Night Rate' value={updatedRoomData.occassionPerNightRate} type='text' onChange={handleEditRoomForm('occassionPerNightRate')} />
+                                        </CCol>
+                                    </CRow>
+                                    <CRow>
+                                        <CCol className='mt-3' lg={6}>
+                                            <CFormInput label='Start Date' type='date' value={updatedRoomData.occassionStartDate} onChange={handleEditRoomForm('occassionStartDate')} />
+                                        </CCol>
+                                        <CCol className='mt-3' lg={6}>
+                                            <CFormInput label='End Date' type='date' value={updatedRoomData.occassionEndDate} onChange={handleEditRoomForm('occassionEndDate')} />
+                                        </CCol>
+                                    </CRow>
+                                </CCardBody>
+                            </CCard>
 
                         </CCardBody>
                     </CCard>

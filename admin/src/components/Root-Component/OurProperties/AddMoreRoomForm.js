@@ -15,13 +15,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import swal from 'sweetalert';
 import { nanoid } from 'nanoid'
 
-const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesData}) => {
+const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesData }) => {
   // console.log(property)
   const [saveRoomButttonActive, setSaveRoomButttonActive] = useState(false)
   const [roomFormData, setRoomFormData] = useState({
     imgUrl: [], roomId: "",
     roomType: "", totalRooms: "", availableRooms: "",
-    adultCapacity: "", childrenCapacity: "", ratePerNight: "",
+    adultCapacity: "", childrenCapacity: "", weekdayPerNightRate: "",
+    weekendPerNightRate: "", occassionName: "", occassionStartDate: "", occassionEndDate: "", occassionPerNightRate: "",
 
     nonRefundable: false, wardrobe: false, bedsideTable: false, houseKeeping: false, balcony: false,
     breakfast: false, mosquitonet: false, Wifi: false, hotNcoldshower_24hrs: false,
@@ -38,8 +39,8 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
   const [picURL, setPicURL] = useState("")
 
   const imgCloudUpload = async (e) => {
-    setSaveRoomButttonActive(true)
     e.preventDefault()
+    setSaveRoomButttonActive(true)
     if (!roomFormData.roomType) {
       setSaveRoomButttonActive(false)
       return toast.error("Please fill room type !")
@@ -79,12 +80,15 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
       .then((res) => {
         console.log(res)
         setRoomImgUrl(false)
-        setRoomFormData({imgUrl: [], roomId: "",
-        roomType: "", totalRooms: "", availableRooms: "",
-        adultCapacity: "", childrenCapacity: "", ratePerNight: "",
-        nonRefundable: false, wardrobe: false, bedsideTable: false, houseKeeping: false, balcony: false,
-        breakfast: false, mosquitonet: false, Wifi: false, hotNcoldshower_24hrs: false,
-        airconditioned: false, roomService: false, seaView: false, fitnessCenter: false, swimmingPool: false, spa: false})
+        setRoomFormData({
+          imgUrl: [], roomId: "",
+          roomType: "", totalRooms: "", availableRooms: "",
+          adultCapacity: "", childrenCapacity: "", weekdayPerNightRate: "",
+          weekendPerNightRate: "", occassionName: "", occassionStartDate: "", occassionEndDate: "", occassionPerNightRate: "",
+          nonRefundable: false, wardrobe: false, bedsideTable: false, houseKeeping: false, balcony: false,
+          breakfast: false, mosquitonet: false, Wifi: false, hotNcoldshower_24hrs: false,
+          airconditioned: false, roomService: false, seaView: false, fitnessCenter: false, swimmingPool: false, spa: false
+        })
         setSaveRoomButttonActive(false)
         setRoomForm(false)
         swal({
@@ -164,7 +168,10 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
 
           <CRow>
             <CCol className='mt-3' lg={6}>
-              <CFormInput label='Room Per Night Charge' type='number' onChange={handleRoomForm('ratePerNight')} />
+              <CFormInput label='Week-Day Per Night Charge' type='number' onChange={handleRoomForm('weekdayPerNightRate')} />
+            </CCol>
+            <CCol className='mt-3' lg={6}>
+              <CFormInput label='Week-End Per Night Charge' type='number' onChange={handleRoomForm('weekendPerNightRate')} />
             </CCol>
           </CRow>
 
@@ -175,9 +182,6 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
               <h4>Room Facility</h4>
             </CCardHeader>
             <CCardBody className='p-4'>
-
-
-
               <CRow className='text-start aminitiesFonts'>
                 <CCol className='mt-2' >
                   <CFormCheck type='checkbox' label='Non Refundable' value={roomFormData.nonRefundable}
@@ -252,6 +256,32 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
                 </CCol>
               </CRow>
 
+
+
+
+              <CCard className='mx-2 mt-4'>
+                <CCardHeader className='text-center'>
+                  <h4>In Case Of Occassion</h4>
+                </CCardHeader>
+                <CCardBody className='p-4'>
+                  <CRow>
+                    <CCol className='mt-3' lg={6}>
+                      <CFormInput label='Occassion Name' type='text' onChange={handleRoomForm('occassionName')} />
+                    </CCol>
+                    <CCol className='mt-3' lg={6}>
+                      <CFormInput label='Occassion Per Night Rate' type='text' onChange={handleRoomForm('occassionPerNightRate')} />
+                    </CCol>
+                  </CRow>
+                  <CRow>
+                    <CCol className='mt-3' lg={6}>
+                      <CFormInput label='Start Date' type='date' onChange={handleRoomForm('occassionStartDate')} />
+                    </CCol>
+                    <CCol className='mt-3' lg={6}>
+                      <CFormInput label='End Date' type='date' onChange={handleRoomForm('occassionEndDate')} />
+                    </CCol>
+                  </CRow>
+                </CCardBody>
+              </CCard>
 
             </CCardBody>
           </CCard>

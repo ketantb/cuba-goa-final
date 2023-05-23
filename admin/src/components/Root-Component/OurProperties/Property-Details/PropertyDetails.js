@@ -34,7 +34,7 @@ const ViewPropertyDetails = () => {
         getProperty()
         // eslint-disable-next-line
     }, [id])
-    console.log(resort)
+    console.log("Resort => ", resort)
 
     const deleteRoom = (roomId, index) => {
         const confirmDelete = async () => {
