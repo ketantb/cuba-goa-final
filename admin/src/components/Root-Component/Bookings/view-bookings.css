@@ -44,3 +44,12 @@
     color: #ffff;
     border-radius: 0px;
 }
+
+.special-request-call-bell{
+    color: #0d6efd;
+    cursor: pointer;
+}
+
+.special-request-call-bell:hover{
+    color: #002153;
+}

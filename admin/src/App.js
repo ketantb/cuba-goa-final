@@ -47,9 +47,7 @@ function App() {
           <Route path='/bookings' element={
             <Suspense fallback={<p>Loading....</p>}>
               <>
-                <Header />
                 <ViewBooking />
-                <Footer />
               </>
             </Suspense>
           } />
