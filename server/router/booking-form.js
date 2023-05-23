@@ -99,29 +99,43 @@ const Booking = require('../models/booking')
 // });
 
 
-router.post('/booking-form', clientMiddleware, async (req, resp) => {
-  console.log('client middilware id', req.client)
-  try {
-    const bookingData = await Booking.create({
-      ...req.body,
-      client: req.clientId
-    })
-    console.log(bookingData)
-    resp.json({ success: true, data: bookingData })
-  }
-  catch (err) {
-    resp.json({ success: false, message: err })
-  }
-})
+// router.post('/booking-form', clientMiddleware, async (req, resp) => {
+//   console.log('client middilware id', req.client)
+//   try {
+//     const bookingData = await Booking.create({
+//       ...req.body,
+//       client: req.clientId
+//     })
+//     console.log(bookingData)
+//     resp.json({ success: true, data: bookingData })
+//   }
+//   catch (err) {
+//     resp.json({ success: false, message: err })
+//   }
+// })
 
 
-router.get('/get-bookings', clientMiddleware, async (req, resp) => {
+// router.get('/get-bookings', clientMiddleware, async (req, resp) => {
+//   try {
+//     const bookingData = await Booking.find({ client: req.clientId })
+//     resp.json({ success: true, list: bookingData })
+//   }
+//   catch (err) {
+//     resp.json({ success: false, message: err })
+//   }
+// })
+
+
+//update bookingStatus to Rejected => 
+
+router.patch("/reject-booking/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const bookingData = await Booking.find({ client: req.clientId })
-    resp.json({ success: true, list: bookingData })
+    const updatedData = await Booking.updateOne({ _id: id }, { $set: { bookingStatus: "rejected" } })
+    res.json({ "message": "success", data: updatedData });
   }
   catch (err) {
-    resp.json({ success: false, message: err })
+    res.status(500).json({ message: err })
   }
 })
 

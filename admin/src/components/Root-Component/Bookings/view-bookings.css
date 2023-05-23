@@ -18,6 +18,7 @@
     font-weight: 700;
     border-radius: 5px;
     padding: 3px 5px;
+    cursor: pointer;
     /* background-color: #2eb85c;
     background-color: #e55353;
     background-color: #ced2d8; */
@@ -52,4 +53,9 @@
 
 .special-request-call-bell:hover{
     color: #002153;
+}
+
+.booking-list-container>div{
+    display: flex;
+    margin-bottom: 5rem;
 }
