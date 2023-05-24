@@ -5,6 +5,7 @@ import Header from "../../Header/Header";
 import Footer from "../Footer/Footer";
 
 import "./detailed.css";
+import PreLoader from "../../Preloader-Component/Preloader-Component";
 
 export default function DetailedSpa() {
   const [details, setDetails] = useState({});
@@ -37,6 +38,12 @@ export default function DetailedSpa() {
     // Redirect user to booking page
     navigate("/booking");
   };
+
+  if(!details){
+    return(
+      <PreLoader/>
+    )
+  }
 
   return (
     <div className="detailed-spa-container">

@@ -7,7 +7,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import PropertiesForm from './PropertiesForm'
 import Header from '../../Header/Header'
-
+import PreLoader from '../../Preloader-Component/Preloader-Component'
 
 const Footer = React.lazy(() => import('../Footer/Footer'))
 
@@ -26,7 +26,7 @@ const OurProperties = () => {
 
   const getPropertiesData = async () => {
     await axios(`/hotelbook`)
-    // await axios(`http://localhost:4001/hotelbook`)
+      // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
         setAllProperties(res.data)
@@ -77,13 +77,13 @@ const OurProperties = () => {
 
   if (!allProperties) {
     return (
-      <p>Loading...</p>
+      <PreLoader/>
     )
   }
 
   return (
     <>
-    <Header/>
+      <Header />
       <main className='our-properties-main'>
         <div className='quba-goa-search'>
           <div className='banner'>
@@ -93,14 +93,14 @@ const OurProperties = () => {
           <div className='properties-to-book'>
             {/* filter section do at veyr last */}
           </div>
-          <div className='add-on-btn' style={{marginBottom: '50px'}}>
+          <div className='add-on-btn' style={{ marginBottom: '50px' }}>
             <PropertiesForm getPropertiesData={getPropertiesData} />
           </div>
           <div className='our-property-card-container'>
             <section>
-              <PropertyList currentList={currentList} allProperties={allProperties} getPropertiesData={getPropertiesData} deleteProperty={deleteProperty}/>
+              <PropertyList currentList={currentList} allProperties={allProperties} getPropertiesData={getPropertiesData} deleteProperty={deleteProperty} />
             </section>
-            <section style={{marginTop: '50px'}}>
+            <section style={{ marginTop: '50px' }}>
               <Pagination totalPosts={allProperties.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} />
             </section>
           </div>

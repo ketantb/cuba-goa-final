@@ -10,6 +10,7 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import EditRoomForm from '../EditRoomForm'
 import EditResort from './EditResort'
+import PreLoader from '../../../Preloader-Component/Preloader-Component'
 // import Images from './Images';
 
 const ViewPropertyDetails = () => {
@@ -76,6 +77,12 @@ const ViewPropertyDetails = () => {
             }
         });
         return
+    }
+
+    if(!resort){
+        return(
+            <PreLoader/>
+        )
     }
         
     return (

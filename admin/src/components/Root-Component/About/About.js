@@ -3,6 +3,7 @@ import './About.css'
 import Footer from '../Footer/Footer';
 import axios from "../../../helpers/axios"
 import AboutUsForm from './editAboutUs';
+import PreLoader from '../../Preloader-Component/Preloader-Component';
 
 // const bannerimg = 'https://www.tusktravel.com/blog/wp-content/uploads/2021/07/Goa-open-for-tourist.jpg'
 
@@ -23,11 +24,17 @@ function About() {
         console.log(err)
       })
   }
-  console.log(aboutUsData)
+  // console.log(aboutUsData)
   // fetchData()
   useEffect(() => {
     fetchData()
   }, [])
+
+  if(!aboutUsData){
+    return(
+      <PreLoader/>
+    )
+  }
 
   return (
     <>

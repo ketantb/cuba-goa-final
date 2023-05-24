@@ -1,11 +1,11 @@
 import { useState } from "react"
 import axios from "../../../helpers/axios"
 import "./view-bookings.css"
-import { RiDeleteBin5Fill } from 'react-icons/ri';
 import Header from "../../Header/Header";
 import { useNavigate, useParams } from "react-router";
 import Footer from "../Footer/Footer";
 import BookingList from "./bookingList";
+import PreLoader from "../../Preloader-Component/Preloader-Component";
 
 
 const ViewBooking = () => {
@@ -26,15 +26,13 @@ const ViewBooking = () => {
 
     useState(() => {
         fetchBookingList()
-    }, [])
+    }, [bookingList])
 
     if (!bookingList) {
         return (
-            <>
-                Loading . . .
-            </>
+          <PreLoader/>
         )
-    }
+      }
 
     // console.log("Booking List => ", bookingList)
     return (
