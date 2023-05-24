@@ -77,7 +77,7 @@ const OurProperties = () => {
 
   if (!allProperties) {
     return (
-      <h1>Loading...</h1>
+      <p>Loading...</p>
     )
   }
 

@@ -16,6 +16,7 @@ const BookingList = ({ bookingList, setBookingList }) => {
     const list = bookingList;
     // console.log("List => ", list)
     const deleteBooking = async (bookingData) => {
+        //confirmation toaster required
         if(bookingData.bookingStatus === "cancelled"){
             return toast.error("Booking has already been cancelled by the Client !")
         }
@@ -29,6 +30,7 @@ const BookingList = ({ bookingList, setBookingList }) => {
             //in this block email will be sent to client 
             setBookingList();
         }).catch((err) => {
+            alert("An Error occoured ! please try after some time !")
             console.log(err)
         })
     }
