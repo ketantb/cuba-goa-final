@@ -71,7 +71,6 @@ const OurProperties = () => {
     const obj = ourPropertiesData.find((el) => el.resortName === selectedValue[0])
     // const newObject = obj?.rooms?.filter((el) => el._id !== id)
     // obj.rooms = newObject
-    // fetch(`https://cubagoa-server.onrender.com/hotelbook/${obj._id}`, {
     axios.put(`http://localhost:4001/hotelbook/${obj._id}`)
       .then((resp) => {
         resp.json().then(() => {

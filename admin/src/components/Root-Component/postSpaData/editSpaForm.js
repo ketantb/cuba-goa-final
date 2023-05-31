@@ -45,8 +45,8 @@ const EditSpa = ({ getSpaList, card }) => {
         }
         const imgData = new FormData()
         imgData.append("file", spaImage)
-        imgData.append("upload_preset", "ketanInstaClone")
-        await axios.post("https://api.cloudinary.com/v1_1/ketantb/image/upload", imgData)
+        imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET)
+        await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
             .then((res) => {
                 // console.log(res.data.url)
                 setSpaImage(res.data.url)

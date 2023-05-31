@@ -46,12 +46,8 @@ function PostForm() {
   const uploadImage = async () => {
     const imgData = new FormData();
     imgData.append("file", image);
-    imgData.append("upload_preset", "insta_clone");
-    await axios
-      .post(
-        "https://api.cloudinary.com/v1_1/harshada0611/image/upload",
-        imgData
-      )
+    imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
+    await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
       .then((resp) => {
         console.log(resp.data.url);
         setForm({ ...form, imgUrl: resp.data.url });
@@ -65,7 +61,7 @@ function PostForm() {
     <div id="UserFormWrapper">
       <div
         id="formWrapper"
-
+       
       >
         <h4
           style={{ textAlign: "center", marginBottom: "1.5rem", color: "#888" }}
@@ -89,7 +85,7 @@ function PostForm() {
                 justifyContent: "center",
                 height: "130px",
                 cursor: "pointer",
-                width: '130px'
+                width:'130px'
               }}
             >
               {image ? (
@@ -129,7 +125,7 @@ function PostForm() {
             value={form.name}
             onChange={handleInputs}
             id="firstinput"
-
+            
           />
         </div>
         <div style={{ marginTop: "1.5rem" }} id='details'>
@@ -139,8 +135,8 @@ function PostForm() {
             name="details"
             value={form.details}
             onChange={handleInputs}
-
-
+            
+          
           />
         </div>
         <div style={{ marginTop: "1.5rem" }} id='details'>
@@ -150,12 +146,12 @@ function PostForm() {
             name="benefits"
             value={form.benefits}
             onChange={handleInputs}
-
+        
           />
-        </div>
+        </div> 
         <div
           id="button"
-
+         
         >
           <button
             className="btn btn-warning"

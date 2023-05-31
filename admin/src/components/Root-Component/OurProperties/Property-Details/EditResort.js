@@ -44,14 +44,14 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
         setSaveResortBtnActive(true)
         // console.log(updatedRoomData.imgUrl)
         if (!updatedResortForm.resortName || !updatedResortForm.resortLocation || !updatedResortForm.resortDescription) {
-            return toast.error("Please fill all the Input Fields !")
             setSaveResortBtnActive(false)
+            return toast.error("Please fill all the Input Fields !")
         }
         if (roomImage) {
             const imgData = new FormData()
             imgData.append("file", roomImage)
-            imgData.append("upload_preset", "ketanInstaClone")
-            await axios.post("https://api.cloudinary.com/v1_1/ketantb/image/upload", imgData)
+            imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET)
+            await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
                 .then((res) => {
                     // console.log(res.data.url)
                     setRoomImage(res.data.url)

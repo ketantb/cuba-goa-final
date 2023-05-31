@@ -1,10 +1,13 @@
-
-var mongoose=require('mongoose');
+const mongoose=require('mongoose');
 
 
 const contactusSchema = new mongoose.Schema({
-    imgurl: String,
-    address: String
+    firstName: String,
+    lastName: String,
+    email: String,
+    contact: String,
+    yourOrganization: String,
+    message: String
 })
  
 const Contactus =  mongoose.model("Contactus", contactusSchema)

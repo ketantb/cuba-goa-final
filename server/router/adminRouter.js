@@ -1,5 +1,4 @@
 const express = require("express");
-const adminMiddleware = require('../middleware/admin')
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -56,7 +55,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/contactus", adminMiddleware, async (req, res) => {
+router.post("/contactus", async (req, res) => {
   try {
     const contactus = await Contactus.create(req.body);
     res.status(200).json(contactus);
@@ -87,7 +86,7 @@ router.get("/contactus/:id", async (req, res) => {
 });
 
 //to update Contactus by id
-router.put("/contactus/:id", adminMiddleware, async (req, res) => {
+router.put("/contactus/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const contactus = await Contactus.findByIdAndUpdate(id, req.body);
@@ -105,7 +104,7 @@ router.put("/contactus/:id", adminMiddleware, async (req, res) => {
 });
 
 // delete a Contactus
-router.delete("/contactus/:id", adminMiddleware, async (req, res) => {
+router.delete("/contactus/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const contactus = await Contactus.findByIdAndDelete(id, req.body);

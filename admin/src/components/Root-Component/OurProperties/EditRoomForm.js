@@ -60,8 +60,8 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
         for (let i = 0; i < roomImages.length; i++) {
             const imgData = new FormData()
             imgData.append("file", roomImages[i])
-            imgData.append("upload_preset", "ketanInstaClone")
-            await axios.post("https://api.cloudinary.com/v1_1/ketantb/image/upload", imgData)
+            imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET)
+            await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
                 .then((res) => {
                     // console.log(res)
                     arr.push(res.data.secure_url)
