@@ -9,7 +9,7 @@ import EditSpa from "../postSpaData/editSpaForm";
 const SpaCard = ({ card, deleteSpa, getSpaList }) => {
   console.log(card);
   const navigate = useNavigate();
-  const [hovered, setHovered] = useState(false);
+  const [showEditSpaForm, setShowEditSpaForm] = useState(false)
 
   return (
     <>
@@ -27,10 +27,11 @@ const SpaCard = ({ card, deleteSpa, getSpaList }) => {
               {card.name}
             </div>
             <div className="spa-card-footer-rb">
-              <EditSpa card={card} getSpaList={getSpaList}/>
+               <button onClick={() => setShowEditSpaForm(true)}>Edit Spa</button>
             </div>
           </div>
         </div>
+        <EditSpa card={card} getSpaList={getSpaList} showEditSpaForm={showEditSpaForm} setShowEditSpaForm={setShowEditSpaForm}/>
       </div>
     </>
   );

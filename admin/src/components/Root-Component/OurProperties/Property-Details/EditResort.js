@@ -43,9 +43,9 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
         console.log(updatedResortForm)
         setSaveResortBtnActive(true)
         // console.log(updatedRoomData.imgUrl)
-        if (!updatedResortForm.resortName || !updatedResortForm.resortLocation || !updatedResortForm.resortDescription) {
+        if (!updatedResortForm.resortName || !updatedResortForm.resortLocation) {
             setSaveResortBtnActive(false)
-            return toast.error("Please fill all the Input Fields !")
+            return toast.error("Please fill Resort Name and Resort Location !")
         }
         if (roomImage) {
             const imgData = new FormData()

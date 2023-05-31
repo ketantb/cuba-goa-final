@@ -1,69 +1,70 @@
+import './editSpaForm.css'
 import React, { useEffect } from 'react'
-import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai'
-import { RiHotelLine } from 'react-icons/ri'
-import { useState, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from "../../../helpers/axios"
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from "../../../helpers/axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {
-    CButton, CCol, CModal, CModalHeader,
-    CModalTitle, CModalBody, CModalFooter, CFormInput, CRow,
-    CFormTextarea, CFormCheck, CCard, CCardHeader, CCardBody,
-    CImage
+    CButton, CModal, CModalHeader, CModalTitle,
+    CModalBody, CModalFooter, CFormInput, CImage
 } from '@coreui/react'
 import swal from 'sweetalert';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 
-const EditSpa = ({ getSpaList, card }) => {
+const EditResort = ({ card, getSpaList, showEditSpaForm, setShowEditSpaForm }) => {
     const navigate = useNavigate()
-    // console.log(card)
-    const [updatedSpa, setUpdatedSpa] = useState(card)
-    const [editSpaForm, setEditSpaForm] = useState({ name: "", imgUrl: "", details: "", benefits: "" })
+    console.log("Card => ", card)
+    const [updatedSpaForm, setUpdatedSpaForm] = useState(card)
     const [saveSpaBtnActive, setSaveSpaBtnActive] = useState(false)
-    const [visibleForm, setVisibleForm] = useState(false)
-    const [spaImage, setSpaImage] = useState("s")
+    const [spaImage, setSpaImage] = useState(false)
     const [spaImgUrl, setSpaImgUrl] = useState(false)
-    const token = localStorage.getItem('token')
-    // console.log('editSpaForm => ', editSpaForm);
-    const handleEditSpaForm = (params) => (e) => {
-        setUpdatedSpa({ ...updatedSpa, [params]: e.target.value })
+    const handleUpdateSpaForm = (params) => (e) => {
+        setUpdatedSpaForm({ ...updatedSpaForm, [params]: e.target.value })
     }
+    const token = localStorage.getItem('token')
 
     const deleteImage = () => {
-        setUpdatedSpa({ ...updatedSpa, imgUrl: "" })
+        setUpdatedSpaForm({ ...updatedSpaForm, imgUrl: "" })
     }
 
     const imgCloudUpload = async (e) => {
         e.preventDefault()
-        console.log(updatedSpa)
+        console.log(updatedSpaForm)
         setSaveSpaBtnActive(true)
         // console.log(updatedRoomData.imgUrl)
-        if (!updatedSpa.name || !updatedSpa.details) {
+        if (!updatedSpaForm.name || !updatedSpaForm.details) {
             setSaveSpaBtnActive(false)
-            return toast.error("Please fill all the Input Fields !")
+            return toast.error("Please fill Spa Name and Spa Details !")
         }
-        const imgData = new FormData()
-        imgData.append("file", spaImage)
-        imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET)
-        await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
-            .then((res) => {
-                // console.log(res.data.url)
-                setSpaImage(res.data.url)
-                // console.log(editSpaForm)
-            })
-            .catch((err) => {
-                alert("unable to upload Image, please try after some time !")
-                setSaveSpaBtnActive(false)
-                console.log(err)
-            })
-        // setUpdatedSpa({ ...updatedSpa, imgUrl: spaImage })
+        if (spaImage) {
+            const imgData = new FormData()
+            imgData.append("file", spaImage)
+            imgData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET)
+            await axios.post(process.env.REACT_APP_CLOUDINARY_URL, imgData)
+                .then((res) => {
+                    // console.log(res.data.url)
+                    setSpaImage(res.data.url)
+                    // console.log(editResortForm)
+                })
+                .catch((err) => {
+                    alert("An err occoured please try after some time !")
+                    setSaveSpaBtnActive(false)
+                    console.log(err)
+                })
+        }
         setSpaImgUrl(true)
     }
 
     const saveSpa = async () => {
         if (!card) return
-        let data = ({ ...updatedSpa, imgUrl: spaImage })
+        let data;
+        if (spaImage) {
+            data = { ...updatedSpaForm, imgUrl: spaImage }
+        }
+        else {
+            data = { ...updatedSpaForm, imgUrl: updatedSpaForm.imgUrl }
+        }
         await axios.put(`/spa/${card._id}`, data, {
             headers: {
                 authorization: token
@@ -73,7 +74,7 @@ const EditSpa = ({ getSpaList, card }) => {
                 console.log(res)
                 setSpaImgUrl(false)
                 getSpaList()
-                setVisibleForm(false)
+                setShowEditSpaForm(false)
                 setSaveSpaBtnActive(false)
                 swal({
                     title: "Good job!",
@@ -81,6 +82,7 @@ const EditSpa = ({ getSpaList, card }) => {
                     icon: "success",
                     button: "OK!",
                 });
+                navigate('/spa')
             })
             .catch((err) => {
                 alert("An error occoured please try after some time !")
@@ -90,22 +92,19 @@ const EditSpa = ({ getSpaList, card }) => {
     }
 
     useEffect(() => {
+        console.log("before useEffect Ran")
         if (spaImgUrl) {
-            saveSpa();
+            saveSpa()
             console.log("useEffect Ran")
         }
     }, [spaImgUrl])
 
     return (
         <>
-            <CCol className='text-end px-4 py-3'>
-                <CButton className='mx-5' onClick={() => { setVisibleForm(true) }}>Edit Spa</CButton>
-            </CCol>
-
             <CModal
                 keyboard={false}
                 portal={false}
-                visible={visibleForm}
+                visible={showEditSpaForm}
                 className='booking-form-p ' scrollable size='lg'>
                 <section style={{ zIndex: 100000, position: 'absolute' }}>
                     <ToastContainer
@@ -116,13 +115,13 @@ const EditSpa = ({ getSpaList, card }) => {
                         position={"top-center"}
                     />
                 </section>
-                <CModalHeader onClick={() => { setVisibleForm(false) }}>
-                    <CModalTitle><h4>Resort Info</h4></CModalTitle>
+                <CModalHeader onClick={() => { setShowEditSpaForm(false) }}>
+                    <CModalTitle><h4>Spa Info</h4></CModalTitle>
                 </CModalHeader>
                 <CModalBody >
-                    {updatedSpa.imgUrl ?
+                    {updatedSpaForm.imgUrl ?
                         <div className="mb-4 editResortDeleteImg" style={{ textAlign: 'center' }}>
-                            <CImage className='p-0 m-0' width={300} height={200} src={updatedSpa.imgUrl} />
+                            <CImage className='p-0 m-0' width={300} height={200} src={updatedSpaForm.imgUrl} />
                             <button onClick={deleteImage} className='editResortDeleteIcon'><RiDeleteBin5Fill /></button>
                         </div>
                         : null}
@@ -130,31 +129,25 @@ const EditSpa = ({ getSpaList, card }) => {
                         <CFormInput type="file" id="formFile" label="Upload spa image" onChange={(e) => setSpaImage(e.target.files[0])} />
                     </div>
                     <div className="mb-4">
-                        <CFormInput label="Spa Name" value={updatedSpa.name} maxLength={50} onChange={handleEditSpaForm('name')} />
+                        <CFormInput label="Spa Name" value={updatedSpaForm.name} maxLength={50} onChange={handleUpdateSpaForm('name')} />
                     </div>
-                    {/* <div className="mb-4">
-                        <CFormInput type="text" size="sm" maxLength={2000} label="Location" value={editSpaForm.resortLocation} onChange={handleEditSpaForm('resortLocation')} />
-                    </div> */}
-                    <div>
-                        <CFormTextarea label="Spa Details" maxLength={5000} onChange={handleEditSpaForm('details')} value={updatedSpa.details} />
+                    <div className="mb-4">
+                        <CFormInput type="text" size="sm" maxLength={2000} label="Spa Details" value={updatedSpaForm.details} onChange={handleUpdateSpaForm('details')} />
                     </div>
-                    <div>
-                        <CFormTextarea label="Spa Benefits" maxLength={5000} onChange={handleEditSpaForm('benefits')} value={updatedSpa.benefits} />
+                    <div className="mb-4">
+                        <CFormInput type="text" size="sm" maxLength={2000} label="Spa Benefits" value={updatedSpaForm.benefits} onChange={handleUpdateSpaForm('benefits')} />
                     </div>
-
                 </CModalBody>
 
                 <CModalFooter>
-                    <CButton color="secondary" onClick={() => setVisibleForm(false)}>
+                    <CButton color="secondary" onClick={() => setShowEditSpaForm(false)}>
                         Close
                     </CButton>
                     <CButton color="primary" type='submit' disabled={saveSpaBtnActive} onClick={imgCloudUpload}>Save Spa</CButton>
                 </CModalFooter>
             </CModal>
-            {/* {console.log(updatedSpa)} */}
-            {console.log(spaImage)}
         </>
     )
 }
 
-export default EditSpa;
+export default EditResort;

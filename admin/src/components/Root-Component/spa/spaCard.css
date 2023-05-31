@@ -46,11 +46,11 @@
 }
 
 .spa-card-footer-rb{
-  width: 50%;
+  margin-top: 10px;
   margin-left: 0%;
 }
 
-.spa-card-footer-rb>div>button{
+.spa-card-footer-rb>button{
   padding-top: 5px;
   width: 110px;
   height: 30px;
@@ -131,7 +131,7 @@
       /* height: 52rem; */
       box-sizing: content-box;
       /* padding-bottom: 3rem; */
-      margin: auto;
+      margin-top: 2rem;
       /* margin-top: 5rem; */
       /* border: 1px solid #908f8f; */
       border-radius: 12px;
@@ -142,7 +142,7 @@
   .spa-card-container{
       /* width: 295px; */
       /* width: 18rem; */
-      width: 100%;
+      width: 20rem;
       /* height: 52rem; */
       box-sizing: content-box;
       /* padding-bottom: 3rem; */
