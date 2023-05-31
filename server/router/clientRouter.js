@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const adminMiddleware = require('../middleware/admin')
 const Client = require('../models/client-registration')
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 
-router.get('/get-all-clients', async (req, res) => {
+router.get('/get-all-clients', adminMiddleware, async (req, res) => {
   try {
     const allClients = await Client.find();
     res.status(200).json({ data: allClients });
@@ -15,7 +16,7 @@ router.get('/get-all-clients', async (req, res) => {
   }
 })
 
-router.get('/get-client-details/:id', async (req, res) => {
+router.get('/get-client-details/:id', adminMiddleware, async (req, res) => {
   console.log(req.params.id)
   try {
     const clientData = await Client.find({ _id: req.params.id });
@@ -27,7 +28,7 @@ router.get('/get-client-details/:id', async (req, res) => {
 })
 
 
-router.post('/rejection-mail', async (req, res) => {
+router.post('/rejection-mail', adminMiddleware, async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",

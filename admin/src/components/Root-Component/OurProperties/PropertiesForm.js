@@ -20,24 +20,30 @@ const PropertiesForm = ({ getPropertiesData }) => {
   const navigate = useNavigate()
   const [saveRoomBtnActive, setSaveRoomBtn] = useState(false)
   const [visibleForm, setVisibleForm] = useState(false)
-  const [resortForm, setResortForm] = useState({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "", 
-                                               aboutUs: "", resortAddress: "", pincode: "", resortPhoneNumber: "",
-                                               resortEmail: "", cubaGoaHelpLineNumber: "" })
+  const [resortForm, setResortForm] = useState({
+    resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "",
+    aboutUs: "", resortAddress: "", pincode: "", resortPhoneNumber: "",
+    resortEmail: "", cubaGoaHelpLineNumber: ""
+  })
   const [showSelectedImg, setShowSelectedImg] = useState("")
   const [resortImage, setResortImage] = useState("")
+  const token = localStorage.getItem('token')
   const handleResortForm = (params) => (e) => {
     setResortForm({ ...resortForm, [params]: e.target.value })
   }
 
   const postPropertyForm = async () => {
-    // await axios.post("https://cuba-goa-server.onrender.com/hotelbook", resortForm)
-    await axios.post("/hotelbook", resortForm)
+    await axios.post("/hotelbook", resortForm, {
+      headers: {
+        authorization: token
+      }
+    })
       .then((res) => {
         console.log(res)
         getPropertiesData()
         setResortForm({ resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "" })
         setResortImage("")
-      setShowSelectedImg("");
+        setShowSelectedImg("");
         setSaveRoomBtn(false)
         setVisibleForm(false)
         swal({

@@ -37,6 +37,7 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
   }
   const [roomImgUrl, setRoomImgUrl] = useState(false)
   const [picURL, setPicURL] = useState("")
+  const token = localStorage.getItem('token')
 
   const imgCloudUpload = async (e) => {
     e.preventDefault()
@@ -76,7 +77,11 @@ const AddMoreRoomForm = ({ showRoomForm, setRoomForm, property, getPropertiesDat
     roomFormData.roomId = nanoid()
     property.rooms.push(roomFormData)
     // await axios.put(`http://localhost:4001/hotelbook/${property._id}`, property)
-    await axios.put(`/hotelbook/${property._id}`, property)
+    await axios.put(`/hotelbook/${property._id}`, property, {
+      headers: {
+        authorization: token
+      }
+    })
       .then((res) => {
         console.log(res)
         setRoomImgUrl(false)

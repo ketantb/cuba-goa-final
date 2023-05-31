@@ -32,6 +32,7 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
     const handleEditResortForm = (params) => (e) => {
         setUpdatedResortForm({ ...updatedResortForm, [params]: e.target.value })
     }
+    const token = localStorage.getItem('token')
 
     const deleteImage = () => {
         setUpdatedResortForm({ ...updatedResortForm, resortImgURL: "" })
@@ -76,7 +77,11 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
         }
         // console.log(data)
         // await axios.put(`http://localhost:4001/entire-hotelbook/${property._id}`, data)
-        await axios.put(`/entire-hotelbook/${property._id}`, data)
+        await axios.put(`/entire-hotelbook/${property._id}`, data, {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 console.log(res)
                 setRoomImgUrl(false)

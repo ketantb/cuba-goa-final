@@ -2,6 +2,7 @@ import React from 'react'
 import './Home.css'
 import Video from '../../Video'
 import { useState, useEffect } from 'react'
+import axios from '../../../helpers/axios'
 import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom'
 import { Image } from 'react-bootstrap'
@@ -41,7 +42,7 @@ const Home = () => {
   ]
 
   const getPropertiesData = async () => {
-    const response = await fetch(`https://cuba-goa-server.onrender.com/hotelbook`, {
+    const response = await axios(`/hotelbook`, {
       headers: {
         method: 'GET'
       }

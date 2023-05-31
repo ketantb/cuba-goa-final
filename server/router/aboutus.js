@@ -1,8 +1,9 @@
+const adminMiddleware = require('../middleware/admin')
 const router = require("express").Router();
 
 const Aboutus = require("../models/aboutus")
 
-router.post("/about-us", async (req, res) => {
+router.post("/about-us", adminMiddleware, async (req, res) => {
     try{
         const { id } = req.params
         const newAboutUs = await Aboutus.create(req.body);
@@ -15,6 +16,7 @@ router.post("/about-us", async (req, res) => {
 })
 
 router.get("/about-us", async(req, res) => {
+    console.log("data")
     try{
         const data = await Aboutus.find();
         res.status(200).json({data: data});
@@ -24,7 +26,7 @@ router.get("/about-us", async(req, res) => {
     }
 })
 
-router.put("/about-us/:id", async (req, res) => {
+router.put("/about-us/:id", adminMiddleware, async (req, res) => {
     // console.log(req.params.id);
     // res.send(req.body)
     try{

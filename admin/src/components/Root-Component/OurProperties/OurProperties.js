@@ -23,10 +23,10 @@ const OurProperties = () => {
   const lastPostIndex = currentPage * postPerPage
   const firstPostIndex = lastPostIndex - postPerPage
   const currentList = allProperties.slice(firstPostIndex, lastPostIndex)
+  const token = localStorage.getItem('token')
 
   const getPropertiesData = async () => {
     await axios(`/hotelbook`)
-      // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
         setAllProperties(res.data)
@@ -54,8 +54,11 @@ const OurProperties = () => {
               <button onClick={onClose}>Cancel</button>
               <button
                 onClick={() => {
-                  // axios.delete(`http://localhost:4001/hotelbook/${id}`)
-                  axios.delete(`/hotelbook/${id}`)
+                  axios.delete(`/hotelbook/${id}`, {
+                    headers: {
+                      authorization: token
+                    }
+                  })
                     .then((resp) => {
                       console.log(resp)
                       getPropertiesData()
@@ -77,7 +80,7 @@ const OurProperties = () => {
 
   if (!allProperties) {
     return (
-      <PreLoader/>
+      <PreLoader />
     )
   }
 

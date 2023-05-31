@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const clientMiddleware = require('../middleware/client')
+const adminMiddleware = require('../middleware/admin')
 const Booking = require('../models/booking')
 // // Booking summary
 // router.post("/add-cart", clientMiddleware, async (req, res) => {
@@ -128,7 +129,7 @@ const Booking = require('../models/booking')
 
 //update bookingStatus to Rejected => 
 
-router.patch("/reject-booking/:id", async (req, res) => {
+router.patch("/reject-booking/:id", adminMiddleware, async (req, res) => {
   const { id } = req.params;
   try {
     const updatedData = await Booking.updateOne({ _id: id }, { $set: { bookingStatus: "rejected" } })

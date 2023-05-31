@@ -18,7 +18,7 @@ const ViewPropertyDetails = () => {
 
     const [resort, setResort] = useState([])
     const { resortname, id } = useParams()
-
+    const token = localStorage.getItem('token')
     //GET PROPERTY DETAILS
     const getProperty = async () => {
         try {
@@ -46,7 +46,11 @@ const ViewPropertyDetails = () => {
             // return
 
             // await axios.put(`http://localhost:4001/hotelbook/${resort._id}`, resort)
-            await axios.put(`/hotelbook/${resort._id}`, resort)
+            await axios.put(`/hotelbook/${resort._id}`, resort, {
+                headers: {
+                    authorization: token
+                }
+            })
             .then((res) => {
               console.log(res);
               getProperty()

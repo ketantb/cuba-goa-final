@@ -33,6 +33,7 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
 
     const [roomImages, setRoomImages] = useState([])
     const [roomImgUrl, setRoomImgUrl] = useState(false)
+    const token = localStorage.getItem('token')
 
     const handleEditRoomForm = (params) => (e) => {
         setUpdatedRoomData({ ...updatedRoomData, [params]: e.target.value })
@@ -81,8 +82,11 @@ const EditRoomForm = ({ getProperty, room, resort, index }) => {
     const saveRoom = async () => {
         if (!resort) return
         resort.rooms.splice(index, 1, updatedRoomData)
-        // await axios.put(`http://localhost:4001/hotelbook/${resort._id}`, resort)
-        await axios.put(`/hotelbook/${resort._id}`, resort)
+        await axios.put(`/hotelbook/${resort._id}`, resort, {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 console.log(res)
                 setRoomImgUrl(false)

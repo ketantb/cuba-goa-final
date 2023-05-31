@@ -10,30 +10,24 @@ import { CButton } from '@coreui/react';
 
 
 const Header = () => {
-
-  const [hidenew,setNavBar] = useState(true)
-  const location1 = useLocation()
-  // let user = JSON.parse(localStorage.getItem('user-info'))
   const navigate = useNavigate()
-  let user = JSON.parse(localStorage.getItem('user-info'))
+  const [hidenew,setNavBar] = useState(true)
+  let token = localStorage.getItem('token')
 
-  console.log(location1)
+//   useEffect(()=>{
+//      if(user?.username && location1!=='/'){
+//           return 
+//      } 
 
-
-  useEffect(()=>{
-     if(user?.username && location1!=='/'){
-          return 
-     } 
-
-    if(user?.username  ){
-      navigate('/')
-      return
-    }
-navigate('/landing-page')
-  },[])
+//     if(user?.username  ){
+//       navigate('/')
+//       return
+//     }
+// navigate('/landing-page')
+//   },[])
 
 function LogOut(){
-localStorage.removeItem('user-info')
+localStorage.removeItem('token')
 navigate('/landing-page')
 }
 

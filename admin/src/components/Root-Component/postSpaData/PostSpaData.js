@@ -11,6 +11,7 @@ function PostForm() {
     imgUrl: "",
   });
   const [image, setImage] = useState("");
+  const token = localStorage.getItem('token')
 
   //handle inputs
   const handleInputs = (e) => {
@@ -21,8 +22,11 @@ function PostForm() {
   //post data form
   const postData = async () => {
     await axios
-      // .post("https://cubagoa-server.onrender.com/addspa", form)
-      .post("/addspa", form)
+      .post("/addspa", form, {
+        headers: {
+          authorization: token
+        }
+      })
       .then((resp) => {
         console.log(resp);
       })
@@ -61,7 +65,7 @@ function PostForm() {
     <div id="UserFormWrapper">
       <div
         id="formWrapper"
-       
+
       >
         <h4
           style={{ textAlign: "center", marginBottom: "1.5rem", color: "#888" }}
@@ -85,7 +89,7 @@ function PostForm() {
                 justifyContent: "center",
                 height: "130px",
                 cursor: "pointer",
-                width:'130px'
+                width: '130px'
               }}
             >
               {image ? (
@@ -125,7 +129,7 @@ function PostForm() {
             value={form.name}
             onChange={handleInputs}
             id="firstinput"
-            
+
           />
         </div>
         <div style={{ marginTop: "1.5rem" }} id='details'>
@@ -135,8 +139,8 @@ function PostForm() {
             name="details"
             value={form.details}
             onChange={handleInputs}
-            
-          
+
+
           />
         </div>
         <div style={{ marginTop: "1.5rem" }} id='details'>
@@ -146,12 +150,12 @@ function PostForm() {
             name="benefits"
             value={form.benefits}
             onChange={handleInputs}
-        
+
           />
-        </div> 
+        </div>
         <div
           id="button"
-         
+
         >
           <button
             className="btn btn-warning"

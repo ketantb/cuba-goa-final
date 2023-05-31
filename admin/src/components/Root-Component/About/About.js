@@ -13,8 +13,10 @@ function About() {
 
   const [aboutUsData, setAboutUsData] = useState();
   const [showAboutUsForm, setShowAboutUsForm] = useState(false);
+  const token = localStorage.getItem('token')
 
   const fetchData = async () => {
+    console.log(token)
     await axios.get("/about-us")
       .then((res) => {
         console.log(res.data.data[0])
@@ -30,9 +32,9 @@ function About() {
     fetchData()
   }, [])
 
-  if(!aboutUsData){
-    return(
-      <PreLoader/>
+  if (!aboutUsData) {
+    return (
+      <PreLoader />
     )
   }
 

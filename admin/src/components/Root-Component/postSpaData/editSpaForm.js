@@ -24,6 +24,7 @@ const EditSpa = ({ getSpaList, card }) => {
     const [visibleForm, setVisibleForm] = useState(false)
     const [spaImage, setSpaImage] = useState("s")
     const [spaImgUrl, setSpaImgUrl] = useState(false)
+    const token = localStorage.getItem('token')
     // console.log('editSpaForm => ', editSpaForm);
     const handleEditSpaForm = (params) => (e) => {
         setUpdatedSpa({ ...updatedSpa, [params]: e.target.value })
@@ -63,8 +64,11 @@ const EditSpa = ({ getSpaList, card }) => {
     const saveSpa = async () => {
         if (!card) return
         let data = ({ ...updatedSpa, imgUrl: spaImage })
-        // await axios.put(`http://localhost:4001/spa/${card._id}`, data)
-        await axios.put(`/spa/${card._id}`, data)
+        await axios.put(`/spa/${card._id}`, data, {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 console.log(res)
                 setSpaImgUrl(false)

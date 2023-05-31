@@ -10,6 +10,8 @@ import ViewPropertyDetails from './components/Root-Component/OurProperties/Prope
 import ViewBooking from './components/Root-Component/Bookings/view-bookings';
 import ClientList from './components/Client/Client-List';
 import PreLoader from './components/Preloader-Component/Preloader-Component';
+import PublicRoute from './routes/publicRoutes';
+import PrivateRoute from './routes/privateRoutes';
 
 
 const Header = React.lazy(() => import('./components/Header/Header'))
@@ -35,155 +37,152 @@ function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* <Route path='/log-in' element={<Suspense fallback={<p>Loading....</p>}>
-            <LogIn2 />
-          </Suspense>}>
-          </Route> */}
-
-          <Route path='/landing-page' element={<Suspense fallback={<PreLoader/>}>
-            <LandingPage />
-          </Suspense>}>
+          {/* PublicRoutes => */}
+          <Route element={<PublicRoute />}>
+            <Route path='/landing-page' element={<Suspense fallback={<PreLoader />}>
+              <LandingPage />
+            </Suspense>}>
+            </Route>
           </Route>
 
-          <Route path='/bookings' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <ViewBooking />
-              </>
-            </Suspense>
-          } />
-
-
-          {/* <Route path="" element={<Header />} /> */}
-
-          <Route path='/' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <Home />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-          <Route path="/about" element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <About />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-          <Route path="/spa" element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <Spa />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-
-          <Route path='/our-properties/:name/:id' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <BookingPage />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-          <Route path='/resorts' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Resorts />
-              </>
-            </Suspense>
-          } />
-
-          <Route path='/our-properties' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <OurProperties />
-              </>
-            </Suspense>
-          } />
-
-          <Route path='/:resortname/:id/rooms' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <ViewPropertyDetails />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-          <Route path='/contact-us' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Header />
-                <ContactUs />
-                <Footer />
-              </>
-            </Suspense>
-          } />
-
-          <Route path='/gallery' element={
-            <Suspense fallback={<PreLoader/>}>
-              <>
-                <Gallery />
-                <Footer />
-              </>
-            </Suspense>} />
-
-          <Route path='/view-room-info/:id/:idChild'
-            element={
-              <Suspense fallback={<PreLoader/>}>
-                <ShowInfoOfRoomCart />
+          {/* PrivateRoutes => */}
+          <Route element={<PrivateRoute />}>
+            <Route path='/bookings' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <ViewBooking />
+                </>
               </Suspense>
             } />
 
-          <Route path="/leran-More" element={
-            <Suspense fallback={<PreLoader/>}>
-              <LearnMore />
-            </Suspense>
-          } />
+            <Route path='/' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <Home />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
 
-          <Route path="/addSpa" element={
-            <Suspense fallback={<PreLoader/>}>
-              <PostSpaData />
-            </Suspense>
-          } />
+            <Route path="/about" element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <About />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
 
-          <Route path="/spa-details/:id" element={
-            <Suspense fallback={<PreLoader/>}>
-              <SpaDetailes />
-            </Suspense>
-          } />
+            <Route path="/spa" element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <Spa />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
 
-          <Route path="/booking-form" element={
-            <Suspense fallback={<PreLoader/>}>
-              <BookingForm />
-            </Suspense>
-          } />
 
-          <Route path="/client-details/:clientId" element={
-            <Suspense fallback={<PreLoader/>}>
-              <ClientDetails />
-            </Suspense>
-          } />
+            <Route path='/our-properties/:name/:id' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <BookingPage />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
 
-          <Route path="/our-clients" element={
-            <Suspense fallback={<PreLoader/>}>
-              <ClientList />
-            </Suspense>
-          } />
+            <Route path='/resorts' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Resorts />
+                </>
+              </Suspense>
+            } />
 
+            <Route path='/our-properties' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <OurProperties />
+                </>
+              </Suspense>
+            } />
+
+            <Route path='/:resortname/:id/rooms' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <ViewPropertyDetails />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
+
+            <Route path='/contact-us' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Header />
+                  <ContactUs />
+                  <Footer />
+                </>
+              </Suspense>
+            } />
+
+            <Route path='/gallery' element={
+              <Suspense fallback={<PreLoader />}>
+                <>
+                  <Gallery />
+                  <Footer />
+                </>
+              </Suspense>} />
+
+            <Route path='/view-room-info/:id/:idChild'
+              element={
+                <Suspense fallback={<PreLoader />}>
+                  <ShowInfoOfRoomCart />
+                </Suspense>
+              } />
+
+            <Route path="/leran-More" element={
+              <Suspense fallback={<PreLoader />}>
+                <LearnMore />
+              </Suspense>
+            } />
+
+            <Route path="/addSpa" element={
+              <Suspense fallback={<PreLoader />}>
+                <PostSpaData />
+              </Suspense>
+            } />
+
+            <Route path="/spa-details/:id" element={
+              <Suspense fallback={<PreLoader />}>
+                <SpaDetailes />
+              </Suspense>
+            } />
+
+            <Route path="/booking-form" element={
+              <Suspense fallback={<PreLoader />}>
+                <BookingForm />
+              </Suspense>
+            } />
+
+            <Route path="/client-details/:clientId" element={
+              <Suspense fallback={<PreLoader />}>
+                <ClientDetails />
+              </Suspense>
+            } />
+
+            <Route path="/our-clients" element={
+              <Suspense fallback={<PreLoader />}>
+                <ClientList />
+              </Suspense>
+            } />
+          </Route>
 
         </Routes>
       </BrowserRouter>

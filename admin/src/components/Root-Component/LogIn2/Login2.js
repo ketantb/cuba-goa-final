@@ -48,7 +48,7 @@ const Login2 = ({ showLogin, setShowLogin }) => {
         // console.log(response.data.username)
         // console.log(response.data.token)
         setLoading(false)
-        localStorage.setItem('user-info', JSON.stringify(response.data))
+        localStorage.setItem('token', response.data.token)
         navigate('/')
       })
       .catch((err) => {

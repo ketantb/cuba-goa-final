@@ -1,10 +1,11 @@
 const express = require("express");
+const adminMiddleware = require('../middleware/admin')
 const router = express.Router()
 const Spa = require("../models/spa");
 
 // spa
 
-router.post("/addspa", async (req, res) => {
+router.post("/addspa", adminMiddleware, async (req, res) => {
   try {
     const spa = await Spa.create(req.body);
     res.status(200).json(spa);
@@ -46,7 +47,7 @@ router.get("/spaDetails/:id", async (req, resp) => {
   }
 });
 
-router.delete("/delete/spa/:id", async (req, res) => {
+router.delete("/delete/spa/:id", adminMiddleware, async (req, res) => {
   try{
     const deletedSpa = await Spa.findByIdAndDelete(req.params.id)
     if(deletedSpa){
@@ -62,7 +63,7 @@ router.delete("/delete/spa/:id", async (req, res) => {
 })
 
 //to update Spa by id
-router.put("/spa/:id", async (req, res) => {
+router.put("/spa/:id", adminMiddleware, async (req, res) => {
   console.log(req.params.id)
   // res.json({message: req.body})
   try {

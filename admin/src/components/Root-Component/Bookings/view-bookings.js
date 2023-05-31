@@ -14,8 +14,13 @@ const ViewBooking = () => {
     const navigate = useNavigate();
     const [details, setDetails] = useState([])
     const [bookingList, setBookingList] = useState()
+    const token = localStorage.getItem('token')
     const fetchBookingList = async () => {
-        await axios.get("/get-all-bookings")
+        await axios.get("/get-all-bookings", {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 setBookingList(res.data.data.reverse())
             })
@@ -30,9 +35,9 @@ const ViewBooking = () => {
 
     if (!bookingList) {
         return (
-          <PreLoader/>
+            <PreLoader />
         )
-      }
+    }
 
     // console.log("Booking List => ", bookingList)
     return (
@@ -57,7 +62,7 @@ const ViewBooking = () => {
                         <input onChange={(e) => handleInputFilter(e)}/>
                     </section>
                 </div> */}
-                <BookingList bookingList={bookingList} setBookingList={setBookingList}/>
+                <BookingList bookingList={bookingList} setBookingList={setBookingList} />
             </div>
             <div style={{ marginTop: "10rem" }}>
                 <Footer />

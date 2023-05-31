@@ -18,7 +18,7 @@ const instance = new Razorpay({
 
 
 
-router.post("/hotelbook",async (req, res) => {
+router.post("/hotelbook", adminMiddleware, async (req, res) => {
   try {
     const resortData = await HotelBook.create(req.body);
     // console.log(resortData)
@@ -63,7 +63,7 @@ router.get("/resort-details/:id", async (req, res) => {
 
 
 //to update only rooms by id
-router.put("/hotelbook/:id", async (req, res) => {
+router.put("/hotelbook/:id", adminMiddleware, async (req, res) => {
   console.log(req.params.id)
   // res.json({message: req.body})
   try {
@@ -83,7 +83,7 @@ router.put("/hotelbook/:id", async (req, res) => {
 });
 
 //to update whole Resort by id
-router.put("/entire-hotelbook/:id", async (req, res) => {
+router.put("/entire-hotelbook/:id", adminMiddleware, async (req, res) => {
   // console.log(req.params.id)
   // res.json({message: req.body})
   try {
@@ -104,7 +104,7 @@ router.put("/entire-hotelbook/:id", async (req, res) => {
 
 
 // delete a hotel Book
-router.delete("/hotelbook/:id", async (req, res) => {
+router.delete("/hotelbook/:id", adminMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const hotelBook = await HotelBook.findByIdAndDelete(id, req.body);
@@ -122,7 +122,7 @@ router.delete("/hotelbook/:id", async (req, res) => {
 });
 
 //Update total rooms in DB after booking
-router.patch("/updateTotalRoomsinDb/:id", async (req, res) => {
+router.patch("/updateTotalRoomsinDb/:id", adminMiddleware, async (req, res) => {
   try {
     // console.log(req.params.id)
     // const name = req.body.resort.resortName

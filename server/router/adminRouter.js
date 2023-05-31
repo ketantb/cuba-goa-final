@@ -1,4 +1,5 @@
 const express = require("express");
+const adminMiddleware = require('../middleware/admin')
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -39,22 +40,23 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ status: false, message: "Email not found" });
     const passwordCheck = await bcrypt.compare(password, user.password);
-    if (!passwordCheck)
+    if (!passwordCheck){
       return res
         .status(400)
         .json({ status: false, message: "Invalid password" });
-    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
+    }
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET_KEY, {
       expiresIn: "24h",
     });
     res
       .status(200)
-      .json({ status: true, message: "succes login", id: user._id, username: user.name, token: token });
+      .json({ status: true, message: "succes login", username: user.name, token: token });
   } catch (er) {
     res.status(400).json({ status: false, message: er.message });
   }
 });
 
-router.post("/contactus", async (req, res) => {
+router.post("/contactus", adminMiddleware, async (req, res) => {
   try {
     const contactus = await Contactus.create(req.body);
     res.status(200).json(contactus);
@@ -85,7 +87,7 @@ router.get("/contactus/:id", async (req, res) => {
 });
 
 //to update Contactus by id
-router.put("/contactus/:id", async (req, res) => {
+router.put("/contactus/:id", adminMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const contactus = await Contactus.findByIdAndUpdate(id, req.body);
@@ -103,7 +105,7 @@ router.put("/contactus/:id", async (req, res) => {
 });
 
 // delete a Contactus
-router.delete("/contactus/:id", async (req, res) => {
+router.delete("/contactus/:id", adminMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const contactus = await Contactus.findByIdAndDelete(id, req.body);

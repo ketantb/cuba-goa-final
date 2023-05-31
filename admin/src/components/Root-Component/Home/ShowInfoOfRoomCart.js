@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { useParams } from 'react-router'
 import './ShowInfoOfRoomCart.css'
+import axios from '../../../helpers/axios'
 import { CCard, CCardBody, CCardHeader, CCardTitle, CImage } from '@coreui/react'
 import {AiFillStar,AiOutlineStar} from 'react-icons/ai'
 import {MdBalcony} from 'react-icons/md'
@@ -18,7 +19,7 @@ const ShowInfoOfRoomCart = () => {
     const [showAllImage,setShowAllImage] = useState(false)
 
     const getRoom = async  ()=>{
-      const response = await fetch(`https://cuba-goa-server.onrender.com/${id}`,{headers:{
+      const response = await axios(`/${id}`,{headers:{
         method:'GET'
       }})
       const data = await response.json()

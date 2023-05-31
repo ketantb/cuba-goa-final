@@ -27,25 +27,26 @@ const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFro
     const handleUpdateAboutUsForm = (params) => (e) => {
         setAboutUsData({ ...aboutUsData, [params]: e.target.value })
     }
+    const token = localStorage.getItem('token')
 
     const deleteImage = () => {
         setAboutUsData({ ...aboutUsData, bannerImgUrl: "" })
     }
 
     const fetchData = async () => {
-      await axios.get("/about-us")
-        .then((res) => {
-        //   console.log(res.data.data[0])
-          setAboutUsData(res.data.data[0])
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+        await axios.get("/about-us")
+            .then((res) => {
+                //   console.log(res.data.data[0])
+                setAboutUsData(res.data.data[0])
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
     console.log(aboutUsData?._id)
     // fetchData()
     useEffect(() => {
-      fetchData()
+        fetchData()
     }, [])
     console.log("AboutUsForm", aboutUsData)
     const imgCloudUpload = async (e) => {
@@ -75,20 +76,24 @@ const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFro
         }
         setImgUrl(true)
     }
-
+    
     const saveAboutUs = async () => {
         if (!aboutUsData) return
         let data;
         if (bannerImage) {
-            data = { ...aboutUsData, bannerImgUrl: bannerImage}
+            data = { ...aboutUsData, bannerImgUrl: bannerImage }
         }
         else {
-            data = { ...aboutUsData, bannerImgUrl: aboutUsData.bannerImgUrl}
+            data = { ...aboutUsData, bannerImgUrl: aboutUsData.bannerImgUrl }
         }
         console.log("data => ", data)
         setShowAboutUsForm(false)
         // await axios.put(`http://localhost:4001/entire-hotelbook/${aboutUsData._id}`, data)
-        await axios.put(`/about-us/${aboutUsData._id}`, data)
+        await axios.put(`/about-us/${aboutUsData._id}`, data, {
+            headers: {
+                authorization: token
+            }
+        })
             .then((res) => {
                 console.log(res)
                 setImgUrl(false)
@@ -140,7 +145,7 @@ const AboutUsForm = ({ showAboutUsForm, setShowAboutUsForm, dataFetchFunctionFro
                 </CModalHeader>
 
                 <CModalBody >
-                    
+
                     {aboutUsData?.bannerImgUrl ?
                         <div className="mb-4 editResortDeleteImg" style={{ textAlign: 'center' }}>
                             <CImage className='p-0 m-0' width={300} height={200} src={aboutUsData?.bannerImgUrl} />
