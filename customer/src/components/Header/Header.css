@@ -1,0 +1,285 @@
+.app-bar {
+  width: 100%;
+  height: 10rem;
+  z-index: 100 !important;
+  /* border: 1px solid black; */
+  margin: auto;
+  position: fixed;
+  top: 0%;
+  padding: 2rem;
+}
+
+/* desktop navbar */
+
+.app-bar .desktop-section {
+  display: flex;
+  /* justify-content: space-between; */
+  justify-content: center;
+}
+
+.header-hotel-drop-down {
+  background-color: transparent;
+  border: none;
+}
+
+.col-2-box .header-dropdown {
+  background: transparent;
+  outline: none;
+  /* color: white; */
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Nunito Sans", Arial, sans-serif;
+  /* border: 1px solid black; */
+  border: none;
+  outline: none;
+  height: 25px;
+  margin-right: 25px;
+  margin-top: 47px;
+  width: 175px;
+  cursor: pointer;
+}
+
+.col-2-box select option {
+  color: black;
+  padding-top: 25px;
+  font-family: "Nunito Sans", Arial, sans-serif;
+  cursor: pointer;
+}
+
+.app-bar .desktop-section .appbar-col-1 {
+  height: fit-content;
+  margin-top: 0.4rem;
+  margin-bottom: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.app-bar .desktop-section .appbar-col-1 .r-image {
+  padding-bottom: 15px;
+  margin-top: -30px;
+}
+
+.app-bar .desktop-section .appbar-col-1 .r-image>img {
+  /* border: 1px solid black; */
+  width: 200px;
+}
+
+.app-bar .desktop-section .appbar-col-1 .r1 {
+  margin-top: -5px;
+  color: #474747;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.app-bar .desktop-section .appbar-col-1 .r2 {
+  color: goldenrod;
+}
+
+.app-bar .desktop-section .appbar-col-1 .title {
+  /* display: none; */
+  display: block;
+  /* border: 1px solid black; */
+  font-family: 'Prata';
+  font-size: large;
+  letter-spacing: 10px;
+  margin-left: 1rem;
+  font-weight: bold;
+  /* padding: 1rem; */
+  color: white;
+
+}
+
+.app-bar .desktop-section .appbar-col-1 .logoWrapper {
+  width: 8rem;
+  height: 4rem;
+  margin-left: 3rem;
+}
+
+.app-bar .desktop-section .appbar-col-1 .logoWrapper img {
+  width: 100%;
+  height: 100%;
+}
+
+.app-bar .desktop-section .appbar-col-2 .menu {
+  display: none;
+  cursor: pointer;
+}
+
+.close-cross-icon {
+  cursor: pointer;
+}
+
+.app-bar .desktop-section .appbar-col-2 .col-2-box {
+  /* border:1px solid black; */
+  height: 100%;
+  display: flex;
+}
+
+.app-bar .desktop-section .appbar-col-2 .col-2-box .btn-item {
+  /* border:1px solid black; */
+  height: 2rem;
+  margin: auto;
+  margin-inline-end: 1rem;
+  /* color: white; */
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Nunito Sans", Arial, sans-serif;
+}
+
+
+/* .app-bar .desktop-section .appbar-col-2 .col-2-box .btn-item:last-child {
+  border: 1px solid black;
+  font-size: 1rem;
+  padding: 0.2rem;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding: 1rem 1rem;
+
+} */
+
+.app-bar .desktop-section .appbar-col-2 .col-2-box .btn-item:hover {
+  background-color: rgb(103, 186, 212);
+  outline: none;
+  border: none;
+  color: black;
+}
+
+
+@media only screen and (max-width:900px) {
+  .app-bar {
+    width: 100%;
+    z-index: 10;
+    /* border: 1px solid black; */
+    margin: auto;
+    position: fixed;
+    padding: 1rem 0rem;
+    height: 5rem;
+  }
+
+  /* desktop navbar */
+
+  .app-bar .desktop-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+
+  .app-bar .desktop-section .appbar-col-1 {
+    height: fit-content;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+  }
+
+  .app-bar .desktop-section .appbar-col-1 .logoWrapper {
+    width: 8rem;
+    height: 4rem;
+    margin-left: 0rem;
+    display: none;
+  }
+
+  .app-bar .desktop-section .appbar-col-1 .title {
+    display: block;
+    /* border: 1px solid black; */
+    font-family: 'calibri';
+    font-size: larger;
+    font-weight: bold;
+    letter-spacing: 0.2rem;
+    margin-left: 1rem;
+  }
+
+  .app-bar .desktop-section .appbar-col-1 .logoWrapper img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .app-bar .desktop-section .appbar-col-2 {
+    display: flex;
+  }
+
+  .app-bar .desktop-section .appbar-col-2 .col-2-box {
+    /* border:1px solid black; */
+    display: none;
+  }
+
+  .app-bar .desktop-section .appbar-col-2 .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Nunito Sans", Arial, sans-serif;
+    /* border: 1px solid black; */
+    font-weight: 600;
+    font-size: 2rem;
+    opacity: 0.5;
+    margin-right: 1rem;
+  }
+
+
+  .app-bar .desktop-section .appbar-col-2 .col-2-box .btn-item {
+    /* border:1px solid black; */
+    height: 2rem;
+    margin: auto;
+    margin-inline-end: 1rem;
+    color: black;
+    font-size: 1.1rem;
+    font-family: "Nunito Sans", Arial, sans-serif;
+  }
+
+  .app-bar .desktop-section .appbar-col-2 .col-2-box .btn-item:hover {
+    background-color: rgb(200, 241, 200);
+    outline: none;
+    border: none;
+  }
+
+
+  /* mobile view navbar */
+
+  .app-bar .right-side-navbar {
+    background-color: rgba(0, 53, 128, 255);
+    width: 85%;
+    height: 50rem;
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    padding-right: 2rem;
+    box-shadow: 5px 5px 1000px 5px black;
+  }
+
+  .app-bar .right-side-navbar .col-2-box {
+    padding: 0.5rem 0rem;
+
+  }
+
+  .app-bar .right-side-navbar .col-2-box .btn-item {
+    /* border:1px solid black; */
+    width: fit-content;
+    color: rgb(217, 237, 245);
+    border-bottom: 0.1px solid rgb(217, 237, 245);
+    display: block;
+    align-self: flex-end;
+    font-size: 1rem
+  }
+
+  .head-dropdown-resp {
+    cursor: pointer;
+    width: fit-content;
+    color: rgb(217, 237, 245);
+    border: none;
+    outline: none;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom: 0.1px solid rgb(217, 237, 245);
+    background-color: transparent;
+    display: block;
+    align-self: flex-end;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,177 @@
+.view-details-wrapper {
+    /* border: 1px solid black; */
+    padding-bottom: 2rem;
+    margin-top: 0rem;
+}
+
+.view-details-wrapper .resort-name h2 {
+    font-family: 'Geomanist';
+    text-align: center;
+    margin-top: 5.5rem;
+    /* border:1px solid black; */
+}
+
+.view-details-wrapper .section2 {
+    /* border: 1px solid black; */
+    width: 85%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+
+
+.view-details-wrapper .section2 .property-info {
+    /* border: 1px solid black; */
+    padding-right: 1rem;
+    width: 100%;
+}
+
+.view-details-wrapper .section2 .property-info div {}
+
+.view-details-wrapper .section2 .property-info p {
+    padding: 1rem 1rem 1rem 1rem;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 2rem;
+    font-family: "Rajdhani, sans-serif";
+}
+
+.view-details-wrapper .section2 .map {
+    /* border: 1px solid black; */
+    width: 35%;
+    position: relative;
+}
+
+.view-details-wrapper .section2 .map iframe {
+    width: 100%;
+    height: 100%;
+}
+
+
+.view-details-wrapper .section3>h3 {
+    /* background-color: lightblue; */
+    line-height: 3rem;
+    padding: 0.5rem 1rem;
+}
+
+.view-details-wrapper .section3 {
+    width: 90%;
+    margin: auto;
+    margin-top: 2rem;
+    /* border: 1px solid black; */
+}
+
+.view-details-wrapper .section3 .booking-wrapper {
+    display: flex;
+}
+
+.view-details-wrapper .section3 .booking-wrapper .room-card-wrapper {
+    /* border: 1px solid black;  */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding-left: 1rem;
+    width: 100%;
+}
+
+
+
+
+
+
+
+@media only screen and (max-width:900px) {
+    .view-details-wrapper {
+        /* border: 1px solid black; */
+        padding-bottom: 2rem;
+    }
+
+    .view-details-wrapper .resort-name h2 {
+        font-family: 'Geomanist';
+        text-align: center;
+        margin-top: 3rem;
+        /* border:1px solid black; */
+    }
+
+    .view-details-wrapper .section2 {
+        /* border: 1px solid black; */
+        width: 100%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .view-details-wrapper .section2 .property-info {
+        /* border:1px solid black; */
+        padding-right: 0.5rem;
+        width: 100%;
+        padding-left: 0.5rem;
+    }
+
+    .view-details-wrapper .section2 .property-info div {}
+
+    .view-details-wrapper .section2 .property-info p {
+        padding: 1rem 0.5rem 1rem 0rem;
+        text-align: justify;
+        font-size: 1.1rem;
+        line-height: 2rem;
+    }
+
+    .view-details-wrapper .section2 .map {
+        /* border: 1px solid black; */
+        width: 100%;
+        height: 15rem;
+    }
+
+    .view-details-wrapper .section2 .map iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .view-details-wrapper .section3 {
+        margin-top: 1rem;
+    }
+
+    .view-details-wrapper .section3 {
+        width: 100%;
+    }
+
+    .view-details-wrapper .section3 .booking-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .view-details-wrapper .section3 .booking-wrapper .room-card-wrapper {
+        padding-left: 0rem;
+        width: 100%;
+        margin: auto;
+        justify-content: center;
+    }
+
+
+
+    .view-details-wrapper .section3 {
+        width: 100%;
+        margin: auto;
+        margin-top: 0rem;
+        /* border: 1px solid  0black; */
+    }
+
+    .view-details-wrapper .section3>h3 {
+        /* background-color: lightblue; */
+        line-height: 3rem;
+        padding: 0rem 1rem;
+    }
+
+    .view-details-wrapper .section3 .booking-wrapper {
+        display: flex;
+    }
+
+    .view-details-wrapper .section3 .booking-wrapper .room-card-wrapper {
+        /* border: 1px solid black;  */
+        padding-left: 1rem;
+        width: 100%;
+    }
+
+}

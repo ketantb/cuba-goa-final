@@ -1,9 +1,7 @@
 const router = require('express').Router()
 
 const Rating = require('../models/rating')
-const clientMiddleware = require('../middleware/client')
-
-
+const clientMiddleware = require('../middleware/customer')
 
 
 router.post('/rate-us', clientMiddleware, async (req, resp) => {
@@ -15,7 +13,6 @@ router.post('/rate-us', clientMiddleware, async (req, resp) => {
         resp.json({ success: false, message: err })
     }
 })
-
 
 
 router.get('/get-reviews/:id', async (req, resp) => {

@@ -3,21 +3,11 @@ require("dotenv").config();
 
 const express = require("express");
 const router = express.Router();
-const Razorpay = require("razorpay");
 const HotelBook = require("../models/post-property");
-const adminMiddleware = require('../middleware/admin')
-
-const secretKey = process.env.RAZOR_SECRET;
-const keyId = process.env.RAZOR_KEYID;
-
-const instance = new Razorpay({
-  key_id: keyId,
-  key_secret: secretKey,
-});
+const adminMiddleware=require('../middleware/admin')
 
 
-
-
+//post new property
 router.post("/hotelbook", adminMiddleware, async (req, res) => {
   try {
     const resortData = await HotelBook.create(req.body);
@@ -29,46 +19,14 @@ router.post("/hotelbook", adminMiddleware, async (req, res) => {
   }
 });
 
-//GET DATA OF SPECIFIC OWNER (login required)
-router.get('/my-resorts',adminMiddleware,(req,resp)=>{
-
-})
-
-
-
-//GET ALL HOTEL DATA TO SHOW TO CLIENTS
-router.get("/hotelbook", async (req, res) => {
-  try {
-    const hotelBook = await HotelBook.find({});
-    res.status(200).json(hotelBook);
-  } catch (error) {
-    res.status(5009).json({ message: error.message });
-  }
-});
-
-
-
-//GET SPECIFIC HOTEL BY ID
-router.get("/resort-details/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const resortData = await HotelBook.find({_id:id});
-    res.json({success:true,resortData:resortData});
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-
 
 //to update only rooms by id
 router.put("/hotelbook/:id", adminMiddleware, async (req, res) => {
-  console.log(req.params.id)
+//   console.log(req.params.id)
   // res.json({message: req.body})
   try {
     const { id } = req.params;
-    const hotelBook = await HotelBook.findByIdAndUpdate(id, {rooms: req.body.rooms});
+    const hotelBook = await HotelBook.findByIdAndUpdate(id, { rooms: req.body.rooms });
     //we cannot find any product in database
     if (!hotelBook) {
       return res
@@ -81,6 +39,8 @@ router.put("/hotelbook/:id", adminMiddleware, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+
 
 //to update whole Resort by id
 router.put("/entire-hotelbook/:id", adminMiddleware, async (req, res) => {
@@ -103,6 +63,48 @@ router.put("/entire-hotelbook/:id", adminMiddleware, async (req, res) => {
 });
 
 
+
+//GET ALL HOTEL DATA TO SHOW TO CLIENTS
+router.get("/hotelbook", async (req, res) => {
+  try {
+    const hotelBook = await HotelBook.find({});
+
+    res.status(200).json(hotelBook);
+  } catch (error) {
+    res.status(5009).json({ message: error.message });
+  }
+});
+
+
+//GET SPECIFIC HOTEL BY ID
+router.get("/resort-details/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const resortData = await HotelBook.find({ _id: id });
+    res.json({ success: true, resortData: resortData });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+
+//get specific room details
+router.get('/resort-room/:resortId/:roomId', async (req, resp) => {
+  const { resortId, roomId } = req.params
+  // console.log(resortId, roomId)
+  try {
+    const resort = await HotelBook.findOne({ _id: resortId })
+    let resortRoom = resort.rooms.find((room) => room.roomId === roomId)
+    resp.json({ success: true, data: resortRoom })
+  }
+  catch (err) {
+    resp.json({ success: false, message: `cannot find data ${err}`, })
+  }
+})
+
+
 // delete a hotel Book
 router.delete("/hotelbook/:id", adminMiddleware, async (req, res) => {
   try {
@@ -121,46 +123,62 @@ router.delete("/hotelbook/:id", adminMiddleware, async (req, res) => {
   }
 });
 
-//Update total rooms in DB after booking
-router.patch("/updateTotalRoomsinDb/:id", adminMiddleware, async (req, res) => {
+
+
+
+router.get('/images', async (req, resp) => {
+  const imgArr = []
   try {
-    // console.log(req.params.id)
-    // const name = req.body.resort.resortName
-    // console.log(req.body.resort.resortName)
-    // const room = await HotelBook.find({resortName: name});
-    // console.log(room)
-    let acknowledged = false
-    for (let i = 0; i < req.body.length; i++) {
-      acknowledged = false;
-      console.log("ROOM", i, "=>")
-      const _id = req.body[i].room._id
-      const updatedAvailableRooms = req.body[i].room.availableRooms
-      let ack
-      const roomUpdated = await HotelBook.updateOne({
-        "rooms._id": _id
-      },
-        {
-          "$set": {
-            "rooms.$.availableRooms": updatedAvailableRooms
-          }
-        })
-      acknowledged = roomUpdated.acknowledged
-      console.log(roomUpdated)
+    const Data = await HotelBook.find()
+    for (let property of Data) {
+      for (let i = 0; i < property.rooms.length; i++) {
+        for (let j = 0; j < property.rooms[i].imgUrl.length; j++) {
+          imgArr.push(property.rooms[i].imgUrl[j])
+        }
+      }
     }
-    if (acknowledged == true) {
-      res.status(200).json({
-        message: "Total Rooms Data Updated Successfully"
-      })
-    }else{
-      res.status(200).json({
-        message: "Total Rooms Data Updation Failed"
-      })
-    }
-  } catch (err) {
-    console.log(err)
-    res.status(400).json({ message: err.message, status: false });
+    // console.log('imgArr=>', imgArr)
+    resp.json({ success: true, data: imgArr })
+  }
+  catch (err) {
+    resp.json({ success: false, message: err })
   }
 })
+
+
+//get images of specific resort
+router.post('/images/:id', async (req, resp) => {
+  const resortId = req.params.id
+//   console.log(resortId)
+  try {
+    // console.log(resortId)
+    const resort = await HotelBook.find({ _id: resortId })
+    console.log('clicked resort for images', resort)
+    resp.json({ success: true, resort: resort })
+  }
+  catch (err) {
+    resp.json({ success: false, message: err })
+  }
+})
+
+
+// delete a hotel Book
+router.delete("/hotelbook/:id", adminMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const hotelBook = await HotelBook.findByIdAndDelete(id, req.body);
+    //we cannot find any product in database
+    if (!hotelBook) {
+      return res
+        .status(404)
+        .json({ message: `cannot find any hotel Book with ${id}` });
+    }
+
+    res.status(200).json(hotelBook);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 
