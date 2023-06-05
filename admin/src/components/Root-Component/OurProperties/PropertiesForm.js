@@ -21,7 +21,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
   const [visibleForm, setVisibleForm] = useState(false)
   const [resortForm, setResortForm] = useState({
     resortImgURL: "", resortName: "", resortDescription: "", resortLocation: "",
-    aboutUs: "", resortAddress: "", pincode: "", resortPhoneNumber: "",
+    resortAddress: "", pincode: "", resortPhoneNumber: "",
     resortEmail: "", cubaGoaHelpLineNumber: ""
   })
   const [showSelectedImg, setShowSelectedImg] = useState("")
@@ -116,7 +116,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
           />
         </section>
         <CModalHeader onClick={() => { setVisibleForm(false) }}>
-          <CModalTitle><h4>Resort Info</h4></CModalTitle>
+          <CModalTitle><h4>Edit Resort</h4></CModalTitle>
         </CModalHeader>
         <CModalBody >
 
@@ -139,21 +139,27 @@ const PropertiesForm = ({ getPropertiesData }) => {
             <CFormTextarea value={resortForm.pincode} label="Pincode" maxLength={5000} onChange={handleResortForm('pincode')} />
           </div>
           <div>
-            <CFormTextarea value={resortForm.aboutUs} label="About Us" maxLength={5000} onChange={handleResortForm('aboutUs')} />
-          </div>
-          <div>
-            <CFormTextarea value={resortForm.resortDescription} label="Resort Info" maxLength={5000} onChange={handleResortForm('resortDescription')} />
-          </div>
-          <div>
-            <CFormTextarea value={resortForm.resortPhoneNumber} label="Resort Phone Number" maxLength={5000} onChange={handleResortForm('resortPhoneNumber')} />
-          </div>
-          <div>
-            <CFormTextarea value={resortForm.resortEmail} label="Resort Email" maxLength={5000} onChange={handleResortForm('resortEmail')} />
-          </div>
-          <div>
-            <CFormTextarea value={resortForm.cubaGoaHelpLineNumber} label="Cuba Goa Helpline Number" maxLength={5000} onChange={handleResortForm('cubaGoaHelpLineNumber')} />
+            <CFormTextarea value={resortForm.resortDescription} label="Resort Description" maxLength={5000} onChange={handleResortForm('resortDescription')} />
           </div>
 
+
+
+          <CCard className='mx-2 mt-4'>
+            <CCardHeader className='text-center'>
+              <h4>Contact Us</h4>
+            </CCardHeader>
+            <CCardBody className='p-4'>
+              <div className="mb-4">
+                <CFormTextarea value={resortForm.resortPhoneNumber} label="Resort Phone Number" maxLength={5000} onChange={handleResortForm('resortPhoneNumber')} />
+              </div>
+              <div className="mb-4">
+                <CFormTextarea value={resortForm.resortEmail} label="Resort Email" maxLength={5000} onChange={handleResortForm('resortEmail')} />
+              </div>
+              <div className="mb-4">
+                <CFormTextarea value={resortForm.cubaGoaHelpLineNumber} label="Cuba Goa Helpline Number" maxLength={5000} onChange={handleResortForm('cubaGoaHelpLineNumber')} />
+              </div>
+            </CCardBody>
+          </CCard>
         </CModalBody>
 
         <CModalFooter>

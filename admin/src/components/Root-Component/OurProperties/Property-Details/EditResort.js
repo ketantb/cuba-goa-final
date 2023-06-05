@@ -22,7 +22,7 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
     // console.log("property => ", property)
     const [editResortForm, setEditResortForm] = useState({
         resortDescription: "", resortImgURL: "", resortLocation: "",
-        resortName: "", aboutUs: "", resortAddress: "", pincode: "",
+        resortName: "", resortAddress: "", pincode: "",
         resortPhoneNumber: "", resortEmail: "", cubaGoaHelpLineNumber: ""
     })
     const [updatedResortForm, setUpdatedResortForm] = useState(property)
@@ -127,7 +127,7 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
                     />
                 </section>
                 <CModalHeader onClick={() => { setShowEditResortForm(false) }}>
-                    <CModalTitle><h4>Resort Info</h4></CModalTitle>
+                    <CModalTitle><h4>Add Resort</h4></CModalTitle>
                 </CModalHeader>
                 <CModalBody >
                     {updatedResortForm.resortImgURL ?
@@ -151,39 +151,26 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
                     <div className="mb-4">
                         <CFormInput type="text" size="sm" maxLength={2000} label="Pincode" value={updatedResortForm.pincode} onChange={handleEditResortForm('pincode')} />
                     </div>
+                    <div className="mb-4">
+                        <CFormTextarea label="Resort Description" maxLength={5000} value={updatedResortForm.resortDescription} onChange={handleEditResortForm('resortDescription')} />
+                    </div>
 
                     <CCard className='mx-2 mt-4'>
                         <CCardHeader className='text-center'>
-                            <h4>Additional Information</h4>
+                            <h4>Contact Us</h4>
                         </CCardHeader>
                         <CCardBody className='p-4'>
-
-                            {/* <div className="mb-4">
-                                <CFormTextarea label="Resort Info" maxLength={5000} value={updatedResortForm.resortDescription} onChange={handleEditResortForm('resortDescription')} />
-                            </div> */}
                             <div className="mb-4">
-                                <CFormTextarea label="About Us" maxLength={5000} value={updatedResortForm.aboutUs} onChange={handleEditResortForm('aboutUs')} />
+                                <CFormInput label="Resort Phone Number" maxLength={5000} value={updatedResortForm.resortPhoneNumber} onChange={handleEditResortForm('resortPhoneNumber')} />
                             </div>
-                            <CCard className='mx-2 mt-4'>
-                                <CCardHeader className='text-center'>
-                                    <h4>Contact Us</h4>
-                                </CCardHeader>
-                                <CCardBody className='p-4'>
-                                    <div className="mb-4">
-                                        <CFormInput label="Resort Phone Number" maxLength={5000} value={updatedResortForm.resortPhoneNumber} onChange={handleEditResortForm('resortPhoneNumber')} />
-                                    </div>
-                                    <div className="mb-4">
-                                        <CFormInput label="Resort Email" maxLength={5000} value={updatedResortForm.resortEmail} onChange={handleEditResortForm('resortEmail')} />
-                                    </div>
-                                    <div className="mb-4">
-                                        <CFormInput label="Cuba Goa Helpline Number" maxLength={5000} value={updatedResortForm.cubaGoaHelpLineNumber} onChange={handleEditResortForm('cubaGoaHelpLineNumber')} />
-                                    </div>
-                                </CCardBody>
-                            </CCard>
-
+                            <div className="mb-4">
+                                <CFormInput label="Resort Email" maxLength={5000} value={updatedResortForm.resortEmail} onChange={handleEditResortForm('resortEmail')} />
+                            </div>
+                            <div className="mb-4">
+                                <CFormInput label="Cuba Goa Helpline Number" maxLength={5000} value={updatedResortForm.cubaGoaHelpLineNumber} onChange={handleEditResortForm('cubaGoaHelpLineNumber')} />
+                            </div>
                         </CCardBody>
                     </CCard>
-
                 </CModalBody>
 
                 <CModalFooter>
