@@ -44,6 +44,7 @@
     .footer2{
         /* border: 1px solid black; */
         display: flex;
+        padding-left: 25px;
     }
 
     .footer1 div:nth-child(2){
