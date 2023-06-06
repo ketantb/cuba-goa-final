@@ -127,7 +127,7 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
                     />
                 </section>
                 <CModalHeader onClick={() => { setShowEditResortForm(false) }}>
-                    <CModalTitle><h4>Add Resort</h4></CModalTitle>
+                    <CModalTitle><h4>Edit Resort</h4></CModalTitle>
                 </CModalHeader>
                 <CModalBody >
                     {updatedResortForm.resortImgURL ?

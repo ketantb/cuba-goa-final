@@ -116,7 +116,7 @@ const PropertiesForm = ({ getPropertiesData }) => {
           />
         </section>
         <CModalHeader onClick={() => { setVisibleForm(false) }}>
-          <CModalTitle><h4>Edit Resort</h4></CModalTitle>
+          <CModalTitle><h4>Add Resort</h4></CModalTitle>
         </CModalHeader>
         <CModalBody >
 
