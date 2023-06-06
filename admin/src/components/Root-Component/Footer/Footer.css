@@ -42,7 +42,18 @@
         text-align: center;
     }
     .footer2{
+        /* border: 1px solid black; */
         display: flex;
+    }
+
+    .footer1 div:nth-child(2){
+        padding-top: 35px;
+        /* border: 1px solid black; */
+    }
+
+    .footer1 div:last-child{
+        padding-top: 35px;
+        /* border: 1px solid black; */
     }
 
     img{
@@ -113,7 +124,7 @@
         
     }
     .newsletter h4{
-        padding-top: 30px;
+        /* padding-top: 30px; */
     }
     .newsletter a {
         color: #fff;
@@ -159,6 +170,13 @@
  
   .greatbluesort{
     padding: 40px 0;
+  }
+
+  .newsletter p div{
+    color: #ffff;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
   }
 
 
