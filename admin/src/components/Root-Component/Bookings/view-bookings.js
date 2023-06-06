@@ -22,6 +22,7 @@ const ViewBooking = () => {
             }
         })
             .then((res) => {
+                console.log(res.data.data)
                 setBookingList(res.data.data.reverse())
             })
             .catch((err) => {
