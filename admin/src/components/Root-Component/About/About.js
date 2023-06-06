@@ -69,7 +69,6 @@ function About() {
         setShowAboutUsForm={setShowAboutUsForm}
         dataFetchFunctionFromParent={setAboutUsData}
       />
-      <Footer />
 
     </>
 

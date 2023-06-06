@@ -74,7 +74,6 @@ const ContactUs = () => {
             <div className='contact-us-cont'>
                 <ContactUsList queryList={queryList} setQueryList={setQueryList} />
                 <div style={{ marginTop: '10rem' }}>
-                    <Footer />
                 </div>
             </div>
         </>
