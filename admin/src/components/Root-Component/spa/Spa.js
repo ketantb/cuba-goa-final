@@ -18,9 +18,9 @@ const Spa = () => {
       // const response = await axios.get("http://localhost:4001/allSpaList");
       const response = await axios.get("/allSpaList");
       if (response.data.success) {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setData(response.data.data);
-        console.log(data)
+        // console.log(data)
       } else {
         console.log(response.data.message);
       }

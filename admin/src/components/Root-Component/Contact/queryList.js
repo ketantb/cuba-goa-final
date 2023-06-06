@@ -10,6 +10,7 @@ import ViewQuery from './viewQuery';
 
 const ContactUsList = ({ queryList, setQueryList }) => {
     const [query, setQuery] = useState("")
+    // console.log('querylist => ', queryList)
     const [showQueryModel, setShowQueryModal] = useState(false)
     const viewQueryDetails = (details) => {
         setShowQueryModal(true)

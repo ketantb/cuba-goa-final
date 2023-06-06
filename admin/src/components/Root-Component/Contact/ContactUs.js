@@ -52,7 +52,7 @@ const ContactUs = () => {
             }
         })
             .then((res) => {
-                console.log(res.data)
+                // console.log(res.data)
                 setQueryList(res.data)
             })
             .catch((err) => {

@@ -15,7 +15,7 @@ export default function DetailedSpa() {
   const fetchDetails = async (id) => {
     try {
       const { data } = await axios.get("/spaDetails/" + id);
-      console.log(data);
+      // console.log(data);
       if (data.success) {
         setDetails(data.data);
       } else {
