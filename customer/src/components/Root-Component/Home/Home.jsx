@@ -47,24 +47,6 @@ const Home = () => {
     getPropertiesData()
   }, [])
 
-  // useEffect(() => {
-  //   const boxes = document.querySelectorAll('.card')
-  //   window.addEventListener('scroll', checkBoxes)
-  //   checkBoxes()
-  //   function checkBoxes() {
-  //     const triggerBottom = window.innerHeight / 5 * 6
-  //      boxes.forEach(box => {
-  //       const boxTop = box.getBoundingClientRect().top
-  //       if (boxTop < triggerBottom) {
-  //         box.classList.add('show')
-  //       }
-  //       else {
-  //         box.classList.remove('show')
-  //       }
-  //     })
-  //   }
-  // }, [])
-
   if (!allProperties) {
     return (
       <h1>.</h1>
@@ -75,11 +57,6 @@ const Home = () => {
   return (
     <div className='home-wrap'>
       <Video />
-      {/* <div style={{ marginTop: '1rem' }} className=''>
-        <h2 style={{ textAlign: 'center', marginTop: '2rem', marginBottom: '2.5rem' }}>FEATURED PROPERTIES</h2>
-        <HomeList currentList={currentList} />
-        <Pagination totalPosts={allProperties.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
-      </div> */}
       <div className='home-content'  >
         <div className='content-wrapper' data-aos='zoom-in' data-aos-delay='80'>
           <h6>
@@ -109,7 +86,7 @@ const Home = () => {
         <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Featured Properties</h2>
         <div style={{ border: '0.2px solid lightgrey', width: '30%', margin: 'auto' }}></div>
         <div className='container1' >
-          {allProperties.map((property, index) => {
+          {allProperties?.map((property, index) => {
             return (
               <div className='card' key={index + 1} data-aos={(index % 2 === 0) ? ('flip-left') : ('flip-right')} data-aos-delay="35" >
                 <div className='img-wrap1'>
@@ -136,12 +113,8 @@ const Home = () => {
             )
           })}
         </div>
-
       </div>
-      {/*
-import { location2 } from 'react-icons-kit/icomoon/location2'
-import { Icon } from 'react-icons-kit' 
- */}
+
       <div className='property-locations'>
         <div className='location-header'>
           <div><Icon icon={location2} size={30} style={{ color: 'orange' }}></Icon></div>

@@ -33,19 +33,19 @@ router.get('/contactus', adminMiddleware, async (req, res) => {
 router.post('/query-acknowledgement-mail', adminMiddleware, async (req, res) => {
     console.log(req.body);
     try {
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.NODEMAILER_EMAIL,
-          pass: process.env.NODEMAILER_PASSWORD
-        }
-      });
-  
-      const mailOptions = {
-        from: process.env.EMAIL,
-        to: req.body.email,
-        subject: "Query Acknowledgement Mail",
-        text: `
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.NODEMAILER_EMAIL,
+                pass: process.env.NODEMAILER_PASSWORD
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: req.body.email,
+            subject: "Query Acknowledgement Mail",
+            text: `
   
         Dear ${req.body.firstName + " " + req.body.lastName},
         
@@ -58,23 +58,23 @@ router.post('/query-acknowledgement-mail', adminMiddleware, async (req, res) => 
         With sincere appreciation,
         CUBA GOA
         `
-      }
-  
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error);
-          return res.status(500).json({ error: error })
-        } else {
-          console.log('Email sent: ' + info.response);
-          return res.status(201).json({message: "success", data: info.response});
         }
-      })
-  
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return res.status(500).json({ error: error })
+            } else {
+                console.log('Email sent: ' + info.response);
+                return res.status(201).json({ message: "success", data: info.response });
+            }
+        })
+
     }
     catch (err) {
-      console.log(error)
-      res.status(401).json({ message: err })
+        console.log(error)
+        res.status(401).json({ message: err })
     }
-  })
+})
 
 module.exports = router
