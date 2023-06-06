@@ -45,8 +45,8 @@ const govaBeachLocation = [
 const ContactUs = () => {
     const [queryList, setQueryList] = useState()
     const token = localStorage.getItem('token')
-    const fetchQueries = () => {
-        axios.get('/contactus', {
+    const fetchQueries = async () => {
+        await axios.get('/contactus', {
             headers: {
                 authorization: token
             }
