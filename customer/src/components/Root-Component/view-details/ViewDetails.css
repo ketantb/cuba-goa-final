@@ -74,11 +74,60 @@
     width: 100%;
 }
 
+.view-details-roomtable-header{
+    background-color: #3779c7;
+    color: #ffff;
+    /* #3376b0 */
+}
 
+.view-details-roomtable-header .cell{
+    border-left: 1px solid #3376b0;
+    font-size: 16px;
+}
 
+.view-details-roomtable-row{
+    border-bottom: #3376b0;
+}
 
+.view-details-roomtable-row .cell{
+    border-left: 1px solid #3376b0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 500;
+}
 
+.view-details-roomtable-row .cell span{
+    /* border: 1px solid black; */
+}
 
+.view-details-roomtable-row .cell span:first-child{
+    font-size: 22px;
+}
+
+.view-details-roomtable-row .cell span:last-child{
+    /* margin-left: 15px; */
+    font-size: 18px;
+    /* border: 1px solid black; */
+    margin-top: 10px;
+}
+
+.view-details-roomtable-row .show-prices-btn{
+    background-color: #3376b0;
+    padding: 0%;
+    text-align: center;
+    width: 100%;
+    height: 35px;
+    color: #ffff;
+    border-radius: 0px;
+}
+
+.roomTable-container{
+
+}
+
+.roomTable-searchbar{
+
+}
 
 @media only screen and (max-width:900px) {
     .view-details-wrapper {

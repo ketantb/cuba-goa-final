@@ -25,6 +25,7 @@ import OurProperties from './components/Root-Component/OurProperties/OurProperti
 import ContactUs from './components/Root-Component/Contact/ContactUs';
 import SignIn from './components/Root-Component/signin/Signin';
 import { Toaster } from 'react-hot-toast';
+import RoomTable from './components/Root-Component/view-details/RoomTable-With-Aminities/RoomTable';
 
 
 
@@ -55,6 +56,7 @@ function App() {
           <Route path="/spa" element={<Spa />}></Route>
           <Route path='/our-properties' element={<OurProperties />}></Route>
           <Route path='/:resortname/:id/rooms' element={<ViewDetails />} ></Route>
+          <Route path='/:resortname/:id/rooms-table' element={<RoomTable/>} ></Route>
           <Route path='/spa-details/:spaId' element={<SpaDetails />} ></Route>
           <Route path='/contactus' element={<ContactUs />}></Route>
           <Route path='/terms-conditions' element={<TermsConditions />}></Route>

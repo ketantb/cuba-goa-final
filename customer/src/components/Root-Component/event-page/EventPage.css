@@ -286,7 +286,19 @@
     animation-delay: 2.4s;
 }
 
+.eventcontactwrap {
+    width: 30%;
+    margin: auto;
+}
 
+.eventcontactwrap .eventcontactbtn {
+    width: 100%;
+}
+
+.eventcontactwrap .eventcontactbtn:hover {
+    background-color: black;
+    color: white;
+}
 
 @media only screen and (max-width:900px) {
     * {
@@ -579,6 +591,17 @@
     .event-wrap .delay-8 {
         animation-delay: 2.4s;
     }
+
+    .eventcontactwrap {
+        width: 70%;
+        margin: auto;
+    }
+
+    .eventcontactwrap .eventcontactbtn {
+        width: 100%;
+    }
+
+
 }
 
 /*  */

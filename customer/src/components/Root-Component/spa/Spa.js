@@ -5,13 +5,14 @@ import arrow from '../../../assets/arrow.png'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from 'react-icons-kit'
 import { location2 } from 'react-icons-kit/icomoon/location2'
+import spaimage from '../../../assets/spa-bg-2.png'
 import Footer from "../Footer/Footer";
 
 const Spa = () => {
-  useEffect(()=>{
-    window.scrollTo(0,0);
-     // eslint-disable-next-line
-},[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // eslint-disable-next-line
+  }, [])
   const [data, setData] = useState([]);
   const navigate = useNavigate()
 
@@ -47,17 +48,17 @@ const Spa = () => {
         <section className="entry-point-spa" style={{ padding: '0' }}>
 
           <div className="spa-main-cont">
-            <div className="firts-content-spa">
+            {/* <div className="firts-content-spa">
               <h2>SPA</h2>
             </div>
-            <h4 >AYURVEDIC SPA TREATMENTS IN GOA</h4>
+            <h4 >AYURVEDIC SPA TREATMENTS IN GOA</h4> */}
+            <img src={spaimage} alt='spaimage' />
           </div>
 
 
           <div style={{ marginTop: '2rem' }}>
-            <h5 style={{ textAlign: 'center' }}>
-              Welcome to a World of Rejuvenation. At Kalpaka Spa– Find Yourself
-              In The Hands Of Our Expert Masseurs – All The Way From Kerala.
+            <h5 style={{ textAlign: 'center' }} className='spatitleheading'>
+              Greetings from the World of Rejuvenation. At Kalpaka Spa, put yourself in the capable hands of our Kerala-trained massage therapists.
             </h5>
           </div>
 

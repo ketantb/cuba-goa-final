@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Register.css'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -7,13 +7,13 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../../helpers/axios'
+
 
 
 function Copyright(props) {
@@ -33,11 +33,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Register() {
-    useEffect(()=>{
-        window.scrollTo(0,0);
-         // eslint-disable-next-line
-    },[])
     const navigate = useNavigate()
+
 
     const [inputData, setInputData] = useState({
         name: '',
@@ -56,36 +53,36 @@ export default function Register() {
     //handle sumbit
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         if (inputData.password === inputData.confirmPassword) {
-            const response = await axios.post(`/register`, inputData);
-            if (response.data.success) {
-                toast.success(response.data.message)
-                navigate('/signin')
-            }
-            else {
-                if (response.data.message === 'Account already exist') {
-                    toast.error(response.data.message)
+            try {
+                const response = await axios.post('/customer-register', inputData);
+                if (response.data.success) {
+                    toast.success(response.data.message);
+                    navigate('/signin')
                 }
                 else {
-                    const errors = response.data.message
-                    for (let err of errors) {
-                        toast.error(err.msg)
-                    }
-                }
+                    // toast.error(response.data.message)
 
+                    // console.log('errors', response.data.message)
+                    const errors = response.data.message
+                    errors.forEach(err => {
+                        toast.error(err.msg)
+                    })
+                }
+            } catch (error) {
+                console.log(error.response.data.message);
+
+                // console.log(error.response.data.message);
             }
         }
         else {
-            toast.error("Password dosen't match")
+            toast.error("passwords dosen't match")
         }
-
-
     }
 
 
     return (
-        <div className='register-wrap'>
+        <div className='registrationWrapper'>
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -175,12 +172,13 @@ export default function Register() {
                             <Grid item>
                                 Already have an account?
                                 <Button onClick={() => navigate('/signin')}>Click here</Button>
+
                             </Grid>
                         </Box>
                     </Box>
                     <Copyright sx={{ mt: 8, mb: 4 }} />
                 </Container>
             </ThemeProvider>
-        </div>
+        </div >
     );
 }

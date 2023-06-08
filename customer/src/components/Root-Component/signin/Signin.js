@@ -56,12 +56,9 @@ export default function SignIn() {
     e.preventDefault()
     console.log(inputData)
     try {
-      toast.loading('signin In...')
-      const response = await axios.post('/signin', inputData)
+      const response = await axios.post('/customer-signin', inputData)
       if (response.data.success) {
         console.log(response.data.message)
-        toast.success(response.data.message)
-        toast.dismiss()
         localStorage.setItem('token', response.data.data.token)
         navigate('/our-properties')
         toast.success('LoggedIn successfully')

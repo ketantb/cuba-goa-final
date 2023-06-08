@@ -14,9 +14,11 @@ const serverUrl = process.env.REACT_APP_HOST
 
 const BookingPage = () => {
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         // eslint-disable-next-line
-    }, [])
+    }, []);
+
+
     const navigate = useNavigate()
     const { resortname, resortId, roomId } = useParams()
     const [resort, setResort] = useState({})
@@ -31,7 +33,7 @@ const BookingPage = () => {
     const [datesFromHomePage, setDatesFromHomePage] = useState(false)
     const [checkin, setCheckin] = useState()
     const [checkout, setCheckout] = useState()
-
+    const [paybleAmount, setPayableAmount] = useState()
 
     //store data
     const datesData = useSelector(store => store)
@@ -47,7 +49,7 @@ const BookingPage = () => {
                 }
             })
             if (response.data.success) {
-                // console.log('userdata=>', response.data.details)
+                console.log('userdata=>', response.data.details)
                 setUser(response.data.details)
             }
             else {
@@ -145,7 +147,15 @@ const BookingPage = () => {
         setConfirm(true)
         // console.log('updated', roomChange, roomPrice, total)
         toast.success('Thank you for confirmation, Now you can proceed for payment')
+
     }
+    useEffect(() => {
+        if (confirm) {
+            const paybleAmount = (Number(total) + Number(total) * 12 / 100)
+            setPayableAmount(paybleAmount)
+        }
+        // eslint-disable-next-line
+    }, [handleConfirm])
 
 
 
@@ -189,7 +199,7 @@ const BookingPage = () => {
             checkOut: checkout,
             noOfRooms: roomNos,
             specialRequest: bookingForm.specialRequest,
-            totalAmount: total,
+            totalAmount: paybleAmount,
             bookingDate: bookingDate,
             bookingTime: bookingTime,
             reservationId: nanoid(),
@@ -267,6 +277,7 @@ const BookingPage = () => {
         return ('...loading')
     }
 
+
     return (
         <>
             <div className='bookingsummaryheading'>
@@ -313,10 +324,11 @@ const BookingPage = () => {
                     <div className='row2'>
                         <div><h5>Your Price Summary</h5></div>
                         <div>
-                            <div><h3>Total Amount</h3></div>
+                            <div><h5>Total Room Rates</h5></div>
                             <div className='totalamount-wrap'>
                                 <div><img src={rupee} alt='' /></div>
                                 {!roomChange ? (<h3>{roomPrice}</h3>) : (<h3>{roomPrice * roomNos}</h3>)}
+                                <span style={{ marginTop: '.5rem', marginLeft: '.2rem' }}>+ 12% Taxes</span>
                             </div>
                         </div>
                     </div>
@@ -328,7 +340,7 @@ const BookingPage = () => {
                             <p>
                                 <ul>
                                     <li>All prices are subject to availability</li>
-                                    <li> Luxury tax and service tax applicable as per government of India regulations.</li>
+                                    <li>Luxury tax and service tax applicable as per government of India regulations.</li>
                                     <li>Complimentary breakfast (in case the guests are entitled to) will be served as per Breakfast Menu between 08:30 AM to 10:30 AM only.</li>
                                     <li>Outside Food and Drinks are strictly not allowed.</li>
                                     <li>Washing of clothes in the room is not allowed.</li>
@@ -434,6 +446,17 @@ const BookingPage = () => {
                                 name='specialRequest' value={bookingForm.specialRequest} onChange={handleInputs}></textarea>
                         </div>
                     </div>
+
+                    {confirm ? (
+                        <div className='totalamount-wrap' style={{ padding: '1rem .5rem' }}>
+                            <h5> YOUR TOTAL PAYABLE AMOUNT</h5>
+                            <div style={{ display: 'flex' }}>
+                                <img src={rupee} alt='' style={{ width: '2rem', height: '1.5rem', opacity: '0.4' }} />
+                                <h4>{paybleAmount}</h4>
+                            </div>
+                        </div>
+                    ) : (null)}
+
 
 
                     <div className='row5'>

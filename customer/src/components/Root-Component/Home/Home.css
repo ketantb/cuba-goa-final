@@ -30,11 +30,13 @@
 
 }
 
-.home-content .content-wrapper p {
+
+
+.home-content .content-wrapper .inner-wrapper p {
     text-align: justify;
     line-height: 2rem;
     font-size: 1.1rem;
-    width: 30%;
+    width: 45%;
     float: inline-end;
     padding: 1.5rem;
     /* border: 1px solid black; */
@@ -269,7 +271,7 @@
 
     .home-content {
         padding: 1rem 1rem;
-
+        margin-top: 15rem;
     }
 
     .home-content .content-wrapper {
@@ -279,12 +281,13 @@
 
     .home-content .content-wrapper h6 {
         width: 100%;
-        text-align: center;
+        text-align: justify;
         padding: 0;
         padding-right: 0rem;
         line-height: 2rem;
         font-size: 1rem;
         margin: auto;
+        padding-left: 1rem;
 
     }
 
@@ -297,8 +300,8 @@
 
     }
 
-    .home-content .content-wrapper p {
-        text-align: left;
+    .home-content .content-wrapper .inner-wrapper p {
+        text-align: justify;
         line-height: 2rem;
         font-size: 1.1rem;
         width: 95%;
@@ -458,7 +461,6 @@
     .property-locations {
         margin-top: 6rem;
         margin-bottom: 0rem;
-
         /* border: 1px solid black; */
     }
 
@@ -466,10 +468,11 @@
     .property-locations .location-header {
         display: flex;
         justify-content: center;
+        margin: auto;
     }
 
     .property-locations .dummy-border {
-        width: 25%;
+        width: 95%;
         margin: auto;
         border: 1px solid grey;
     }
@@ -481,6 +484,7 @@
     .property-locations .location-header h3 {
         margin-left: 1rem;
         color: black;
+        text-align: center;
     }
 
 

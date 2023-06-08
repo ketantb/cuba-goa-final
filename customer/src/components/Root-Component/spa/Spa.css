@@ -8,19 +8,24 @@
 }
 
 .spa-main-cont {
-  height: 45rem;
+  width: 100%;
+  height: 50rem;
   text-align: start;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: rgb(255, 255, 255);
   background-size: 100%;
-  background-image: url('../../../assets/spaCloud.jpg');
+  /* background-image: url('../../../assets/spa-bg-2.png'); */
   background-size: cover;
   background-position: 'center center';
   text-align: center;
-  padding: 1rem;
+  margin-top: 17rem;
   /* border:1px solid black; */
+}
+
+.spatitleheading {
+  margin-top: 8rem;
 }
 
 /* .entry-point-spa {
@@ -286,24 +291,37 @@
   }
 
   .spa-main-cont {
-    height: 40rem;
+    width: 100%;
+    height: 30rem;
     text-align: start;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color: rgb(255, 255, 255);
     background-size: 100%;
-    background-image: url('../../../assets/spaCloud.jpg');
-    background-size: cover;
+    /* background-image: url('../../../assets/spa-bg-2.png'); */
     background-position: 'center center';
     text-align: center;
-    padding: 1rem;
-    margin-top: 7rem;
-    /* border:1px solid black; */
+    background-repeat: no-repeat;
+    /* border: 1px solid black; */
+    padding: 0;
+    margin: auto;
+    margin-top: 5rem;
+  }
+
+  .spa-main-cont img {
+    height: 100%;
+    
   }
 
   .spa-quots-content {
     width: 100%;
+  }
+
+  .spatitleheading {
+    font-size: 1rem;
+    padding: 1rem;
+    margin-top: 0rem;
   }
 
   .spa-footer {}
@@ -314,7 +332,7 @@
   }
 
   .normal-text-spa {
-    margin: 20px 0;
+    margin: 0px 0;
     color: black;
     font-size: 20px;
   }

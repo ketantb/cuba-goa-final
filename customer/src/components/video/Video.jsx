@@ -6,6 +6,8 @@ import axios from '../../helpers/axios'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast'
 
+
+
 const Video = () => {
 
   const navigate = useNavigate()
@@ -123,6 +125,47 @@ const Video = () => {
         <div className='row3' onClick={handleCheckAvailable} >
           CHECK AVAILABILITY
         </div>
+      </div>
+
+
+
+
+      <div className='home-search-box-desktop'>
+        <div>
+          <div>
+            <input type="date" id="myDate" placeholder="Check-in Date"
+              name='checkindate' value={checkindate} onChange={(e) => setCheckindate(e.target.value)} />
+          </div>
+          <div>
+            <input type="date" id="myDate" placeholder="Check-in Date"
+              name='checkoutdate' value={checkoutdate} onChange={(e) => setCheckoutdate(e.target.value)} />
+          </div>
+          <div>
+            <select id='select' name='resort' value={resortId}
+              onChange={(e) => setResortId(e.target.value)}>
+              <option>SELECT RESORT</option>
+              {allProperties.map((resort, i) => {
+                return (
+                  <option
+                    value={resort._id}>{resort.resortName}</option>
+                )
+              })}
+            </select>
+          </div>
+          <div onClick={handleCheckAvailable} style={{ paddingTop: '.35rem', fontSize: '.9rem' }}>
+            CHECK AVAILABILITY
+          </div>
+        </div>
+
+        <div className='row2'>
+          {/* <label style={{ letterSpacing: '2px', paddingLeft: '.1rem', fontWeight: 'bold' }}>SEARCH RESORT</label> */}
+
+
+
+
+        </div>
+
+
       </div>
 
     </div>

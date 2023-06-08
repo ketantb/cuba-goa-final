@@ -88,10 +88,6 @@ const Header = ({ auth, setAuth }) => {
     // eslint-disable-next-line
   }, [resortId])
 
-  if (!allProperties) {
-    return (<h1>Header</h1>)
-  }
-
   return (
     <div className='app-bar' style={{ backgroundColor: navBackground }}>
 
@@ -106,7 +102,7 @@ const Header = ({ auth, setAuth }) => {
               </select> :
               <select className='header-dropdown' onChange={(e) => { setResortId(e.target.value) }} style={{ marginTop: '2.95rem' }}>
                 {/* <option>CUBA AGONDA</option> */}
-                {allProperties?.map((el) => {
+                {allProperties.map((el) => {
                   return (
                     <option value={el._id}>{el.resortName.toUpperCase()}</option>
                   )
@@ -142,7 +138,7 @@ const Header = ({ auth, setAuth }) => {
                 navigate('/');
                 toast.dismiss()
                 toast.success('LoggedOut successfully!')
-
+                
               }} >LOGOUT</Button>)
               :
               (<Button className='btn-item' onClick={() => navigate('/signin')}>LOGIN</Button>)}
@@ -169,7 +165,7 @@ const Header = ({ auth, setAuth }) => {
             <select className='head-dropdown-resp' onChange={(e) => { setResortId(e.target.value) }}
               style={{ fontWeight: 'bold' }}>
               {/* <option>CUBA AGONDA</option> */}
-              {allProperties?.map((el) => {
+              {allProperties.map((el) => {
                 return (
                   <option className='head-dropdown-resp' value={el._id}>{el.resortName.toUpperCase()}</option>
                 )
@@ -177,10 +173,10 @@ const Header = ({ auth, setAuth }) => {
             </select>
           }
           <Button className='btn-item' onClick={() => { navigate('/spa'); handleCloseNavbar() }}>SPA</Button>
-          <Button className='btn-item' onClick={() => { navigate('/events'); handleCloseNavbar() }}>Events</Button>
+          <Button className='btn-item' onClick={() => {navigate('/events');handleCloseNavbar()}}>Events</Button>
           <Button className='btn-item' onClick={() => { navigate('/gallery'); handleCloseNavbar() }}>GALLERY</Button>
           <Button className='btn-item' onClick={() => { navigate('/aboutus'); handleCloseNavbar() }}>About Us</Button>
-          <Button className='btn-item' onClick={() => { navigate('/contactus'); handleCloseNavbar() }}>Contact Us</Button>
+          <Button className='btn-item' onClick={() => {navigate('/contactus');handleCloseNavbar()}}>Contact Us</Button>
           {auth ? (<Button className='btn-item' onClick={() => { navigate('/my-bookings'); handleCloseNavbar() }}>MY BOOKINGS</Button>)
             : (null)}
 

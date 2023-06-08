@@ -3,18 +3,29 @@ import './EventPage.css'
 import { Icon } from 'react-icons-kit'
 import { location2 } from 'react-icons-kit/icomoon/location2'
 import Footer from '../Footer/Footer'
+import {useNavigate} from 'react-router-dom'
+
 
 const EventPage = () => {
-
+const navigate=useNavigate()
   const eventArr = [
     {
       eventName: 'GALA PARTY',
       eventTitle: "Step into a World of Glamour and Elegance at Our Spectacular Gala Party",
-      eventDescription:"Our gala parties are hosted at the most prestigious venues, offering a captivating backdrop that sets the stage for an unforgettable evening. From luxurious ballrooms to stunning outdoor locations, our chosen venues exude elegance and sophistication, creating an ambiance that elevates the entire experience.Be captivated by world-class entertainment that takes center stage throughout the night. From captivating live bands and mesmerizing dance performances to awe-inspiring acrobats and renowned DJs, our gala party showcases talent that leaves you spellbound and ensures that the dance floor remains alive with energy.",
+      eventDescription: "Experience the splendour of a romantic beach wedding at our magnificent resort. Our resort, which is tucked away on the picturesque coastline, offers the ideal setting for your big day. Imagine taking your vows as the sun is sinking over the dazzling ocean, with the sound of the waves gently breaking in the backdrop. From custom event planning to arranging stunning beachside ceremonies and celebrations, our committed wedding team will help you at every turn. Our resort offers opulent lodging, mouthwatering cuisine options, and unmatched service to ensure an amazing beach wedding experience whether you want a small gathering or a large celebration. Allow us to realise your idea and provide priceless memories that will last a lifetime. To begin planning, call us right now.",
       eventStartDate: '',
       eventEndDate: '',
       eventImage: 'https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&w=600'
     },
+    {
+      eventName: 'BEACH WEDDINGS',
+      eventTitle: " Celebrate Love by the Shore",
+      eventDescription: "Our gala parties are hosted at the most prestigious venues, offering a captivating backdrop that sets the stage for an unforgettable evening. From luxurious ballrooms to stunning outdoor locations, our chosen venues exude elegance and sophistication, creating an ambiance that elevates the entire experience.Be captivated by world-class entertainment that takes center stage throughout the night. From captivating live bands and mesmerizing dance performances to awe-inspiring acrobats and renowned DJs, our gala party showcases talent that leaves you spellbound and ensures that the dance floor remains alive with energy.",
+      eventStartDate: '',
+      eventEndDate: '',
+      eventImage: 'https://images.pexels.com/photos/169211/pexels-photo-169211.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    },
+
 
     {
       eventName: 'BIRTHDAY',
@@ -45,10 +56,10 @@ const EventPage = () => {
   ]
 
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
-     // eslint-disable-next-line
-},[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <>
@@ -58,7 +69,7 @@ const EventPage = () => {
         {/* gala party */}
         {eventArr.map((event, index) => {
           return (
-            <div className='outerwrap' data-aos='fade-down' key={index+1}
+            <div className='outerwrap' data-aos='fade-down' key={index + 1}
               style={{
                 background: `url(${event.eventImage})`,
                 backgroundPosition: 'center center',
@@ -113,9 +124,12 @@ const EventPage = () => {
 
         {/* gala party */}
 
-
       </div>
 
+
+      <div className='eventcontactwrap' onClick={()=>navigate('/contactus')}>
+        <button className='eventcontactbtn'>CONTACT US</button>
+      </div>
 
       <div className='property-locations'>
         <div className='location-header'>
@@ -152,6 +166,7 @@ const EventPage = () => {
           </section>
         </div>
       </div>
+
 
 
       <Footer />

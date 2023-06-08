@@ -19,10 +19,10 @@ import Footer from '../Footer/Footer'
 
 const Home = () => {
   const navigate = useNavigate()
-  useEffect(()=>{
-    window.scrollTo(0,0);
-     // eslint-disable-next-line
-},[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // eslint-disable-next-line
+  }, [])
   //SHOW ROOMS
   const viewRooms = (id, resortname) => {
     navigate(`/${resortname}/${id}/rooms`)
@@ -36,7 +36,7 @@ const Home = () => {
       .then((res) => {
         // console.log(res.data)
         setAllProperties(res.data)
-          //  setSelectedVal([res.data[0].resortName, res.data[0]._id])
+        //  setSelectedVal([res.data[0].resortName, res.data[0]._id])
       })
       .catch((err) => {
         console.log(err)
@@ -46,6 +46,24 @@ const Home = () => {
   useEffect(() => {
     getPropertiesData()
   }, [])
+
+  // useEffect(() => {
+  //   const boxes = document.querySelectorAll('.card')
+  //   window.addEventListener('scroll', checkBoxes)
+  //   checkBoxes()
+  //   function checkBoxes() {
+  //     const triggerBottom = window.innerHeight / 5 * 6
+  //      boxes.forEach(box => {
+  //       const boxTop = box.getBoundingClientRect().top
+  //       if (boxTop < triggerBottom) {
+  //         box.classList.add('show')
+  //       }
+  //       else {
+  //         box.classList.remove('show')
+  //       }
+  //     })
+  //   }
+  // }, [])
 
   if (!allProperties) {
     return (
@@ -57,25 +75,22 @@ const Home = () => {
   return (
     <div className='home-wrap'>
       <Video />
+      {/* <div style={{ marginTop: '1rem' }} className=''>
+        <h2 style={{ textAlign: 'center', marginTop: '2rem', marginBottom: '2.5rem' }}>FEATURED PROPERTIES</h2>
+        <HomeList currentList={currentList} />
+        <Pagination totalPosts={allProperties.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} currentPage={currentPage} />
+      </div> */}
       <div className='home-content'  >
         <div className='content-wrapper' data-aos='zoom-in' data-aos-delay='80'>
           <h6>
-            Discover CUBA GOA, a distinguished collection of independent luxury hotels in the captivating region of Goa, India. Uncover a world of unparalleled hospitality and luxury.
-            Explore our exquisite properties now!
+            Discover CUBA GOA, a prestigious collection of independent luxury hotels in the alluring area of Goa, India. Discover a world of unrivalled luxury and hospitality. Check out our beautiful properties right away!
           </h6>
           <div className='inner-wrapper'  >
             <p   >
-              Find the ultimate escape at Cuba Goa, where sandy beaches, multi-sports courts, and playgrounds await you and your family.
-              With breathtaking views and plentiful outdoor adventures available for rent,
-              this resort is the ideal city getaway. Expect all the amenities you desire in a vacation destination, including stunning surroundings.
-              With hospitality services that exude grandeur, we offer a respite from the mundane.
+              Experience the ideal getaway in Cuba Goa, where your family can take pleasure in sand beaches, sports courts, and playgrounds. This resort is the ideal city vacation because it offers stunning views and a variety of outdoor excursions that can be rented. Expect to find all the comforts you want while travelling, together with breathtaking scenery. We provide a break from the ordinary with extravagant hospitality offerings.
             </p>
             <p >
-              Goa, a destination known for its sun-kissed beaches and breathtaking scenery,
-              is a treasure trove of relaxation. Cuba Hotels Goa is an unmatched haven for both leisure and business, crafting a perfect getaway
-              for families and fruitful conclaves. Nestled in the arms of nature,
-              delightful flavors await across a diverse international and regional menu. These delectable dishes perfectly pair with our exotic cocktails,
-              complementing the serene ambiance that spans across South Goa - an oasis of refined luxury.
+              A treasure trove of leisure can be found in the sun-kissed beaches and stunning scenery. Hotels in Cuba Goa is an unmatched haven for both leisure and business, creating the ideal getaway for families and productive conclaves. A broad international and local cuisine awaits, nestled in the embrace of nature. These delicious foods go nicely with our exotic drinks, adding to South Goa's serene vibe as an oasis of elegant beauty
             </p>
           </div>
 
@@ -86,7 +101,7 @@ const Home = () => {
         <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Featured Properties</h2>
         <div style={{ border: '0.2px solid lightgrey', width: '30%', margin: 'auto' }}></div>
         <div className='container1' >
-          {allProperties?.map((property, index) => {
+          {allProperties.map((property, index) => {
             return (
               <div className='card' key={index + 1} data-aos={(index % 2 === 0) ? ('flip-left') : ('flip-right')} data-aos-delay="35" >
                 <div className='img-wrap1'>
@@ -113,41 +128,27 @@ const Home = () => {
             )
           })}
         </div>
+
       </div>
 
       <div className='property-locations'>
         <div className='location-header'>
-          <div><Icon icon={location2} size={30} style={{ color: 'orange' }}></Icon></div>
+          <div style={{ display: 'none' }}><Icon icon={location2} size={30} style={{ color: 'orange' }}></Icon></div>
           <h3 style={{}}>Cuba Goa Property Locations</h3>
         </div>
         <div className='dummy-border' ></div>
 
         <div className='location-addresses'>
-          <section className='address-section'>
-            <h6>CUBA BEACH BUNGALOWS</h6>
-            <div></div>
-            <p>Center of Palolem Beach, Palolem Beach, Canacona, Goa - 403702</p>
-          </section>
-          <section className='address-section'>
-            <h6>CUBA PATNEM BEACH BUNGALOWS</h6>
-            <div></div>
-            <p>North side of Patnem Beach, Palolem-Patnem Road, Canacona, Goa - 403702</p>
-          </section>
-          <section className='address-section'>
-            <h6>CUBA PREMIUM HUTS</h6>
-            <div></div>
-            <p>Center of Palolem Beach, Palolem Beach, Canacona, Goa - 403702</p>
-          </section>
-          <section className='address-section'>
-            <h6>PALOLEM BEACH RESORT</h6>
-            <div></div>
-            <p>Entrance of Palolem Beach, Besides car parking area, Palolem Beach, Canacona, Goa - 403702</p>
-          </section>
-          <section className='address-section'>
-            <h6>CUBA AGONDA</h6>
-            <div></div>
-            <p>Tambli Val, Agonda Beach Road, Agonda, Canacona, Goa - 403702</p>
-          </section>
+          {allProperties.map((resort, i) => {
+            return (
+              <section className='address-section' key={i + 1}>
+                <h6>{resort.resortName}</h6>
+                <div></div>
+                <p>{resort.resortAddress}</p>
+              </section>
+            )
+
+          })}
         </div>
       </div>
 
