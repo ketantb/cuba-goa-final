@@ -40,19 +40,35 @@ const RoomTable = () => {
         }
     }
 
+    const map = new Map();
     const handleTotalCalc = (e) => {
-        // const roomObject =  roomArr.find((el, i) => {
-        //     if(el._id === e.target.value){
-        //         return el
-        //     }
-        // })
+        if(e.target.value == 0){
+            return
+        }
+        const arr = (e.target.value.split(','))
+        let roomId = arr[0];
+        let noOfRooms = parseInt(arr[1])
+        // console.log(roomId)
+        // console.log(noOfRooms)
+        const roomObject = roomArr.find((el, i) => {
+            if (el._id === roomId) {
+                return el
+            }
+        })
         // console.log(roomObject)
-        console.log(e.target.value[0])
-        console.log(e.target.value[1])
-        // console.log(roomObject.noOfRooms)
-        // setTotalPrice(totalPrice + parseInt(e.target.value))
-        // setRoomsSelected(roomsSelected + )
-        // console.log(totalPrice)
+        // console.log(noOfRooms)
+        map.set(roomObject._id, { nos: noOfRooms, price: noOfRooms * roomObject.weekdayPerNightRate })
+        // console.log(map)
+        let allOverTotalRooms = 0;
+        let allOverTotalPrice = 0;
+        for (let entry of map.entries()) {
+            allOverTotalRooms += map.get(entry[0]).nos
+            allOverTotalPrice += map.get(entry[0]).price
+        }
+        // console.log(allOverTotalRooms)
+        setRoomsSelected(allOverTotalRooms)
+        // console.log(allOverTotalPrice)
+        setTotalPrice(allOverTotalPrice)
     }
 
     useEffect(() => {
@@ -73,13 +89,13 @@ const RoomTable = () => {
                 </CTableHead>
                 <CTableBody>
                     {
-                        roomArr?.map((room) => {
+                        roomArr?.map((room, idx) => {
                             const availableRooms = parseInt(room.availableRooms)
                             return (
                                 <CTableRow className='rooms-table-row' key={room._id}>
-                                    <CTableHeaderCell
+                                    <CTableDataCell style={{borderRight: '1px solid #3376b0'}}
                                         className='cell' scope="row">
-                                        {<p style={{ color: '#3376b0', fontWeight: '700', marginLeft: '0px' }}
+                                        {<p style={{ color: '#3376b0', fontWeight: '700', marginLeft: '0px'}}
                                             onClick={() => navigate(`/${id}/${room.roomType}/${room.roomId}/details`)}
                                         ><span style={{ borderBottom: '2px solid #3376b0' }}>{room.roomType}</span></p>}
                                         {/* {<p style={{color: 'black', fontsize: '12px'}}>{room.seaView ? "with sea view" : null}</p>} */}
@@ -155,20 +171,20 @@ const RoomTable = () => {
                                                 </p>
                                             </section>
                                         </p>
-                                    </CTableHeaderCell>
-                                    <CTableDataCell>
+                                    </CTableDataCell>
+                                    <CTableDataCell style={{ borderRight: '1px solid #3376b0' }}>
                                         <section className='cell rooms-table-sleeps'>
                                             <span><FaUser /> × <span>{room.adultCapacity}</span></span>
                                             <span style={{ marginLeft: '15px' }}><TiUser /> × <span>{room.childrenCapacity}</span></span>
                                         </section>
                                     </CTableDataCell>
-                                    <CTableDataCell className='cell'>
+                                    <CTableDataCell className='cell' style={{ borderRight: '1px solid #3376b0' }}>
                                         <section className='rooms-table-prices'>
                                             <p style={{ color: 'black' }}>Weekday rates: ₹ <span style={{ fontSize: '18px' }}>{room.weekdayPerNightRate}</span></p>
                                             <p style={{ color: 'black' }}>Weekend rates: ₹ <span style={{ fontSize: '18px' }}>{room.weekendPerNightRate}</span></p>
                                         </section>
                                     </CTableDataCell>
-                                    <CTableDataCell>
+                                    <CTableDataCell style={{ borderRight: '1px solid #3376b0' }}>
                                         <section className='rooms-table-yourchoices'>
                                             <span><MdOutlineFreeBreakfast /></span>
                                             {room.breakfast ?
@@ -182,14 +198,18 @@ const RoomTable = () => {
                                             }
                                         </section>
                                     </CTableDataCell>
-                                    <CTableDataCell>
+                                    <CTableDataCell style={{ borderRight: '1px solid #3376b0' }}>
                                         <section className='rooms-table-select-amt'>
                                             {availableRooms == 0 ? <span className='soldout-btn'>SOLD OUT</span> :
                                                 <select onChange={handleTotalCalc}>
+                                                    <option value={0}>0</option>
                                                     {
-                                                        [...Array(availableRooms)].map((i, index) => {
+                                                        [...Array(availableRooms + 1)].map((i, index) => {
                                                             return (
-                                                                <option value={[room._id, index]}>{index} (₹ {index * room.weekdayPerNightRate})</option>
+                                                                <option value={[room._id, index]}>{index ? <span>
+                                                                    {index} (₹ {index * room.weekdayPerNightRate})
+                                                                </span> : null}</option>
+                                                                // <option value={[room._id, index]}>{index} (₹ {index * room.weekdayPerNightRate})</option>
                                                             )
                                                         })
                                                     }
@@ -197,7 +217,7 @@ const RoomTable = () => {
                                             }
                                         </section>
                                     </CTableDataCell>
-                                    <CTableDataCell style={{ border: '1px solid black' }}>
+                                    <CTableDataCell style={{border: 'none'}} className={`box ${idx === 0 ? 'boxvisible' : 'boxhidden'}`}>
                                         <section className='rooms-table-total-block'>
                                             {roomsSelected ?
                                                 <div>
@@ -205,7 +225,7 @@ const RoomTable = () => {
                                                         {roomsSelected} rooms for
                                                     </section>
                                                     <section>
-                                                        {totalPrice}
+                                                        ₹ {totalPrice}
                                                     </section>
                                                 </div>
                                                 :

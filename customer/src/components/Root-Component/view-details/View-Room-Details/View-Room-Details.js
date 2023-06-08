@@ -5,27 +5,21 @@ import { useNavigate } from 'react-router-dom'
 import axios from '../../../../helpers/axios'
 import { Icon } from 'react-icons-kit'
 import Footer from '../../Footer/Footer'
-import { FaCheck } from 'react-icons/fa';
-import { FaTimes } from 'react-icons/fa';
-import { Box, Button, Modal } from '@mui/material'
-import { location2 } from 'react-icons-kit/icomoon/location2'
-import { cross } from 'react-icons-kit/icomoon/cross'
+import rupee from '../../../../assets/rupee-indian.png'
+import { FaMale } from "react-icons/fa";
+import { FaBaby } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
+import { MdOutlineFreeBreakfast } from "react-icons/md";
+import { MdBalcony } from "react-icons/md";
+import { IoMdFlower } from "react-icons/io";
+import { TbMassage } from "react-icons/tb";
+import { MdOutlineSportsTennis } from "react-icons/md";
 
 
-const style = {
-    overFlowY: "visible",
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%',
-    height: '35rem',
-    bgcolor: 'background.paper',
-    border: '1x solid #000',
-    boxShadow: 1000,
-    p: 1,
 
-};
+
+
+
 
 const ViewRoomDetails = () => {
     useEffect(() => {
@@ -33,21 +27,25 @@ const ViewRoomDetails = () => {
         // eslint-disable-next-line
     }, [])
     const navigate = useNavigate()
+
+
+    //use params
+    const { resortId, roomType, roomId } = useParams();
+
     // eslint-disable-next-line
     const [resortDetails, setResortDetails] = useState();
     const [roomDetails, setRoomDetails] = useState();
-    const { resortId, roomType, roomId } = useParams();
     const [resortname, setResortName] = useState('')
-    const [open, setOpen] = useState(false);
+    const [imgArr, setImgArr] = useState([])
+    const [currentImg, setCurrentImg] = useState('')
 
-    // console.log("resortId => ", resortId)
-    // console.log("roomType => ", roomType)
-    // console.log("roomId => ", roomId)
     const fetchRoomDetails = async () => {
         await axios.get(`/resort-room/${resortId}/${roomId}`)
             .then((res) => {
-                console.log(res.data.data)
+                console.log('room', res.data.data)
                 setRoomDetails(res.data.data)
+                setImgArr(res.data.data.imgUrl)
+                setCurrentImg(res.data.data.imgUrl[0])
             })
             .catch((err) => {
                 console.log(err)
@@ -64,26 +62,12 @@ const ViewRoomDetails = () => {
     useEffect(() => {
         fetchRoomDetails();
         getresort();
+        setResortName(resortname)
         // eslint-disable-next-line
     }, [])
 
 
-    // MODAL
-
-    const handleOpen = (imgArr) => {
-        setOpen(true);
-        // setFullimg(imgArr)
-        console.log(imgArr)
-    };
-    const handleClose = () => { setOpen(false) };
-
-    //HANDLE RESERVE BUTTON
-    const handleReserve = (resortname, resortId, roomId) => {
-        console.log(resortname, resortId, roomId)
-        navigate(`/booking-summary/${resortname}/${resortId}/${roomId}`)
-
-    }
-    if (!roomDetails) {
+    if (!roomDetails || !resortDetails) {
         return (
             <>.</>
         )
@@ -92,175 +76,174 @@ const ViewRoomDetails = () => {
     return (
         <>
             <div className='view-details-container'>
-                <div className='row1'>
-                    <section className='imgwrap' data-aos='flip-right'>
-                        <img src={roomDetails?.imgUrl[3]} alt='' />
-                        <div className='show-more-photos-btn' >
-                            <button variant="contained" onClick={() => handleOpen(roomDetails?.imgUrl)}>More Photos</button>
-                        </div>
-                    </section>
-                </div>
-                <section className='content-wrap' style={{ height: 'fit-content' }} >
-                    <div>
-                        <h2>{roomType}</h2>
-                        <div>
-                            <div>Adults <span>{roomDetails?.adultCapacity}</span></div>
-                            <div>Children<span>{roomDetails?.childrenCapacity}</span></div>
-                        </div>
-                        <div className='book-now-btn'  >
-                            {(roomDetails.availableRooms > 0 && roomDetails.availableRooms <= 4) ? (
-                                <p style={{ width: '100%', color: '#000080', borderBottom: '1px solid lightgrey' }}>{`Huryy! only ${roomDetails.availableRooms} available`}</p>
-                            ) : (null)}
-                            {(roomDetails.availableRooms === '0') ? (
-                                <Button id='sold-out' style={{ backgroundColor: 'red', float: 'right' }}>
-                                    SOLD OUT</Button>
-                            ) : (
-                                <Button id='booknowbtn' variant="contained" color="success"
-                                    onClick={
-                                        () => {
-                                            handleReserve(resortname, resortId, roomDetails.roomId,)
-                                        }}>BOOK NOW</Button>
-                            )}
-                        </div >
+                <div className='imgwrap'>
+                    <div className='imgdiv'>
+                        <img src={currentImg} alt='roomImg' />
+                    </div>
+                    <div className='imgscroll'>
+                        {imgArr.map((img, i) => {
+                            return (
+                                <img src={img} alt='' onMouseEnter={() => setCurrentImg(img)}
+                                    style={{ width: '5rem' }} />
+                            )
+                        })}
 
                     </div>
-                    <p >
-                        Our {roomDetails?.adultCapacity} -bed capacity {roomDetails?.roomType} rooms
-                        are sleek and showcase understated comfort and design.
-                        <br />
-                        Slip into your complimentary bathrobe and slippers and make yourself at home.
-                    </p>
-                </section>
-
-            </div >
+                </div>
 
 
+                {/* content wrapper */}
+                <div className='contentWrap'>
+                    <h3 className='heading'>{roomType}</h3>
+                    <h5>Capacity</h5>
+                    <div className='row1'>
+                        <div>
+                            <FaMale className='icon' />
+                            <p>Adults</p>
+                            <p>{roomDetails.adultCapacity}</p>
+                        </div>
+                        <div>
+                            <FaBaby className='icon' />
+                            <p>Children</p>
+                            <p>{roomDetails.childrenCapacity}</p>
+                        </div>
+                    </div>
 
-            <div className='view-details-container-row2'  >
-                <h2>Aminities & Services</h2>
-                <div>
+                    <h5>Prices</h5>
+                    <div className='row2'>
+                        <div>
+                            <p>Weekday Price Per Night : <span>
+                                <img src={rupee} alt='' style={{ opacity: '0.6' }} />
+                                {roomDetails.weekdayPerNightRate}</span></p>
+                        </div>
+                        <div>
+                            <p>Weekend Price Per Night : <span>
+                                <img src={rupee} alt='' style={{ opacity: '0.6' }} />
+                                {roomDetails.weekendPerNightRate}</span></p>
+                        </div>
+                    </div>
 
-                    <section>
-                        <p >{roomDetails.Wifi ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Wifi</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.airconditioned ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Air conditioned</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.balcony ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Balcony</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.bedsideTable ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>bedside Table</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.breakfast ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Breakfast</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.childrenCapacity ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Children Capacity</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.fitnessCenter ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Fitness Center</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.spa ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Spa</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.swimmingPool ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Swimming Pool</span></p>
-                    </section>
-                    <section>
-                        <p >{roomDetails.wardrobe ? <span className="room-amenities-yes"><FaCheck style={{ color: 'green' }} /></span> : <span className="room-amenities-no"><FaTimes style={{ color: 'darkred' }} /></span>}
-                            <span syle={{ marginLeft: '1rem' }}>Wardrobe</span></p>
-                    </section>
+                    <h5>Specilitites</h5>
+                    <div className='row3'>
+                        <div className='aminity'>
+                            <MdOutlineFreeBreakfast style={{ color: '#BB8B02' }} />
+                            <span>Breakfast</span>
+                        </div>
+                        <div className='aminity'>
+                            <MdBalcony style={{ color: 'darkblue' }} />
+                            <span>Balcony</span>
+                        </div>
+                        <div className='aminity'>
+                            <IoMdFlower style={{ color: 'orangered' }} />
+                            <span>Garden View</span>
+                        </div>
+                        <div className='aminity'>
+                            <TbMassage />
+                            <span>Spa</span>
+                        </div>
+                        <div className='aminity'>
+                            <MdOutlineSportsTennis style={{ color: 'brown' }} />
+                            <span>Kids play area</span>
+                        </div>
+                    </div>
+
+                    <h5>Aminties</h5>
+                    <div className='row4'>
+                        {roomDetails.Wifi ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Wifi</span>
+                            </div>
+                        ) : null}
+
+                        {roomDetails.airconditioned ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Air Conditioned</span>
+                            </div>
+                        ) : null}
+
+                        {roomDetails.bedsideTable ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Bedside Table</span>
+                            </div>
+                        ) : null}
+
+                        {roomDetails.fitnessCenter ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Fitness Center</span>
+                            </div>
+                        ) : null}
+
+
+
+                        {roomDetails.mosquitonet ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Mosquitonet</span>
+                            </div>
+                        ) : null}
+
+                        {roomDetails.roomService ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Room Service</span>
+                            </div>
+                        ) : null}
+
+                        {roomDetails.swimmingPool ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Swimming Pool</span>
+                            </div>
+                        ) : null}
+
+
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Seating Area</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Telephone</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Work desk</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Linen</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Toiletries</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Wake up calls</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>Laundry service</span>
+                        </div>
+                        <div className='aminity'>
+                            <FaCheck className='icon' />
+                            <span>In room dine</span>
+                        </div>
+                        {roomDetails.hotNcoldshower_24hrs ? (
+                            <div className='aminity'>
+                                <FaCheck className='icon' />
+                                <span>Hot & Cold shower </span>
+                            </div>
+                        ) : null}
+
+                    </div>
                 </div>
             </div>
-            <div className='property-locations' style={{ border: '0' }}>
-                <div className='location-header'>
-                    <div><Icon icon={location2} size={30} style={{ color: 'orange' }}></Icon></div>
-                    <h3 style={{}}>Cuba Goa Propery Locations</h3>
-                </div>
-                <div className='dummy-border' ></div>
 
-                <div className='location-addresses'>
-                    <section className='address-section'>
-                        <h6>CUBA BEACH BUNGALOWS</h6>
-                        <div></div>
-                        <p>Center of Palolem Beach, Palolem Beach, Canacona, Goa - 403702</p>
-                    </section>
-                    <section className='address-section'>
-                        <h6>CUBA PATNEM BEACH BUNGALOWS</h6>
-                        <div></div>
-                        <p>North side of Patnem Beach, Palolem-Patnem Road, Canacona, Goa - 403702</p>
-                    </section>
-                    <section className='address-section'>
-                        <h6>CUBA PREMIUM HUTS</h6>
-                        <div></div>
-                        <p>Center of Palolem Beach, Palolem Beach, Canacona, Goa - 403702</p>
-                    </section>
-                    <section className='address-section'>
-                        <h6>PALOLEM BEACH RESORT</h6>
-                        <div></div>
-                        <p>Entrance of Palolem Beach, Besides car parking area, Palolem Beach, Canacona, Goa - 403702</p>
-                    </section>
-                    <section className='address-section'>
-                        <h6>CUBA AGONDA</h6>
-                        <div></div>
-                        <p>Tambli Val, Agonda Beach Road, Agonda, Canacona, Goa - 403702</p>
-                    </section>
-                </div>
-            </div>
-
-
-            <div >
-                <Modal
-                    style={{ border: '5px solid red' }}
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
-                >
-                    <Box sx={{
-                        ...style,
-                        overflowY: 'scroll',
-                        padding: '0.4rem',
-                        backgroundColor: '#f2f2f2',
-                        borderRadius: '4px',
-                        position: 'relative'
-                    }}>
-                        <Icon icon={cross} size={25} style={
-                            {
-                                marginTop: '0',
-                                position: 'absolute',
-                                top: '2%',
-                                left: '2%',
-                                color: 'orangered',
-                            }}
-                            onClick={handleClose} />
-
-                        {roomDetails?.imgUrl?.map((el) => {
-                            return (
-                                <img
-                                    src={el}
-                                    alt=''
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        marginBottom: '1rem',
-                                    }}
-                                />
-                            );
-                        })}
-                    </Box>
-                </Modal>
-            </div>
 
             <Footer />
         </>

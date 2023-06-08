@@ -51,7 +51,7 @@ function About() {
             <h4>
               {aboutUsData?.heading3}
             </h4>
-            <p style={{ paddingRight: '2rem' }}>
+            <p>
               {aboutUsData?.description}
             </p>
           </div>

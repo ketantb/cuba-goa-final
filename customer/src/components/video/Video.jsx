@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast'
 
 
-
 const Video = () => {
 
   const navigate = useNavigate()
@@ -130,42 +129,64 @@ const Video = () => {
 
 
 
-      <div className='home-search-box-desktop'>
+      {/* <div className='home-search-box-desktop'>
         <div>
-          <div>
-            <input type="date" id="myDate" placeholder="Check-in Date"
-              name='checkindate' value={checkindate} onChange={(e) => setCheckindate(e.target.value)} />
-          </div>
-          <div>
-            <input type="date" id="myDate" placeholder="Check-in Date"
-              name='checkoutdate' value={checkoutdate} onChange={(e) => setCheckoutdate(e.target.value)} />
-          </div>
-          <div>
-            <select id='select' name='resort' value={resortId}
-              onChange={(e) => setResortId(e.target.value)}>
-              <option>SELECT RESORT</option>
-              {allProperties.map((resort, i) => {
-                return (
-                  <option
-                    value={resort._id}>{resort.resortName}</option>
-                )
-              })}
-            </select>
-          </div>
-          <div onClick={handleCheckAvailable} style={{ paddingTop: '.35rem', fontSize: '.9rem' }}>
-            CHECK AVAILABILITY
-          </div>
+          <label className='dates'>Check-in date</label>
+          <input type="date" id="myDate" className="custom-date-input" placeholder="dd/mm/yyyy"
+            name='checkindate' value={checkindate} onChange={(e) => setCheckindate(e.target.value)} />
+        </div>
+        <div>
+          <label>CheckIn Date</label>
+          <input type="date" id="myDate" className="custom-date-input" placeholder="dd/mm/yyyy"
+            name='checkoutdate' value={checkoutdate} onChange={(e) => setCheckoutdate(e.target.value)} />
+        </div>
+        <div>
+          <select id='select' name='resort' value={resortId}
+            onChange={(e) => setResortId(e.target.value)}>
+            <option>SELECT RESORT</option>
+            {allProperties.map((resort, i) => {
+              return (
+                <option
+                  value={resort._id}>{resort.resortName}</option>
+              )
+            })}
+          </select>
+        </div>
+        <div onClick={handleCheckAvailable} style={{ paddingTop: '.35rem', fontSize: '.9rem' }}>
+          CHECK AVAILABILITY
+        </div>
+      </div> */}
+
+
+
+      <div className='home-search-box-desktop'>
+        <div className='select-btnwrap'>
+          <label>Looking For?</label>
+          <select id='select' name='resort' value={resortId}
+            onChange={(e) => setResortId(e.target.value)}>
+            <option>SELECT RESORT</option>
+            {allProperties.map((resort, i) => {
+              return (
+                <option
+                  value={resort._id}>{resort.resortName}</option>
+              )
+            })}
+          </select>
+        </div>
+        <div className='dates-wrap'>
+          <label className='dates'>Check-in Date</label>
+          <input type="date" id="myDate" className="custom-date-input" placeholder="dd/mm/yyyy"
+            name='checkindate' value={checkindate} onChange={(e) => setCheckindate(e.target.value)} />
+        </div>
+        <div className='dates-wrap'>
+          <label className='dates'>Check-out Date</label>
+          <input type="date" id="myDate" className="custom-date-input" placeholder="dd/mm/yyyy"
+            name='checkoutdate' value={checkoutdate} onChange={(e) => setCheckoutdate(e.target.value)} />
         </div>
 
-        <div className='row2'>
-          {/* <label style={{ letterSpacing: '2px', paddingLeft: '.1rem', fontWeight: 'bold' }}>SEARCH RESORT</label> */}
-
-
-
-
+        <div onClick={handleCheckAvailable} >
+          CHECK <br/>AVAILABILITY
         </div>
-
-
       </div>
 
     </div>

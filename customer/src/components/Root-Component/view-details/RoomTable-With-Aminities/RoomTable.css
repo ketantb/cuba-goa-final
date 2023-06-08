@@ -1,55 +1,69 @@
-.rooms-table-container{
+.rooms-table-container {
     margin-top: 10rem;
+    padding: 0px 115px;
 }
 
-.rooms-table-header{
+.rooms-table-row .cell:first-child>p>span{
+    cursor: pointer;
+}
+
+.rooms-table-row .cell:first-child>p>span:hover{
+    color: #00487a;
+}
+
+.rooms-table-header {
     background-color: #3376b0;
     color: #ffff;
     font-size: 18px;
 }
 
-.rooms-table-aminities{
+.rooms-table-aminities {
     /* border-top: 2px solid rgb(106, 106, 106); */
 }
 
-.header-cell .cell:first-child{
-    width: 450px;
+.header-cell .cell:first-child {
+    width: 400px;
 }
 
-.header-cell .cell:nth-child(2){
+.header-cell .cell:nth-child(2) {
     width: 150px;
     /* border: 1px solid black; */
 }
 
-.header-cell .cell:nth-child(3){
+.header-cell .cell:nth-child(3) {
     width: 200px;
 }
 
-.rooms-table-aminities{
+.rooms-table-aminities {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    width: 450px;
+    width: 400px;
 }
 
-.rooms-table-sleeps{
-    width: 150px;
+.rooms-table-sleeps {
+    width: 125px;
     /* border: 1px solid black; */
 }
 
-.rooms-table-prices{
-    width: 200px;
+.rooms-table-prices {
+    width: 175px;
 }
 
-.rooms-table-yourchoices{
+.rooms-table-total-block {
+    width: 225px;
 }
 
-.rooms-table-yourchoices span:first-child{
+.rooms-table-yourchoices {
+    width: 150px;
+}
+
+.rooms-table-yourchoices span:first-child {
     color: green;
     font-size: 18px;
 }
 
-.rooms-table-yourchoices span:nth-child(2){
+.rooms-table-yourchoices span:nth-child(2) {
     margin-left: 5px;
     font-size: 14px;
     color: green;
@@ -57,15 +71,15 @@
     padding-top: 3px;
 }
 
-.rooms-table-aminities section{
+.rooms-table-aminities section {
     margin-right: 1rem;
 }
 
-.rooms-table-select-amt{
+.rooms-table-select-amt {
     width: 100px;
 }
 
-.rooms-table-select-amt .soldout-btn{
+.rooms-table-select-amt .soldout-btn {
     color: #ffff;
     padding: 5px 10px;
     background-color: red;
@@ -73,14 +87,20 @@
     font-weight: 500;
 }
 
-.rooms-table-select-amt select{
+.rooms-table-select-amt select {
     width: 90px;
     padding: 2px 5px;
     cursor: pointer;
     outline: none;
 }
 
-.i-will-reserve-btn{
+.boxvisible {}
+
+.boxhidden {
+    display: none;
+}
+
+.i-will-reserve-btn {
     width: 100%;
     background-color: #0071c2;
     color: #ffff;
@@ -89,11 +109,18 @@
     font-weight: 500;
 }
 
-.i-will-reserve-btn:hover{
+.i-will-reserve-btn:hover {
     background-color: #00487a;
 }
 
-.rooms-table-total-block div section ul li{
+.rooms-table-total-block div section ul li {
     margin-left: 16px;
     margin-top: 5px;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .rooms-table-container {
+        padding: 0px 0px;
+    }
 }

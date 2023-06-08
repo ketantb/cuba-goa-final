@@ -1,6 +1,6 @@
 import './App.css';
 
-import {Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import React from 'react';
 import { useState } from 'react';
 import Register from './components/Root-Component/Register/Register'
@@ -24,6 +24,12 @@ import DatesReducer from './components/reducer/DatesReducer';
 import OurProperties from './components/Root-Component/OurProperties/OurProperties';
 import ContactUs from './components/Root-Component/Contact/ContactUs';
 import SignIn from './components/Root-Component/signin/Signin';
+
+
+import NorthGoa from './components/Root-Component/things-to-do/NorthGoa'
+import SouthGoa from './components/Root-Component/things-to-do/SouthGoa'
+import Activity from './components/Root-Component/things-to-do/Activity'
+import Wedding from './components/Root-Component/destination-wedding/Wedding'
 import { Toaster } from 'react-hot-toast';
 import RoomTable from './components/Root-Component/view-details/RoomTable-With-Aminities/RoomTable';
 
@@ -56,10 +62,18 @@ function App() {
           <Route path="/spa" element={<Spa />}></Route>
           <Route path='/our-properties' element={<OurProperties />}></Route>
           <Route path='/:resortname/:id/rooms' element={<ViewDetails />} ></Route>
-          <Route path='/:resortname/:id/rooms-table' element={<RoomTable/>} ></Route>
+          <Route path='/:resortname/:id/rooms-table' element={<RoomTable />} ></Route>
           <Route path='/spa-details/:spaId' element={<SpaDetails />} ></Route>
           <Route path='/contactus' element={<ContactUs />}></Route>
           <Route path='/terms-conditions' element={<TermsConditions />}></Route>
+
+
+          {/* things to do */}
+          <Route path="/north-goa" element={<NorthGoa />}></Route>
+          <Route path="/south-goa" element={<SouthGoa />}></Route>
+          <Route path="/activity" element={<Activity />}></Route>
+          <Route path="/activity" element={<Activity />}></Route>
+          <Route path='/destination-wedding' element={<Wedding />}></Route>
         </Routes>
 
 

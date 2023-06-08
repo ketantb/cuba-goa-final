@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './Header.css';
 import { Box, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-// eslint-disable-next-line
-// import logo from '../../assets/logo.png';
 import { FaAlignJustify } from 'react-icons/fa';
 import { Icon } from 'react-icons-kit';
 import { cross } from 'react-icons-kit/icomoon/cross';
@@ -13,8 +11,15 @@ import { toast } from 'react-hot-toast'
 
 const Header = ({ auth, setAuth }) => {
   const navigate = useNavigate()
-  const [resortId, setResortId] = useState("")
   const [allProperties, setAllProperties] = useState();
+
+
+  let restaurants = ['cuba pure veg', 'bebinca']
+  let thingstodo = [
+    { activity: 'north goa', pagelink: '/north-goa' },
+    { activity: 'south goa', pagelink: '/south-goa' },
+    { activity: 'activity', pagelink: '/activity' },
+  ]
 
   const getPropertiesData = async () => {
     await axios.get(`/hotelbook`)
@@ -26,6 +31,9 @@ const Header = ({ auth, setAuth }) => {
         console.log(err)
       })
   }
+  useEffect(() => {
+    getPropertiesData();
+  }, [])
 
   const token = localStorage.getItem('token')
   useEffect(() => {
@@ -34,25 +42,6 @@ const Header = ({ auth, setAuth }) => {
   }, [token])
 
 
-
-  /*    navbar changing its color   */
-  const [navBackground, setNavBackground] = useState('transparent');
-  //handle scroll
-  const handleScroll = () => {
-    if (window.pageYOffset > 20) {
-      setNavBackground('rgb(242, 246, 248)');
-    } else {
-      setNavBackground('transparent');
-    }
-  }
-  // //useffect
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-  // // ***navbar changin its color ends
 
 
   /*  handling responsive navbar */
@@ -70,81 +59,151 @@ const Header = ({ auth, setAuth }) => {
   }
   /*   handling responsive navbar ends */
 
-  useEffect(() => {
 
-    if (resortId === "") {
-      getPropertiesData();
-      console.log('if block ran')
+  //SHOW ROOMS
+  const viewRooms = (id, resortname) => {
+    navigate(`/${resortname}/${id}/rooms`)
+    handleCloseNavbar();
+    console.log(resortname, id)
+  }
+
+  // handl on click my bookings
+  const handleonclickmybookings = () => {
+    if (auth) {
+      navigate('/my-bookings')
     }
-    else if (resortId) {
-      let resortData = allProperties.find((el) => {
-        // eslint-disable-next-line
-        return el._id == resortId
-      })
-      navigate(`/${resortData.resortName}/${resortData._id}/rooms`)
-      // console.log("resort Data => ", resortData)
-      handleCloseNavbar();
+    else {
+      navigate('/signin')
+      toast('Signin to your account to see your bookings')
     }
-    // eslint-disable-next-line
-  }, [resortId])
+  }
+
+  if (!allProperties) {
+    return (
+      <h6>.</h6>
+    )
+  }
 
   return (
-    <div className='app-bar' style={{ backgroundColor: navBackground }}>
+    <div className='app-bar' style={{ backgroundColor: '#033F91 ' }}>
 
       {/* desktop view navbar */}
       <div className='desktop-section'>
+        <section className='appbar-col-1'>
+          <div className='r-image'>
+            <img src={cubaGoaLogo} alt='cuba-goa-logo' onClick={() => { navigate('/') }} />
+          </div>
+        </section>
         <section className='appbar-col-2'>
           <Box className='col-2-box'>
             <Button className='btn-item' onClick={() => navigate('/')}>Home</Button>
-            {!allProperties ?
-              <select className='header-dropdown'>
-                <option>CUBA AGONDA</option>
-              </select> :
-              <select className='header-dropdown' onChange={(e) => { setResortId(e.target.value) }} style={{ marginTop: '2.95rem' }}>
-                {/* <option>CUBA AGONDA</option> */}
-                {allProperties.map((el) => {
+            <Button className='btn-item' onClick={() => navigate('/aboutus')}>About Us</Button>
+            <div className="dropdown"  >
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style={{
+                  color: 'white', fontSize: '.8rem',
+                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                }}>
+                OUR HOTELS
+              </button>
+              <div className="dropdown-menu" style={{ width: '10rem' }}>
+                {allProperties.map((property, index) => {
                   return (
-                    <option value={el._id}>{el.resortName.toUpperCase()}</option>
+                    <div >
+                      <p onClick={() => viewRooms(property._id, property.resortName)}
+                      >
+                        {property.resortName}
+                      </p>
+                    </div>
                   )
                 })}
-              </select>
-            }
-            <Button className='btn-item' onClick={() => navigate('/spa')}>SPA</Button>
-
-            {/* <Button className='btn-item' onClick={() => navigate('/our-properties')}>OUR PROPERTIES</Button> */}
-            <Button className='btn-item' onClick={() => navigate('/events')}>Events</Button>
-            <section className='appbar-col-1'>
-              {/* <Typography className='title' onClick={() => navigate('/')}
-                style={{ cursor: 'pointer', fontSize: '34px'}}>CUBA GOA</Typography> */}
-              <div className='r-image'>
-                <img src={cubaGoaLogo} alt='cuba-goa-logo' />
               </div>
-              {/* <div className='r1'>HOTEL - SPA - RESTAURANT</div>
-                <div className='r2'>
-                  <AiFillStar/>
-                  <AiFillStar/>
-                  <AiFillStar/>
-                </div> */}
-            </section>
-            <Button className='btn-item' onClick={() => navigate('/aboutus')}>About Us</Button>
+            </div>
+            <Button className='btn-item' onClick={() => navigate('/destination-wedding')}>DESTINATION WEDDINGS</Button>
+            <Button className='btn-item' onClick={() => navigate('/events')}>CELEBRATE WITH US</Button>
+
+            <div className="dropdown"  >
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style={{
+                  color: 'white', fontSize: '.8rem',
+                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                }}>
+                OUR RESTAURANTS
+              </button>
+              <div className="dropdown-menu" style={{ width: '10rem' }}>
+                {restaurants.map((restaurantName, index) => {
+                  return (
+                    <div >
+                      <p >
+                        {restaurantName}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            {/* things to do */}
+            <div className="dropdown"  >
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style={{
+                  color: 'white', fontSize: '.8rem',
+                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                }}>
+                THINGS TO DO
+              </button>
+              <div className="dropdown-menu" style={{ width: '10rem' }}>
+                {thingstodo.map((activity, index) => {
+                  return (
+                    <div key={index + 1}>
+                      <p
+                        onClick={() => {
+                          navigate(`${activity.pagelink}`)
+                        }}>
+                        {activity.activity}
+                      </p>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            <Button className='btn-item' onClick={() => navigate('/spa')}>SPA</Button>
             <Button className='btn-item' onClick={() => navigate('/gallery')}>GALLERY</Button>
             <Button className='btn-item' onClick={() => navigate('/contactus')}>Contact Us</Button>
-            {auth ? (<Button className='btn-item' onClick={() => { navigate('/my-bookings') }}>MY BOOKINGS</Button>) : (null)}
-
-            {auth ?
-              (<Button className='btn-item' onClick={() => {
-                toast.loading('signing out...')
-                localStorage.clear();
-                navigate('/');
-                toast.dismiss()
-                toast.success('LoggedOut successfully!')
-                
-              }} >LOGOUT</Button>)
-              :
-              (<Button className='btn-item' onClick={() => navigate('/signin')}>LOGIN</Button>)}
+            {/* <Button className='btn-item' onClick={handleonclickmybookings}>MY BOOKINGS</Button> */}
+            {/* instead of my bookings menu dropdown for other options */}
+            <div className="dropdown dropdownmenus"  >
+              <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                MENU
+              </button>
+              <div className="dropdown-menu" >
+                {auth ? (
+                  <div>
+                    <p onClick={() => {
+                      localStorage.clear('token');
+                      navigate('/');
+                      toast.success('Logged out successfully')
+                    }}>Logout</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p onClick={() => { navigate('/signin') }}>Login</p>
+                  </div>
+                )}
+                {auth ? (
+                  <div onClick={() => { navigate('/my-bookings') }}>
+                    <p>my bookings</p>
+                  </div>) : (null)}
+              </div>
+            </div>
+            {/* ends */}
           </Box>
 
-          <div className='menu' style={{ width: '100%', marginLeft: '90%' }} onClick={handleOpenNavbar}><FaAlignJustify style={{ color: 'darkblue' }} /></div>
+          <div className='menu' style={{ width: '100%', marginLeft: '10%' }}
+            onClick={handleOpenNavbar}><FaAlignJustify style={{ color: 'white' }} /></div>
 
         </section>
       </div>
@@ -157,37 +216,98 @@ const Header = ({ auth, setAuth }) => {
             <Icon className='close-cross-icon' icon={cross} size={15} style={{ float: 'left', paddingLeft: '1rem', marginTop: '1rem', color: 'lightblue' }}
               onClick={handleCloseNavbar} />
           </div>
-          <Button className='btn-item' onClick={() => { navigate('/'); handleCloseNavbar() }}>Home</Button>
-          {!allProperties ?
-            <select className='head-dropdown-resp' style={{ fontWeight: 'bold' }}>
-              <option>CUBA AGONDA</option>
-            </select> :
-            <select className='head-dropdown-resp' onChange={(e) => { setResortId(e.target.value) }}
-              style={{ fontWeight: 'bold' }}>
-              {/* <option>CUBA AGONDA</option> */}
-              {allProperties.map((el) => {
+          <Button className='btn-item' onClick={() => { navigate('/'); handleCloseNavbar(); }}>Home</Button>
+          <Button className='btn-item' onClick={() => { navigate('/aboutus'); handleCloseNavbar(); }}>About Us</Button>
+          <div className="dropdown"  >
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              OUR HOTELS
+            </button>
+            <div className="dropdown-menu" style={{ width: '10rem' }}>
+              {allProperties.map((property, index) => {
                 return (
-                  <option className='head-dropdown-resp' value={el._id}>{el.resortName.toUpperCase()}</option>
+                  <div >
+                    <p onClick={() => { viewRooms(property._id, property.resortName); }}
+
+                    >
+                      {property.resortName}
+                    </p>
+                  </div>
                 )
               })}
-            </select>
-          }
-          <Button className='btn-item' onClick={() => { navigate('/spa'); handleCloseNavbar() }}>SPA</Button>
-          <Button className='btn-item' onClick={() => {navigate('/events');handleCloseNavbar()}}>Events</Button>
-          <Button className='btn-item' onClick={() => { navigate('/gallery'); handleCloseNavbar() }}>GALLERY</Button>
-          <Button className='btn-item' onClick={() => { navigate('/aboutus'); handleCloseNavbar() }}>About Us</Button>
-          <Button className='btn-item' onClick={() => {navigate('/contactus');handleCloseNavbar()}}>Contact Us</Button>
-          {auth ? (<Button className='btn-item' onClick={() => { navigate('/my-bookings'); handleCloseNavbar() }}>MY BOOKINGS</Button>)
-            : (null)}
+            </div>
+          </div>
+          <Button className='btn-item' onClick={() => { navigate('/destination-wedding'); handleCloseNavbar(); }}>DESTINATION WEDDINGS</Button>
+          <Button className='btn-item' onClick={() => { navigate('/events'); handleCloseNavbar(); }}>CELEBRATE WITH US</Button>
+          <div className="dropdown"  >
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              OUR RESTAURANTS
+            </button>
+            <div className="dropdown-menu" style={{ width: '10rem' }}>
+              {restaurants.map((restaurantName, index) => {
+                return (
+                  <div >
+                    <p >
+                      {restaurantName}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+          {/* things to do */}
+          <div className="dropdown"  >
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              THINGS TO DO
+            </button>
+            <div className="dropdown-menu" style={{ width: '10rem' }}>
+              {thingstodo.map((activity, index) => {
+                return (
+                  <div >
+                    <p
 
-          {auth ?
-            (<Button className='btn-item' onClick={() => {
-              localStorage.clear();
-              navigate('/');
-              handleCloseNavbar()
-            }} >LOGOUT</Button>)
-            :
-            (<Button className='btn-item' onClick={() => { navigate('/signin'); handleCloseNavbar() }}>LOGIN</Button>)}
+                      onClick={() => { navigate(`${activity.pagelink}`); handleCloseNavbar(); }}>
+                      {activity.activity}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+          <Button className='btn-item' onClick={() => { navigate('/spa'); handleCloseNavbar(); }}>SPA</Button>
+          <Button className='btn-item' onClick={() => { navigate('/gallery'); handleCloseNavbar(); }}>GALLERY</Button>
+          <Button className='btn-item' onClick={() => { navigate('/contactus'); handleCloseNavbar(); }}>Contact Us</Button>
+          {/* instead of my bookings menu dropdown for other options */}
+          <div className="dropdown dropdownmenus"  >
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              MENU
+            </button>
+            <div className="dropdown-menu" >
+              {auth ? (
+                <div>
+                  <p onClick={() => {
+                    localStorage.clear('token');
+                    handleCloseNavbar();
+                    navigate('/');
+                    toast.success('Logged out successfully')
+
+                  }}>Logout</p>
+                </div>
+              ) : (
+                <div>
+                  <p onClick={() => { navigate('/signin'); handleCloseNavbar(); }}>Login</p>
+                </div>
+              )}
+              {auth ? (
+                <div onClick={() => { navigate('/my-bookings'); handleCloseNavbar(); }}>
+                  <p>my bookings</p>
+                </div>) : (null)}
+            </div>
+          </div>
+          {/* ends */}
         </Box>
       </div>
 

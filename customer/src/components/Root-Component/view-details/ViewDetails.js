@@ -8,9 +8,12 @@ import {
 } from '@coreui/react'
 import { FaUser } from 'react-icons/fa';
 import { TiUser } from 'react-icons/ti';
+import { TiStarFullOutline } from 'react-icons/ti';
+import { AiOutlineCaretRight } from 'react-icons/ai';
 import Images from './Images';
 import RoomCard from './RoomCard/RoomCard/RoomCard';
 import Reviews from './reviews/Reviews';
+import ResortVideo from './Resort-Videos/ResortVideo';
 
 const ViewDetails = () => {
   const navigate = useNavigate()
@@ -64,16 +67,40 @@ const ViewDetails = () => {
     // eslint-disable-next-line
   }, [id])
 
+  //get reviews of property
+
+  const [reviewsStatus, setReviewsStatus] = useState(false)
+  const getRatingList = async () => {
+    // console.log('id=>', id)
+    const response = await axios.get(`/get-reviews/${id}`)
+    console.log('reviews', response.data.list)
+    if (response.data.list.length <= 0) {
+      setReviewsStatus(false)
+    }
+    else {
+      setReviewsStatus(true)
+      setReviews(response.data.list)
+
+    }
+  }
+  useEffect(() => {
+    getRatingList();
+    //eslint-disable-next-line
+  }, [])
 
 
 
+  const resortVideoObject = {
+    palolemVideo: 'https://drive.google.com/file/d/1B8X-yItktadkVEnL7puUUX_0k61myBli/view?usp=sharing'
+  }
 
   return (
     <>
 
 
       <div className='view-details-wrapper'>
-        <Images images={imgArr} interval={1800} />
+
+        <ResortVideo resortVideoObject={resortVideoObject} resortname={resortname} />
 
         <div className='resort-name'>
           <h2 >{resortname}</h2>
@@ -117,7 +144,7 @@ const ViewDetails = () => {
               Search
             </button>
           </div> */}
-          <CTable>
+          <CTable responsive>
             <CTableHead className='view-details-roomtable-header'>
               <CTableRow>
                 <CTableHeaderCell className='cell' scope="col">Room type</CTableHeaderCell>
@@ -131,13 +158,13 @@ const ViewDetails = () => {
                   return (
                     <CTableRow className='view-details-roomtable-row' key={room._id}>
                       <CTableHeaderCell onClick={() => navigate(`/${id}/${room.roomType}/${room.roomId}/details`)}
-                        className='cell' scope="row" style={{color: '#3376b0', fontWeight: '700'}}>
-                        {<p>{room.roomType}</p>}
+                        className='cell' scope="row" style={{ color: '#3376b0', fontWeight: '700', borderRight: '1px solid #3376b0' }}>
+                        <p><span><AiOutlineCaretRight style={{marginRight: '5px', color: 'goldenrod'}}/></span>{room.roomType}</p>
                         {/* {<p style={{color: 'black', fontsize: '12px'}}>{room.seaView ? "with sea view" : null}</p>} */}
                       </CTableHeaderCell>
-                      <CTableDataCell className='cell'>
-                        <span><FaUser /> × <span>{room.adultCapacity}</span></span>
-                        <span style={{ marginLeft: '15px' }}><TiUser /> × <span>{room.childrenCapacity}</span></span>
+                      <CTableDataCell className='cell' style={{ borderRight: '1px solid #3376b0' }}>
+                        <span><FaUser style={{color: '#3376b0'}}/> × <span>{room.adultCapacity}</span></span>
+                        <span style={{ marginLeft: '15px' }}><TiUser style={{color: '#3376b0'}}/> × <span>{room.childrenCapacity}</span></span>
                       </CTableDataCell>
                       <CTableDataCell className='cell'>
                         <button className='show-prices-btn' onClick={() => navigate(`/${resortname}/${id}/rooms-table`)}>
@@ -176,7 +203,42 @@ const ViewDetails = () => {
         {/* section3 booking section ends */}
 
 
-        <Reviews reviews={reviews} setReviews={setReviews} id={id} />
+        {/* <Reviews reviews={reviews} setReviews={setReviews} id={id} /> */}
+        <div style={{ width: '85%', margin: 'auto', marginTop: '3rem' }}>
+          {reviewsStatus ? (<h5>REVIEWS</h5>) : (null)}</div>
+        <div className='review-outer-wrap'>
+          {
+            reviewsStatus ? (
+              <div className='review-inner-wrap'>
+                {reviews.map((el, i) => {
+                  return (
+                    <div className='review-card'>
+                      <section style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <h5>{el.name}</h5>
+                        <div>
+                          {[...Array(5)].map(() => {
+                            return (
+                              <TiStarFullOutline style={{ color: 'orange' }} />
+                            )
+                          })}
+                        </div>
+                      </section>
+                      <section className='contentsection'>
+                        <p style={{ wordBreak: 'break-word', textAlign: 'justify' }}>
+                          {el.additionalComments}
+                        </p>
+                      </section>
+                    </div>
+                  )
+                })}
+
+
+              </div>
+            ) : (null)
+          }
+
+        </div>
+
       </div>
     </>
   )
