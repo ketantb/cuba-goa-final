@@ -17,9 +17,17 @@ const RoomTable = () => {
     const [resort, setResort] = useState({})
     const [imgArr, setImgArr] = useState([])
     const [roomArr, setRoomArr] = useState([])
-    const [price, setPrice] = useState('')
+    const [data, setData] = useState({ id: '', roomno: '' })
+
+    const [dayStatus, setDayStatus] = useState('')
+
     const [roomsSelected, setRoomsSelected] = useState(0)
     const [totalPrice, setTotalPrice] = useState(0)
+
+
+
+    const [dataobj, setDataObj] = useState({})
+
     //GET PROPERTY DETAILS
     const getProperty = async () => {
         const today = new Date()
@@ -32,48 +40,63 @@ const RoomTable = () => {
             setImgArr(response.data.resortData[0].rooms[0].imgUrl);
 
 
-            (dayOfWeek === 0 || dayOfWeek === 6) ? (setPrice('weekendPrice')) : (setPrice('weekdayPrice'))
+            (dayOfWeek === 0 || dayOfWeek === 6) ? (setDayStatus('weekendPrice')) : (setDayStatus('weekdayPrice'))
 
         }
         catch (err) {
             console.log(err)
         }
     }
+    useEffect(() => {
+        getProperty();
+        // eslint-disable-next-line
+    }, [])
 
-    const map = new Map();
-    const handleTotalCalc = (e) => {
-        if(e.target.value == 0){
-            return
-        }
-        const arr = (e.target.value.split(','))
-        let roomId = arr[0];
-        let noOfRooms = parseInt(arr[1])
-        // console.log(roomId)
-        // console.log(noOfRooms)
-        const roomObject = roomArr.find((el, i) => {
-            if (el._id === roomId) {
-                return el
+
+
+
+    // handle total
+    const handleTotal = (roomNos, roomId) => {
+        let roomPrice = 0
+        for (let i = 0; i < roomArr.length; i++) {
+            if (roomArr[i].roomId === roomId) {
+                roomPrice = (dayStatus === 'weekdayPrice') ? (roomArr[i].weekdayPerNightRate) : (roomArr[i].weekendPerNightRate)
             }
-        })
-        // console.log(roomObject)
-        // console.log(noOfRooms)
-        map.set(roomObject._id, { nos: noOfRooms, price: noOfRooms * roomObject.weekdayPerNightRate })
-        // console.log(map)
-        let allOverTotalRooms = 0;
-        let allOverTotalPrice = 0;
-        for (let entry of map.entries()) {
-            allOverTotalRooms += map.get(entry[0]).nos
-            allOverTotalPrice += map.get(entry[0]).price
         }
-        // console.log(allOverTotalRooms)
-        setRoomsSelected(allOverTotalRooms)
-        // console.log(allOverTotalPrice)
-        setTotalPrice(allOverTotalPrice)
+
+        setRoomsSelected(roomsSelected + roomNos)
+        setTotalPrice(totalPrice + roomNos * roomPrice)
+
+
+        if (!(roomId in dataobj)) {
+            dataobj[roomId] = roomNos
+        }
+        else {
+            dataobj[roomId] += roomNos
+
+        }
+
+    }
+    useEffect(() => {
+        console.log('total room & price', roomsSelected, totalPrice);
+
+        // eslint-disable-next-line
+        console.log(dataobj)
+    }, [handleTotal])
+
+
+    //handle final reserver
+    const handleReserve = () => {
+        navigate(`/booking-summary/${roomsSelected}/${totalPrice}`)
     }
 
-    useEffect(() => {
-        getProperty()
-    }, [id])
+
+    if (!id) {
+        return (
+            <h1>.</h1>
+        )
+    }
+
     return (
         <section className='rooms-table-container'>
             <CTable responsive>
@@ -93,9 +116,9 @@ const RoomTable = () => {
                             const availableRooms = parseInt(room.availableRooms)
                             return (
                                 <CTableRow className='rooms-table-row' key={room._id}>
-                                    <CTableDataCell style={{borderRight: '1px solid #3376b0'}}
+                                    <CTableDataCell style={{ borderRight: '1px solid #3376b0' }}
                                         className='cell' scope="row">
-                                        {<p style={{ color: '#3376b0', fontWeight: '700', marginLeft: '0px'}}
+                                        {<p style={{ color: '#3376b0', fontWeight: '700', marginLeft: '0px' }}
                                             onClick={() => navigate(`/${id}/${room.roomType}/${room.roomId}/details`)}
                                         ><span style={{ borderBottom: '2px solid #3376b0' }}>{room.roomType}</span></p>}
                                         {/* {<p style={{color: 'black', fontsize: '12px'}}>{room.seaView ? "with sea view" : null}</p>} */}
@@ -200,24 +223,55 @@ const RoomTable = () => {
                                     </CTableDataCell>
                                     <CTableDataCell style={{ borderRight: '1px solid #3376b0' }}>
                                         <section className='rooms-table-select-amt'>
-                                            {availableRooms == 0 ? <span className='soldout-btn'>SOLD OUT</span> :
-                                                <select onChange={handleTotalCalc}>
-                                                    <option value={0}>0</option>
-                                                    {
-                                                        [...Array(availableRooms + 1)].map((i, index) => {
-                                                            return (
-                                                                <option value={[room._id, index]}>{index ? <span>
-                                                                    {index} (₹ {index * room.weekdayPerNightRate})
-                                                                </span> : null}</option>
-                                                                // <option value={[room._id, index]}>{index} (₹ {index * room.weekdayPerNightRate})</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
+                                            {availableRooms === 0 ? <span className='soldout-btn'>SOLD OUT</span> :
+                                                // <select onChange={handleTotal}>
+                                                //     <option value={0}>0</option>
+                                                //     {
+                                                //         [...Array(availableRooms + 1)].map((i, index) => {
+                                                //             return (
+                                                //                 <option>
+                                                //                     {index ?
+                                                //                         (
+                                                //                             <span value={i}>
+                                                //                                 {index} (₹ {(dayStatus === 'weekdayPrice') ? (index * room.weekdayPerNightRate) : (index * room.weekendPerNightRate)})
+                                                //                             </span>)
+                                                //                         :
+                                                //                         (null)
+                                                //                     }
+                                                //                 </option>
+                                                //                 // <option value={[room._id, Status]}>{Status} (₹ {Status * room.weekdayPerNightRate})</option>
+                                                //             )
+                                                //         })
+                                                //     }
+                                                // </select>
+                                                (
+                                                    <div className="dropdown">
+                                                        <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                                            style={{ backgroundColor: 'transparent', width: '5rem', color: 'black' }}>
+                                                            0
+                                                        </button>
+                                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                            {[...Array(room.availableRooms + 1)].map((_, index) => {
+                                                                return (
+                                                                    <>
+                                                                        {index ? (
+                                                                            <div onClick={() => handleTotal(index, room.roomId)}
+                                                                                style={{ display: 'flex', gap: '2rem', padding: '0 1rem', borderBottom: '1px solid lightgrey' }} >
+                                                                                <p>{index}</p>
+                                                                                <p >(Rs.{index * room.weekdayPerNightRate})</p>
+                                                                            </div>
+                                                                        ) : (null)}
+                                                                    </>
+                                                                )
+                                                            })}
+
+                                                        </div>
+                                                    </div>
+                                                )
                                             }
                                         </section>
                                     </CTableDataCell>
-                                    <CTableDataCell style={{border: 'none'}} className={`box ${idx === 0 ? 'boxvisible' : 'boxhidden'}`}>
+                                    <CTableDataCell style={{ border: 'none' }} className={`box ${idx === 0 ? 'boxvisible' : 'boxhidden'}`}>
                                         <section className='rooms-table-total-block'>
                                             {roomsSelected ?
                                                 <div>
@@ -233,7 +287,7 @@ const RoomTable = () => {
                                             }
                                             <div>
                                                 <section>
-                                                    <button className='i-will-reserve-btn'>
+                                                    <button className='i-will-reserve-btn' onClick={handleReserve}>
                                                         I'll reserve
                                                     </button>
                                                 </section>

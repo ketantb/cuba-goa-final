@@ -14,6 +14,7 @@ import Images from './Images';
 import RoomCard from './RoomCard/RoomCard/RoomCard';
 import Reviews from './reviews/Reviews';
 import ResortVideo from './Resort-Videos/ResortVideo';
+import ResortAminities from './ResortAminities/ResortAminities';
 
 const ViewDetails = () => {
   const navigate = useNavigate()
@@ -83,16 +84,11 @@ const ViewDetails = () => {
 
     }
   }
+
   useEffect(() => {
     getRatingList();
     //eslint-disable-next-line
   }, [])
-
-
-
-  const resortVideoObject = {
-    palolemVideo: 'https://drive.google.com/file/d/1B8X-yItktadkVEnL7puUUX_0k61myBli/view?usp=sharing'
-  }
 
   return (
     <>
@@ -100,7 +96,7 @@ const ViewDetails = () => {
 
       <div className='view-details-wrapper'>
 
-        <ResortVideo resortVideoObject={resortVideoObject} resortname={resortname} />
+        <ResortVideo resortname={resortname} />
 
         <div className='resort-name'>
           <h2 >{resortname}</h2>
@@ -201,6 +197,11 @@ const ViewDetails = () => {
           </div>
         </div> */}
         {/* section3 booking section ends */}
+
+
+
+        <ResortAminities resortname={resortname}/>
+
 
 
         {/* <Reviews reviews={reviews} setReviews={setReviews} id={id} /> */}

@@ -13,11 +13,25 @@ import { useNavigate } from 'react-router-dom'
 import arrow from '../../../assets/arrow.png'
 import { location2 } from 'react-icons-kit/icomoon/location2'
 import { Icon } from 'react-icons-kit'
+import { cross } from 'react-icons-kit/icomoon/cross'
 import Footer from '../Footer/Footer'
-
-
+import { Box, Button, Typography, Modal } from '@mui/material'
+import cubaIcon from '../../../assets/logocubagoa.png'
 
 const Home = () => {
+  const style = {
+    position: 'absolute',
+    top: '52%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '30%',
+    height: '25rem',
+    bgcolor: 'background.paper',
+    border: '1x solid #000',
+    boxShadow: 1000,
+    p: 0.5,
+  };
+
   const navigate = useNavigate()
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,6 +42,12 @@ const Home = () => {
     navigate(`/${resortname}/${id}/rooms`)
     console.log(resortname, id)
   }
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  const handleClose = () => { setOpen(false) };
 
   const [allProperties, setAllProperties] = useState([])
   const getPropertiesData = async () => {
@@ -44,6 +64,7 @@ const Home = () => {
   }
   console.log("allProperties =>", allProperties)
   useEffect(() => {
+    handleOpen()
     getPropertiesData()
   }, [])
 
@@ -101,7 +122,11 @@ const Home = () => {
         <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Featured Properties</h2>
         <div style={{ border: '0.2px solid lightgrey', width: '30%', margin: 'auto' }}></div>
         <div className='container1' >
-          {allProperties.map((property, index) => {
+          {allProperties.filter((resort) => {
+            if (resort.type === 'resort') {
+              return resort
+            }
+          }).map((property, index) => {
             return (
               <div className='card' key={index + 1} data-aos={(index % 2 === 0) ? ('flip-left') : ('flip-right')} data-aos-delay="35" >
                 <div className='img-wrap1'>
@@ -139,7 +164,7 @@ const Home = () => {
         <div className='dummy-border' ></div>
 
         <div className='location-addresses'>
-          {allProperties.map((resort, i) => {
+          {allProperties.slice(0, 5).map((resort, i) => {
             return (
               <section className='address-section' key={i + 1}>
                 <h6>{resort.resortName}</h6>
@@ -152,7 +177,33 @@ const Home = () => {
         </div>
       </div>
 
-
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}  >
+          <Icon icon={cross} size={20} style={
+            {
+              marginTop: '0',
+              position: 'absolute',
+              top: '2%',
+              left: '93%',
+              color: 'black',
+              cursor: 'pointer'
+            }}
+            onClick={handleClose} />
+          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', borderRadius: '10px', background: 'linear-gradient(#e66465, #9198e5)' }}>
+            <p>
+              <img src={cubaIcon} style={{ width: '150px', height: '150px' }} />
+            </p>
+            <h2>Welcome Back!</h2>
+            <p style={{ marginTop: '15px', textAlign: 'center', fontWeight: '500' }}>As a token of our appreciation, enjoy a 20% discount on your next purchase!</p>
+            <p style={{ marginTop: '15px', fontWeight: '500' }}>Use code: REPEAT20</p>
+          </div>
+        </Box>
+      </Modal>
       <Footer />
     </div>
   )

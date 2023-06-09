@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router'
 import axios from '../../helpers/axios'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-hot-toast'
-
+import homeVideo from '../../assets/HomeVideo.mp4'
 
 const Video = () => {
 
@@ -79,7 +79,7 @@ const Video = () => {
 
   return (
     <div className='main' >
-      < video src={beachResort} autoPlay loop muted data-aos="flip-left" data-aos-delay="600" data-aos-easing="ease-in-out" />
+      < video src={homeVideo} autoPlay loop muted data-aos="flip-left" data-aos-delay="600" data-aos-easing="ease-in-out" />
       {/* <div className='home-text' data-aos="zoom-in" data-aos-delay="2000" data-aos-easing="ease-in-out" >
         <h1 >Captivating Paradise</h1>
         <h4>for unwinding and reveling</h4>

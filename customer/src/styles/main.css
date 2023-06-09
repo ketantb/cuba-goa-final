@@ -79,13 +79,14 @@ video {
 .home-search-box-desktop {
   position: absolute;
   top: 86%;
-  left: 22%;
-  width: 55%;
-  height: 6rem;
+  left: 10%;
+  width: 80%;
+  height: 5rem;
   box-shadow: rgb(4, 4, 4) 0px 20px 20px -10px;
   display: flex;
   background-color: rgba(0, 0, 0, 0.6);
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 0px 25px;
 }
 
 
@@ -98,30 +99,32 @@ video {
 
 .home-search-box-desktop .dates-wrap label {
   color: rgb(227, 227, 227);
-  font-size: 1.2rem;
+  font-size: 1rem;
 
 }
 
 .home-search-box-desktop .dates-wrap .custom-date-input {
   background-color: transparent;
+  text-transform: uppercase;
+  padding-top: 0.5rem;
   color: white;
   border: 0;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
 }
 
 .home-search-box-desktop .select-btnwrap {
   display: flex;
   flex-direction: column;
   color: rgb(227, 227, 227);
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-top: .5rem;
 }
 
 .home-search-box-desktop .select-btnwrap select {
   background-color: transparent;
   color: rgb(227, 227, 227);
-  font-size: 1.1rem;
-  padding: .5rem .5rem 0.5rem .5rem;
+  font-size: 0.8rem;
+  padding: .3rem .5rem 0.2rem .3rem;
 }
 
 .home-search-box-desktop .select-btnwrap select option {
@@ -129,11 +132,13 @@ video {
 }
 
 .home-search-box-desktop div:last-child {
+  cursor: pointer;
   height: fit-content;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
+  width: 11rem;
   padding: .5rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: "calibri";
   word-wrap: break-word;
   color: rgb(227, 227, 227);
@@ -203,8 +208,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* Customize the calendar icon */
   background-image: url('../assets/calendar.png');
   background-size: cover;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 }
 

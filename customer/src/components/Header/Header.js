@@ -62,20 +62,10 @@ const Header = ({ auth, setAuth }) => {
 
   //SHOW ROOMS
   const viewRooms = (id, resortname) => {
+    console.log(id, resortname)
     navigate(`/${resortname}/${id}/rooms`)
     handleCloseNavbar();
     console.log(resortname, id)
-  }
-
-  // handl on click my bookings
-  const handleonclickmybookings = () => {
-    if (auth) {
-      navigate('/my-bookings')
-    }
-    else {
-      navigate('/signin')
-      toast('Signin to your account to see your bookings')
-    }
   }
 
   if (!allProperties) {
@@ -96,19 +86,23 @@ const Header = ({ auth, setAuth }) => {
         </section>
         <section className='appbar-col-2'>
           <Box className='col-2-box'>
-            <Button className='btn-item' onClick={() => navigate('/')}>Home</Button>
-            <Button className='btn-item' onClick={() => navigate('/aboutus')}>About Us</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/')}>Home</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/aboutus')}>About Us</Button>
             <div className="dropdown"  >
               <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 style={{
-                  color: 'white', fontSize: '.8rem',
-                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                  color: 'white', fontSize: '.65rem',
+                  fontFamily: "sans-serif"
                 }}>
                 OUR HOTELS
               </button>
               <div className="dropdown-menu" style={{ width: '10rem' }}>
-                {allProperties.map((property, index) => {
+                {allProperties.filter((resort) => {
+                  if (resort.type === 'resort') {
+                    return resort
+                  }
+                }).map((property, index) => {
                   return (
                     <div >
                       <p onClick={() => viewRooms(property._id, property.resortName)}
@@ -120,24 +114,29 @@ const Header = ({ auth, setAuth }) => {
                 })}
               </div>
             </div>
-            <Button className='btn-item' onClick={() => navigate('/destination-wedding')}>DESTINATION WEDDINGS</Button>
-            <Button className='btn-item' onClick={() => navigate('/events')}>CELEBRATE WITH US</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/destination-wedding')}>DESTINATION WEDDINGS</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/events')}>CELEBRATE WITH US</Button>
 
             <div className="dropdown"  >
               <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 style={{
-                  color: 'white', fontSize: '.8rem',
-                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                  color: 'white', fontSize: '.65rem',
+                  fontFamily: "sans-serif"
                 }}>
                 OUR RESTAURANTS
               </button>
               <div className="dropdown-menu" style={{ width: '10rem' }}>
-                {restaurants.map((restaurantName, index) => {
+                {allProperties.filter((restaurant) => {
+                  if (restaurant.type === 'restaurant') {
+                    return restaurant
+                  }
+                }).map((property, index) => {
                   return (
                     <div >
-                      <p >
-                        {restaurantName}
+                      <p onClick={() => viewRooms(property._id, property.resortName)}
+                      >
+                        {property.resortName}
                       </p>
                     </div>
                   )
@@ -149,8 +148,8 @@ const Header = ({ auth, setAuth }) => {
               <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 style={{
-                  color: 'white', fontSize: '.8rem',
-                  fontFamily: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif"
+                  color: 'white', fontSize: '.65rem',
+                  fontFamily: "sans-serif"
                 }}>
                 THINGS TO DO
               </button>
@@ -169,9 +168,9 @@ const Header = ({ auth, setAuth }) => {
                 })}
               </div>
             </div>
-            <Button className='btn-item' onClick={() => navigate('/spa')}>SPA</Button>
-            <Button className='btn-item' onClick={() => navigate('/gallery')}>GALLERY</Button>
-            <Button className='btn-item' onClick={() => navigate('/contactus')}>Contact Us</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/spa')}>SPA</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/gallery')}>GALLERY</Button>
+            <Button className='btn-item' style={{ fontFamily: 'sans-serif' }} onClick={() => navigate('/contactus')}>Contact Us</Button>
             {/* <Button className='btn-item' onClick={handleonclickmybookings}>MY BOOKINGS</Button> */}
             {/* instead of my bookings menu dropdown for other options */}
             <div className="dropdown dropdownmenus"  >
@@ -224,12 +223,14 @@ const Header = ({ auth, setAuth }) => {
               OUR HOTELS
             </button>
             <div className="dropdown-menu" style={{ width: '10rem' }}>
-              {allProperties.map((property, index) => {
+              {allProperties.filter((resort) => {
+                if (resort.type === 'resort') {
+                  return resort
+                }
+              }).map((property, index) => {
                 return (
                   <div >
-                    <p onClick={() => { viewRooms(property._id, property.resortName); }}
-
-                    >
+                    <p onClick={() => { viewRooms(property._id, property.resortName); }}>
                       {property.resortName}
                     </p>
                   </div>
@@ -245,11 +246,15 @@ const Header = ({ auth, setAuth }) => {
               OUR RESTAURANTS
             </button>
             <div className="dropdown-menu" style={{ width: '10rem' }}>
-              {restaurants.map((restaurantName, index) => {
+              {allProperties.filter((restaurant) => {
+                if (restaurant.type === 'restaurant') {
+                  return restaurant
+                }
+              }).map((property, index) => {
                 return (
                   <div >
-                    <p >
-                      {restaurantName}
+                    <p onClick={() => { viewRooms(property._id, property.resortName); }}>
+                      {property.resortName}
                     </p>
                   </div>
                 )
