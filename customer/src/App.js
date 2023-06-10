@@ -56,7 +56,7 @@ function App() {
           <Route path='/rating-form/:resortId' element={<RatingForm />}> </Route>
           <Route path='/my-bookings' element={<MyBookings />}> </Route>
           <Route path='/aboutus' element={<About />}></Route>
-          <Route path='/booking-summary/:resortname/:resortId/:roomId' element={<BookingPage />}></Route>
+          <Route path='/booking-summary/:resortname/:id' element={<BookingPage />}></Route>
           <Route path='/gallery' element={<Gallary />}></Route>
           <Route path="/events" element={<EventPage />}></Route>
           <Route path="/spa" element={<Spa />}></Route>

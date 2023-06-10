@@ -7,8 +7,9 @@ import { toast } from 'react-hot-toast'
 import moment from 'moment'
 import { nanoid } from 'nanoid';
 import rupee from '../../../../assets/rupee-indian.png'
-
+// import axios from 'axios'
 import { useSelector } from 'react-redux'
+import Footer from '../../Footer/Footer'
 const serverUrl = process.env.REACT_APP_HOST
 
 
@@ -20,30 +21,25 @@ const BookingPage = () => {
 
 
     const navigate = useNavigate()
-    const { resortname, resortId, roomId } = useParams()
-    const [resort, setResort] = useState({})
-    const [room, setRoom] = useState('a')
+    const { resortname, id } = useParams()
+
     const [user, setUser] = useState([])
-    const [roomImage, setRoomImage] = useState('')
-    const [roomPrice, setRoomPrice] = useState('')
-    const [roomNos, setRoomNos] = useState('1')
-    const [roomChange, setRoomChange] = useState(false)
-    const [total, setTotal] = useState()
-    const [confirm, setConfirm] = useState(false)
     const [datesFromHomePage, setDatesFromHomePage] = useState(false)
     const [checkin, setCheckin] = useState()
     const [checkout, setCheckout] = useState()
-    const [paybleAmount, setPayableAmount] = useState()
+
+
+    const [finalAmount, setFinalAmount] = useState()
 
     //store data
-    const datesData = useSelector(store => store)
+    const store = useSelector(store => store)
 
 
     const token = localStorage.getItem('token')
     //get sigined in client details
     const getUser = async () => {
         try {
-            const response = await axios.get(`/user-details`, {
+            const response = await axios.get('/user-details', {
                 headers: {
                     authorization: token
                 }
@@ -53,69 +49,37 @@ const BookingPage = () => {
                 setUser(response.data.details)
             }
             else {
-                console.log(response.data.message)
+                console.log('usererr', response.data.message)
             }
         }
         catch (err) {
-            console.log(err)
+            console.log('userdetailserr', err)
         }
     }
 
 
-    //get Resort
-    const getResort = async () => {
-        try {
-            const response = await axios.get(`/resort-details/${resortId}`)
-            // console.log('resort', response.data.resortData)
-            setResort(response.data.resortData)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-
-    //get room details
-    const getRoom = async () => {
-        const today = new Date()
-        const dayOfWeek = today.getDay()
-        try {
-            const response = await axios.get(`/resort-room/${resortId}/${roomId}`)
-            if (response.data.success) {
-                // console.log(response.data.data?.weekdayPerNightRate)
-                setRoom(response.data.data)
-                setRoomImage(response.data.data?.imgUrl[0]);
-
-                (dayOfWeek === 0 || dayOfWeek === 6) ? (setRoomPrice(response.data.data?.weekendPerNightRate)) : (setRoomPrice(response.data.data?.weekdayPerNightRate));
-
-            }
-            else {
-                console.log(response)
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
 
     useEffect(() => {
-        getResort();
-        getRoom();
         getUser();
 
-        // console.log(datesData)
+        console.log(resortname, id)
 
-        if (datesData.checkIn !== null && datesData.checkOut !== null) {
+        if (store.checkIn !== null && store.checkOut !== null) {
             setDatesFromHomePage(true)
-            setCheckin(datesData.checkIn)
-            setCheckout(datesData.checkOut)
+            setCheckin(store.checkIn)
+            setCheckout(store.checkOut)
         }
         else {
             setDatesFromHomePage(false)
             setCheckin('')
             setCheckout('')
-
         }
+
+
+        console.log('bookingCart===>', store.dataobj, store.setTotalAmount)
+        //final amount
+        const total_with_tax = store.setTotalAmount + (store.setTotalAmount * 12 / 100)
+        setFinalAmount(total_with_tax)
         // eslint-disable-next-line
     }, [])
 
@@ -132,48 +96,7 @@ const BookingPage = () => {
     }
 
 
-    // handle Room No And Total
-    const handleRoomNoAndTotal = (e) => {
-        setRoomNos(Number(e.target.value))
-        setRoomChange(true)
-        setConfirm(false)
-    }
 
-
-    //handle save
-    const handleConfirm = () => {
-        // console.log('inital', roomChange, roomPrice, total)
-        setTotal(Number(roomPrice) * Number(roomNos))
-        setConfirm(true)
-        // console.log('updated', roomChange, roomPrice, total)
-        toast.success('Thank you for confirmation, Now you can proceed for payment')
-
-    }
-    useEffect(() => {
-        if (confirm) {
-            const paybleAmount = (Number(total) + Number(total) * 12 / 100)
-            setPayableAmount(paybleAmount)
-        }
-        // eslint-disable-next-line
-    }, [handleConfirm])
-
-
-
-    //UPDATE ROOM DATA IN BACKEND (i.e no of rooms) when user book rooms
-    const UpdateRoom = async () => {
-        const updateData = {
-            noOfRooms: roomNos,
-            availableRooms: room.availableRooms
-        }
-        try {
-            // eslint-disable-next-line
-            const response = await axios.patch(`/update-room/${resortId}/${roomId}`, updateData)
-            // console.log('updated rooms', response)
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
 
 
     //handle payNow
@@ -184,7 +107,7 @@ const BookingPage = () => {
         // console.log(roomNos)
 
         if (datesFromHomePage) {
-            // console.log('datesData', datesData)
+            // console.log('store', store)
         }
 
         const bookingData = {
@@ -192,76 +115,42 @@ const BookingPage = () => {
             email: user.email,
             contact: user.contact,
             resortname: resortname,
-            resortId: resortId,
-            roomType: room.roomType,
-            roomId: roomId,
             checkIn: checkin,
             checkOut: checkout,
-            noOfRooms: roomNos,
+            roomsBooked: store.dataobj,
             specialRequest: bookingForm.specialRequest,
-            totalAmount: paybleAmount,
+            totalAmount: store.setTotalAmount,
             bookingDate: bookingDate,
             bookingTime: bookingTime,
             reservationId: nanoid(),
             bookingStatus: 'confirmed'
         }
-        // console.log('bookingData', bookingData)
-
+        console.log(bookingData)
         try {
-            // const token = localStorage.getItem('token')
-            if (!token) {
-                toast.error('Please signIn to your account to book a room')
-            }
-            else {
-                if (confirm) {
-                    const response = await axios.post(`/booking-form/${resortId}/${roomId}`, bookingData, {
-                        headers: {
-                            authorization: token
-                        }
-                    })
-                    if (response.data.success) {
-                        // console.log('booking data sent to backend', response.data.data)
-                        UpdateRoom();
-                        sendEmail(bookingData);
-                        toast.success('checkout complete.')
-                    }
-                    else {
-                        toast.error(response.data.message)
-                    }
-                }
-                else {
-                    toast.error('Please confirm your checkin,checkout ,room and price details before payment')
-                }
-                // console.log(response)
-            }
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    //send email after successful booking
-    const sendEmail = async (bookingData) => {
-        console.log('serverURL', serverUrl)
-        const { email } = user
-        // console.log(`email sent to ${email}`)
-
-        try {
-            toast.loading('waiting for confirmation')
-            // eslint-disable-next-line
-            const response = await fetch(`${serverUrl}/send-email`, {
-                method: 'POST',
+            const response = await axios.post(`/booking-form/${resortname}/${id}`, bookingData, {
                 headers: {
-                    "Content-Type": "application/json",
                     authorization: token
-                },
-                body: JSON.stringify({
-                    ...bookingData,
-                    email,
-                    resort,
-                    room
-                })
-            });
+                }
+            })
+            console.log(response)
+            toast.success('Booking Confirmed')
+            if (response.data.success) {
+                const { email } = user
+                // toast.loading('waiting for confirmation')
+                const response = await fetch(`${serverUrl}/send-email`, {
+                    // const resp = await fetch('http://localhost:4000/send-email', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        authorization: token
+                    },
+                    body: JSON.stringify({
+                        ...bookingData,
+                        email,
+                    })
+                });
+
+            }
             toast.dismiss();
             navigate('/my-bookings')
             toast.success('Booking confirmation email sent')
@@ -269,13 +158,60 @@ const BookingPage = () => {
         catch (err) {
             console.log(err)
         }
+
     }
 
 
 
-    if (!roomImage) {
-        return ('...loading')
-    }
+    //send email after successful booking
+    // const sendEmail = async () => {
+    //     console.log('serverURL', serverUrl)
+    //     const bookingDate = moment().format('DD/MM/YYYY')
+    //     const bookingTime = moment().format('HH:mm')
+    //     const bookingData = {
+    //         name: user.name,
+    //         email: user.email,
+    //         contact: user.contact,
+    //         resortname: resortname,
+    //         checkIn: checkin,
+    //         checkOut: checkout,
+    //         roomsBooked: store.dataobj,
+    //         specialRequest: bookingForm.specialRequest,
+    //         totalAmount: store.setTotalAmount,
+    //         bookingDate: bookingDate,
+    //         bookingTime: bookingTime,
+    //         reservationId: nanoid(),
+    //         bookingStatus: 'confirmed'
+    //     }
+    //     const { email } = user
+    //     // console.log(`email sent to ${email}`)
+
+    //     try {
+    //         toast.loading('waiting for confirmation')
+    //         // eslint-disable-next-line
+    //         // const response = await fetch(`${serverUrl}/send-email`, {
+    //         const response = await fetch('http://localhost:4000/send-email', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 authorization: token
+    //             },
+    //             body: JSON.stringify({
+    //                 ...bookingData,
+    //                 email,
+    //             })
+    //         });
+    //         toast.dismiss();
+    //         // navigate('/my-bookings')
+    //         toast.success('Booking confirmation email sent')
+    //     }
+    //     catch (err) {
+    //         console.log(err)
+    //     }
+    // }
+
+
+
 
 
     return (
@@ -286,7 +222,7 @@ const BookingPage = () => {
             <div className='booking-page-wrapper'>
                 {/* col1 */}
                 <div className='col1'>
-                    <div className='row1'>
+                    <div className='row1' >
                         <div><h5>Your Booking Details</h5></div>
                         <div className='dates'>
                             <div>
@@ -309,16 +245,7 @@ const BookingPage = () => {
                             </div>
                         </div>
                         {/* <div className='dummy-border'></div> */}
-                        <div className='selectRooms'>
-                            <lable>Select No Of Rooms</lable>
-                            <input type='number' placeholder='select no of rooms' min='1'
-                                name='roomNos' value={roomNos} onChange={handleRoomNoAndTotal} />
-                        </div>
-                        <div className='save' style={{ display: 'flex', flexDirection: "column", justifyContent: 'flex-end' }}>
-                            <p style={{ padding: '0.5rem' }}>Please click below to confirm your checkIn-checkout dates, room and price details</p>
-                            <Button variant='contained'
-                                onClick={handleConfirm}>CONFIRM</Button>
-                        </div>
+
                     </div>
 
                     <div className='row2'>
@@ -326,9 +253,9 @@ const BookingPage = () => {
                         <div>
                             <div><h5>Total Room Rates</h5></div>
                             <div className='totalamount-wrap'>
-                                <div><img src={rupee} alt='' /></div>
-                                {!roomChange ? (<h3>{roomPrice}</h3>) : (<h3>{roomPrice * roomNos}</h3>)}
-                                <span style={{ marginTop: '.5rem', marginLeft: '.2rem' }}>+ 12% Taxes</span>
+                                <img src={rupee} alt='' style={{ height: '1rem', marginTop: '.3rem', marginRight: '.5rem' }} />
+                                <h5>{store.setTotalAmount}</h5>
+                                <p style={{ marginTop: '.1rem', marginLeft: '.5rem' }}>+12 % Tax</p>
                             </div>
                         </div>
                     </div>
@@ -378,30 +305,14 @@ const BookingPage = () => {
 
                 {/* col2 */}
                 <div className='col2'>
-                    <div className='row1'>
-                        <div><img src={room?.imgUrl[0]} alt='roomImage' /></div>
-                        <div>
-                            <h4>{room.roomType}</h4>
-                            <h6>{resort[0]?.resortName}</h6>
-                            <p style={{ marginTop: '1rem' }}>Rate/night
-                                <br /><span style={{ fontWeight: 'bold', borderBottom: '1px solid black' }}>
-                                    Rs.{roomPrice}
-                                </span>
-                            </p>
-                            <div>
-                                <p style={{ marginBottom: '0' }}>Room Capacity</p>
-                                <section >
-                                    <div>Adults<span>{room.adultCapacity}</span></div>
-                                    <div style={{ marginLeft: '1rem' }}>Children<span>{room.childrenCapacity}</span></div>
-                                </section>
-                            </div>
-                        </div>
+                    <div className='row1' style={{ display: 'none' }}>
                     </div>
 
 
                     {/* row2 */}
-                    <div className='row2' >
-                        <div><h4>CheckIn-CheckOut Details</h4></div>
+                    <div className='row2' style={{ marginTop: '0', paddingTop: '0' }}>
+                        <div >
+                            <h4 >CheckIn-CheckOut Details</h4></div>
                         <table>
                             <tr>
                                 <td>Check-In from :</td>
@@ -413,7 +324,7 @@ const BookingPage = () => {
                             </tr>
                             <tr>
                                 <td>Reception contact no:</td>
-                                <td>{resort[0]?.resortPhoneNumber}</td>
+                                {/* <td>{resort[0]?.resortPhoneNumber}</td> */}
                             </tr>
                         </table>
                     </div>
@@ -433,11 +344,11 @@ const BookingPage = () => {
 
                     <div className='row4'>
                         <h5>Guest Information</h5>
-                        <p>Dear {user.name}, you reserved  {roomNos} rooms of {room.roomType} ,
+                        {/* <p>Dear {user.name}, you reserved  {roomNos} rooms of {room.roomType} ,
                             at  {resortname}, Goa
-                        </p>
+                        </p> */}
                         <p>Address: <br />
-                            {resort[0]?.resortAddress},{resort[0]?.pincode}
+                            {/* {resort[0]?.resortAddress},{resort[0]?.pincode} */}
                         </p>
 
                         <div>
@@ -447,15 +358,7 @@ const BookingPage = () => {
                         </div>
                     </div>
 
-                    {confirm ? (
-                        <div className='totalamount-wrap' style={{ padding: '1rem .5rem' }}>
-                            <h5> YOUR TOTAL PAYABLE AMOUNT</h5>
-                            <div style={{ display: 'flex' }}>
-                                <img src={rupee} alt='' style={{ width: '2rem', height: '1.5rem', opacity: '0.4' }} />
-                                <h4>{paybleAmount}</h4>
-                            </div>
-                        </div>
-                    ) : (null)}
+
 
 
 
@@ -467,154 +370,8 @@ const BookingPage = () => {
 
                 {/* col2 ends */}
 
-
-
-
-
-                {/* <div className='heading'>
-                <h1 data-aos='zoom-in' data-aos-delay='50'>FINALIZE YOUR STAY</h1>
-            </div>
-
-            <div className='row1'>
-                <h5>Your Reservation Summary</h5>
-            </div>
-
-            <div className='row2'>
-                <h4>{resortname}</h4>
-                <table>
-                    <tr>
-                        <td>Check-in from :</td>
-                        <td>12:00 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Check-out before :</td>
-                        <td>10:00 AM</td>
-                    </tr>
-                    <tr>
-                        <td>Reception contact :</td>
-                        <td> </td>
-                    </tr>
-                </table>
-            </div>
-
-            <div className='row3' style={{ backgroundColor: 'lightblue' }}>
-                <div className='col1'>
-                    <div className='row1' >
-                        Room Type
-                        <p>{room.roomType}
-                            {
-                                (room.breakfast === true) ? (
-                                    <span className='breakfast-option' style={
-                                        {
-                                            fontSize: '1rem',
-                                            fontWeight: 'normal',
-                                        }
-                                    }>Room with breakfast</span>
-                                ) : (null)
-                            }
-                        </p>
-
-                        <p style={{ lineHeight: '1rem', fontFamily: "'Ysabeau', sans-serif" }}>Check-in date :</p>
-                        <p style={{ lineHeight: '1rem', fontFamily: "'Ysabeau', sans-serif" }}>Check-out date : </p>
-
-                        <p style={{ lineHeight: '1rem' }}>Adult Capacity : <span>{room.adultCapacity}</span></p>
-                        <p style={{ lineHeight: '1rem' }}>Charges Per Night : {`Rs. ${room.weekdayPerNightRate} +Taxes`} </p>
-                    </div>
-                    <div className='row2'>
-                        <div><p>Total</p></div>
-                        <div><p>{`Rs. ${room.weekdayPerNightRate}`}</p></div>
-                    </div>
-                </div>
-                <div className='col2'>
-                    <h3>Special Request</h3>
-                    <h6>Please explain your request: arrival time, flight details, food preferences, membership number...</h6>
-                    <div>
-                        <textarea name='specialRequest' value={bookingForm.specialRequest} onChange={handleInputs} />
-                    </div>
-                </div>
-            </div>
-
-            <div className='dummy-border'></div>
-
-            <div className='row4' style={{ backgroundColor: 'aliceblue' }}>
-                <h3>Guest Information</h3>
-
-                <div>
-                    guest details form
-                    <div className='col1'>
-                        <h6>Personal Details</h6>
-                        <form className='guestform'>
-                            <div><TextField type='email' className='form-input'
-                                id="outlined-basic" label="Email address" variant="outlined" required
-                                name='email' value={bookingForm.email} onChange={handleInputs} />
-                            </div> 
-                            <div>
-                                <TextField type='text' className='form-input'
-                                    id="outlined-basic" label="Full Name" variant="outlined" required
-                                    name='name' value={bookingForm.name} onChange={handleInputs} />
-                            </div> 
-                             <div>
-                                <TextField type='number' className='form-input'
-                                    id="outlined-basic" label="Phone Number" variant="outlined" required
-                                    name='contact' value={bookingForm.contact} onChange={handleInputs} />
-
-                            </div>
-                            <div>
-                                <lable>Check-in date</lable>
-                                <TextField type='date' className='form-input'
-                                    id="outlined-basic" variant="outlined" required
-                                    name='checkIn' value={bookingForm.checkIn} onChange={handleInputs} />
-                            </div>
-                            <div style={{ marginTop: '2rem' }}>
-                                <lable>Check-out date</lable>
-                                <TextField type='date' className='form-input'
-                                    id="outlined-basic" variant="outlined" required
-                                    name='payNow' value={bookingForm.payNow} onChange={handleInputs} />
-                            </div>
-                            <div style={{ marginTop: '2rem' }}>
-                                <lable>No of Rooms</lable>
-                                <TextField type='number' className='form-input'
-                                    id="outlined-basic" variant="outlined" required
-                                    name='noOfRooms' value={bookingForm.noOfRooms} onChange={handleInputs} />
-                            </div>
-                        </form>
-                    </div>
-                    guest details form ends
-                    <div className='dummy-border'></div>
-
-
-                    payment infomation
-                    <div className='col2'>
-                        <h6>Payment Information</h6>
-                        <div>
-                            <h5>Your Total Payable amount </h5>
-                            <h5 style={{ marginLeft: '10rem' }}>
-                                Rs.{room.weekdayPerNightRate + 100}</h5>
-                        </div>
-                    </div>
-                    payment infomation ends
-
-                </div>
-
-
-                <div className='payNow-btn'>
-                    <Button className='button' onClick={payNow}>payNow</Button>
-                </div>
-
-
-            </div>
-
-
-            <p>Note: Please go through our terms and conditions carefully before booking confirmation
-                <span style={{
-                    marginLeft: '1rem',
-                    color: 'blue',
-                    cursor: 'pointer'
-                }}
-                    onClick={() => { navigate('/terms') }}>click here</span>
-            </p> */}
-
             </div >
+            <Footer/>
         </>
     )
 }

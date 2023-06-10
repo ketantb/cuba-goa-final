@@ -1,8 +1,9 @@
 const intitalData = {
     checkIn: null,
-    checkOut: null
+    checkOut: null,
+    dataObj: null,
+    totalAmount: null
 }
-
 
 
 const DatesReducer = (state = intitalData, action) => {
@@ -17,6 +18,19 @@ const DatesReducer = (state = intitalData, action) => {
             return {
                 ...state,
                 checkOut: action.payload.checkoutdate
+            };
+
+
+        case 'setbookingcart':
+            return {
+                ...state,
+                dataobj: action.payload.dataobj
+            };
+
+        case 'setTotalAmount':
+            return {
+                ...state,
+                setTotalAmount: action.payload.setTotalAmount
             };
 
         default: {

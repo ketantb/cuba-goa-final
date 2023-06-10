@@ -15,6 +15,7 @@ import RoomCard from './RoomCard/RoomCard/RoomCard';
 import Reviews from './reviews/Reviews';
 import ResortVideo from './Resort-Videos/ResortVideo';
 import ResortAminities from './ResortAminities/ResortAminities';
+import Footer from '../Footer/Footer';
 
 const ViewDetails = () => {
   const navigate = useNavigate()
@@ -241,6 +242,7 @@ const ViewDetails = () => {
         </div>
 
       </div>
+      <Footer/>
     </>
   )
 }
