@@ -97,7 +97,7 @@ const ViewDetails = () => {
       <div className='view-details-wrapper'>
 
         {resort.type == 'restaurant' ?
-          <img style={{width: '100%', height: '100vh'}} src={resort.resortImgURL} alt={resort.resortName} />
+          <img style={{ width: '100%', height: '100vh' }} src={resort.resortImgURL} alt={resort.resortName} />
           :
           <ResortVideo resortname={resortname} />}
 
@@ -133,8 +133,9 @@ const ViewDetails = () => {
           activeBtn={activeBtn} setActiveBtn={setActiveBtn}
           /> */}
 
-        <section className='roomTable-container'>
-          {/* <div className='roomTable-searchbar'>
+        {resort.type != 'restaurant' ?
+          <section className='roomTable-container'>
+            {/* <div className='roomTable-searchbar'>
             <p>Check-in date</p>
             <p>Check-out date</p>
           </div>
@@ -143,40 +144,41 @@ const ViewDetails = () => {
               Search
             </button>
           </div> */}
-          <CTable responsive>
-            <CTableHead className='view-details-roomtable-header'>
-              <CTableRow>
-                <CTableHeaderCell className='cell' scope="col">Room type</CTableHeaderCell>
-                <CTableHeaderCell className='cell' scope="col">Sleeps</CTableHeaderCell>
-                <CTableHeaderCell className='cell' scope="col"></CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {
-                roomArr?.map((room, idx) => {
-                  return (
-                    <CTableRow className='view-details-roomtable-row' key={room._id}>
-                      <CTableHeaderCell onClick={() => navigate(`/${id}/${room.roomType}/${room.roomId}/details`)}
-                        className='cell' scope="row" style={{ color: '#3376b0', fontWeight: '700', borderRight: '1px solid #3376b0' }}>
-                        <p><span><AiOutlineCaretRight style={{ marginRight: '5px', color: 'goldenrod' }} /></span>{room.roomType}</p>
-                        {/* {<p style={{color: 'black', fontsize: '12px'}}>{room.seaView ? "with sea view" : null}</p>} */}
-                      </CTableHeaderCell>
-                      <CTableDataCell className='cell' style={{ borderRight: '1px solid #3376b0' }}>
-                        <span><FaUser style={{ color: '#3376b0' }} /> × <span>{room.adultCapacity}</span></span>
-                        <span style={{ marginLeft: '15px' }}><TiUser style={{ color: '#3376b0' }} /> × <span>{room.childrenCapacity}</span></span>
-                      </CTableDataCell>
-                      <CTableDataCell className='cell'>
-                        <button className='show-prices-btn' onClick={() => navigate(`/${resortname}/${id}/rooms-table`)}>
-                          Show prices
-                        </button>
-                      </CTableDataCell>
-                    </CTableRow>
-                  )
-                })
-              }
-            </CTableBody>
-          </CTable>
-        </section>
+            <CTable responsive>
+              <CTableHead className='view-details-roomtable-header'>
+                <CTableRow>
+                  <CTableHeaderCell className='cell' scope="col">Room type</CTableHeaderCell>
+                  <CTableHeaderCell className='cell' scope="col">Sleeps</CTableHeaderCell>
+                  <CTableHeaderCell className='cell' scope="col"></CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {
+                  roomArr?.map((room, idx) => {
+                    return (
+                      <CTableRow className='view-details-roomtable-row' key={room._id}>
+                        <CTableHeaderCell onClick={() => navigate(`/${id}/${room.roomType}/${room.roomId}/details`)}
+                          className='cell' scope="row" style={{ color: '#3376b0', fontWeight: '700', borderRight: '1px solid #3376b0' }}>
+                          <p><span><AiOutlineCaretRight style={{ marginRight: '5px', color: 'goldenrod' }} /></span>{room.roomType}</p>
+                          {/* {<p style={{color: 'black', fontsize: '12px'}}>{room.seaView ? "with sea view" : null}</p>} */}
+                        </CTableHeaderCell>
+                        <CTableDataCell className='cell' style={{ borderRight: '1px solid #3376b0' }}>
+                          <span><FaUser style={{ color: '#3376b0' }} /> × <span>{room.adultCapacity}</span></span>
+                          <span style={{ marginLeft: '15px' }}><TiUser style={{ color: '#3376b0' }} /> × <span>{room.childrenCapacity}</span></span>
+                        </CTableDataCell>
+                        <CTableDataCell className='cell'>
+                          <button className='show-prices-btn' onClick={() => navigate(`/${resortname}/${id}/rooms-table`)}>
+                            Show prices
+                          </button>
+                        </CTableDataCell>
+                      </CTableRow>
+                    )
+                  })
+                }
+              </CTableBody>
+            </CTable>
+          </section>
+          : null}
 
 
 
