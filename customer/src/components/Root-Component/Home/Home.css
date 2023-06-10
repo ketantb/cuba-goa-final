@@ -279,12 +279,11 @@
 
 .modalbox div input {
     padding: .2rem 1rem;
+    outline: none;
 }
 
-
-
 .modalbox div button {
-    background-color: rgb(1, 1, 40);
+    background-color: #3376b0;
     color: white;
     font-weight: normal;
     padding: 3px 3rem;
@@ -292,7 +291,9 @@
     margin-bottom: 1rem;
 }
 
-
+.modalbox div button:hover{
+    background-color: #00487a;
+}
 
 
 
@@ -583,7 +584,6 @@
     }
 
     .modalbox div button {
-        background-color: #3376b0;
         color: white;
         font-weight: normal;
         padding: 3px 3rem;
@@ -591,15 +591,5 @@
         margin-bottom: 1rem;
     }
 
-    .modalbox div button {
-        /* background-color: #00487a; */
-    }
-
 }
 
-
-@media only screen and (max-width:480px) {
-    .modalbox div button {
-    
-    }
-}
