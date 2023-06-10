@@ -105,4 +105,12 @@
     .aminities-block{
         flex-direction: column;
     }
+    .aminities-block div section{
+        margin-top: 0px;
+    }
+    .aminities-block div{
+        margin-top: 0px;
+    }
+    .aminities-block div h6{
+    }
 }

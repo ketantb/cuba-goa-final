@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Home.css'
 import Video from '../../video/Video'
-import { useState, useEffect } from 'react'
 // import { AiOutlineRight, AiOutlineLeft } from 'react-icons/ai';
 // import { Link } from 'react-router-dom'
 // import { Image } from 'react-bootstrap'
-import axios from '../../../helpers/axios';
+// import axios from '../../../helpers/axios';
+
 // import HomeList from '../home-list/HomeList';
 // import Pagination from '../home-list/Pagination';
 // import resortImage from '../../../assets/CUBA_PATNEM_BEACH_BUNGALOWS.jpg'
+import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import arrow from '../../../assets/arrow.png'
 import { location2 } from 'react-icons-kit/icomoon/location2'
@@ -17,19 +18,16 @@ import { cross } from 'react-icons-kit/icomoon/cross'
 import Footer from '../Footer/Footer'
 import { Box, Button, Typography, Modal } from '@mui/material'
 import cubaIcon from '../../../assets/logocubagoa.png'
+import { toast } from 'react-hot-toast';
 
 const Home = () => {
+
   const style = {
-    position: 'absolute',
-    top: '52%',
-    left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '30%',
-    height: '25rem',
     bgcolor: 'background.paper',
-    border: '1x solid #000',
+    border: '2px solid dakblue',
     boxShadow: 1000,
-    p: 0.5,
+    borderRadius: '1rem'
   };
 
   const navigate = useNavigate()
@@ -37,6 +35,8 @@ const Home = () => {
     window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, [])
+
+
   //SHOW ROOMS
   const viewRooms = (id, resortname) => {
     navigate(`/${resortname}/${id}/rooms`)
@@ -51,7 +51,7 @@ const Home = () => {
 
   const [allProperties, setAllProperties] = useState([])
   const getPropertiesData = async () => {
-    await axios.get(`/hotelbook`)
+    await axios.get(`http://localhost:4000/hotelbook`)
       // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
@@ -68,23 +68,13 @@ const Home = () => {
     getPropertiesData()
   }, [])
 
-  // useEffect(() => {
-  //   const boxes = document.querySelectorAll('.card')
-  //   window.addEventListener('scroll', checkBoxes)
-  //   checkBoxes()
-  //   function checkBoxes() {
-  //     const triggerBottom = window.innerHeight / 5 * 6
-  //      boxes.forEach(box => {
-  //       const boxTop = box.getBoundingClientRect().top
-  //       if (boxTop < triggerBottom) {
-  //         box.classList.add('show')
-  //       }
-  //       else {
-  //         box.classList.remove('show')
-  //       }
-  //     })
-  //   }
-  // }, [])
+  const [email, setEmail] = useState('')
+  const handleCouponSubmit = async () => {
+    console.log(email)
+    navigate('/')
+    handleClose();
+    toast.success("You're are eligible for discounts and offers")
+  }
 
   if (!allProperties) {
     return (
@@ -183,24 +173,29 @@ const Home = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}  >
-          <Icon icon={cross} size={20} style={
+        <Box sx={style} className='modalbox'  >
+          <Icon icon={cross} size={15} style={
             {
               marginTop: '0',
               position: 'absolute',
               top: '2%',
-              left: '93%',
+              left: '90%',
               color: 'black',
               cursor: 'pointer'
             }}
             onClick={handleClose} />
-          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', borderRadius: '10px', background: 'linear-gradient(#e66465, #9198e5)' }}>
+          <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', borderRadius: '10px' }}>
             <p>
-              <img src={cubaIcon} style={{ width: '150px', height: '150px' }} />
+              <img src={cubaIcon} style={{ width: '150px', height: '70px' }} alt='' />
             </p>
-            <h2>Welcome Back!</h2>
-            <p style={{ marginTop: '15px', textAlign: 'center', fontWeight: '500' }}>As a token of our appreciation, enjoy a 20% discount on your next purchase!</p>
-            <p style={{ marginTop: '15px', fontWeight: '500' }}>Use code: REPEAT20</p>
+            <h4>Welcome Back!</h4>
+            <p >As a token of our appreciation, enjoy a 20% discount on your next purchase!</p>
+            <p >Use code: REPEAT20</p>
+            <p >If you are repeat customer enter your email id</p>
+            <input type='email' placeholder='Enter Email' style={{ width: '80%' }}
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+            <button onClick={handleCouponSubmit}>SUBMIT</button>
           </div>
         </Box>
       </Modal>
