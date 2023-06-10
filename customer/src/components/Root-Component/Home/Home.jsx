@@ -51,7 +51,7 @@ const Home = () => {
 
   const [allProperties, setAllProperties] = useState([])
   const getPropertiesData = async () => {
-    await axios.get(`http://localhost:4000/hotelbook`)
+    await axios.get(`/hotelbook`)
       // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
