@@ -9,7 +9,7 @@ import Video from '../../video/Video'
 // import HomeList from '../home-list/HomeList';
 // import Pagination from '../home-list/Pagination';
 // import resortImage from '../../../assets/CUBA_PATNEM_BEACH_BUNGALOWS.jpg'
-import axios from 'axios'
+import axios from '../../../helpers/axios'
 import { useNavigate } from 'react-router-dom'
 import arrow from '../../../assets/arrow.png'
 import { location2 } from 'react-icons-kit/icomoon/location2'
@@ -52,7 +52,6 @@ const Home = () => {
   const [allProperties, setAllProperties] = useState([])
   const getPropertiesData = async () => {
     await axios.get(`/hotelbook`)
-      // await axios(`http://localhost:4001/hotelbook`)
       .then((res) => {
         // console.log(res.data)
         setAllProperties(res.data)
