@@ -17,12 +17,7 @@ const OurProperties = () => {
   const [showRoomForm, setRoomForm] = useState(false)
 
 
-  //Pagination
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postPerPage, setPostPerPage] = useState(6)
-  const lastPostIndex = currentPage * postPerPage
-  const firstPostIndex = lastPostIndex - postPerPage
-  const currentList = allProperties.slice(firstPostIndex, lastPostIndex)
+
   const token = localStorage.getItem('token')
 
   const getPropertiesData = async () => {
@@ -101,10 +96,7 @@ const OurProperties = () => {
           </div>
           <div className='our-property-card-container'>
             <section>
-              <PropertyList currentList={currentList} allProperties={allProperties} getPropertiesData={getPropertiesData} deleteProperty={deleteProperty} />
-            </section>
-            <section style={{ marginTop: '50px' }}>
-              <Pagination totalPosts={allProperties.length} postPerPage={postPerPage} setCurrentPage={setCurrentPage} />
+              <PropertyList allProperties={allProperties} getPropertiesData={getPropertiesData} deleteProperty={deleteProperty} />
             </section>
           </div>
         </div>

@@ -1,92 +1,76 @@
 require('dotenv').config()
 const router = require("express").Router()
-const { response } = require("express")
 const clientMiddleware = require('../middleware/customer')
 const Booking = require('../models/booking')
 const HotelBook = require('../models/post-property')
 const moment = require('moment')
 const nodemailer = require('nodemailer')
 
-
-router.post('/booking-form/:resortId/:roomId', clientMiddleware, async (req, resp) => {
-  // console.log('client middilware id', req.client)
-  console.log(req.clientId)
-
-  console.log('on of rooms', req.body.noOfRooms, typeof (req.body.noOfRooms))
+router.post('/booking-form/:resortname/:id', clientMiddleware, async (req, resp) => {
   let checkindate = req.body.checkIn
   let checkoutdate = req.body.checkOut
 
-  //format dates using moment library
+  // //format dates using moment library
   checkindate = moment(checkindate).format('DD/MM/YYYY')
   checkoutdate = moment(checkoutdate).format('DD/MM/YYYY')
   // console.log(checkindate, checkoutdate)
   //ENDS
-  // console.log('req.body of booking form=>', req.body)
-  const resortId = req.params.resortId
-  const roomId = req.params.roomId
-  const noOfRooms = parseInt(req.body.noOfRooms)
-  try {
-    const resort = await HotelBook.findOne({ _id: resortId })
-    const getroom = resort.rooms.find(room => room.roomId === roomId)
-    // console.log('initial rooms', getroom.availableRooms)
-    if (getroom) {
-      // console.log('room found', getroom)
-      if (getroom.availableRooms === 0) {
-        console.log('no room available')
-        resp.json({ success: false, message: 'Sorry, no rooms available' })
-      }
-      else if (getroom.availableRooms < noOfRooms) {
-        // console.log(`Only ${getroom.availableRooms} rooms available. Please enter valid on of rooms you want to book`)
-        resp.json({ sucees: false, message: `Only ${getroom.availableRooms} rooms available. Please enter valid number of rooms you want to book` })
-      }
-      else {
-        const bookingData = await Booking.create({
-          ...req.body,
-          checkIn: checkindate,
-          checkOut: checkoutdate,
-          client: req.clientId
-        })
 
-        // console.log('booking data', bookingData)
-        resp.json({ success: true, data: bookingData })
+  const { resortname, id } = req.params
+  const roomobj = req.body.roomsBooked
+  const idarr = Object.keys(roomobj)
+  const roomnoarr = Object.values(roomobj)
+  const cartLength = Object.keys(roomobj).length
+
+
+  try {
+
+    const resort = await HotelBook.findOne({ _id: id })
+    const roomArr = resort.rooms
+
+    for (let i = 0; i < cartLength; i++) {
+      for (let j = 0; j < roomArr.length; j++) {
+        if (roomArr[j].roomId === idarr[i]) {
+          // console.log('initial room and roomnoarr', roomArr[j].availableRooms, roomnoarr[i])
+          roomArr[j].availableRooms -= roomnoarr[i]
+          // console.log('updated rooms', roomArr[j].availableRooms)
+          // await roomArr[i].save()
+        }
       }
     }
 
+    await resort.save()
+    // console.log('updates room', resort)
+
+
+    const data = {
+      name: req.body.name,
+      email: req.body.email,
+      contact: req.body.contact,
+      resortname: resortname,
+      checkIn: checkindate,
+      checkOut: checkoutdate,
+      specialRequest: req.body.specialRequest,
+      totalAmount: req.body.totalAmount,
+      bookingDate: req.body.bookingDate,
+      bookingTime: req.body.bookingTime,
+      reservationId: req.body.reservationId,
+      bookingStatus: req.body.bookingStatus,
+      client: req.clientId
+    }
+    const newBooking = await Booking.create({
+      ...data,
+      client: req.clientId
+    })
+    console.log(newBooking)
+    resp.json({ success: true, message: 'Confirming..., Please wait', data: newBooking })
   }
   catch (err) {
-    resp.json({ success: false, message: err })
+    console.log(err)
   }
 })
 
 
-
-//update room data after booking
-router.patch('/update-room/:resortId/:roomId', async (req, resp) => {
-  console.log(req.clientId)
-  const { resortId, roomId } = req.params
-  // console.log(resortId, roomId)
-  // console.log(req.body)
-  const { noOfRooms } = req.body
-
-  try {
-    const resort = await HotelBook.findOne({ _id: resortId })
-    const getroom = resort.rooms.find(room => room.roomId === roomId)
-    console.log('initial rooms', getroom.availableRooms)
-    if (getroom) {
-      getroom.availableRooms = parseInt(getroom.availableRooms) - parseInt(noOfRooms)
-      console.log('updatedRoom', getroom.availableRooms)
-      await resort.save()
-      resp.json({ success: true, data: getroom })
-    }
-    else {
-      response.json({ success: true, message: 'no room found' })
-    }
-
-  }
-  catch (err) {
-    resp.json({ success: false, message: err })
-  }
-})
 
 
 //send email of booking confirmation
@@ -94,18 +78,13 @@ router.post('/send-email', clientMiddleware, async (req, resp) => {
   console.log(req.clientId)
   console.log(req.body.email)
   console.log('=======================')
-  console.log(req.body.bookingData)
-  console.log("=========================")
-  console.log(req.body.resort)
-  console.log("======================")
-  console.log(req.body.room)
-  console.log("=======================")
+  console.log(req.body)
+
 
   console.log(process.env.NODEMAILER_EMAIL, process.env.NODEMAILER_PASSWORD)
   try {
     const { email } = req.body
     console.log(email)
-    const resort = await HotelBook.findOne({ _id: req.body.resortId })
     // console.log(resort)
 
     let transporter = nodemailer.createTransport({
@@ -117,7 +96,7 @@ router.post('/send-email', clientMiddleware, async (req, resp) => {
     })
 
     let mailOptions = {
-      from: 'harshadaa1997@gmail.com',
+      from: process.env.NODEMAILER_EMAIL,
       to: email,
       subject: 'Booking Confirmation from Cuba-Goa',
       text: `
@@ -125,8 +104,6 @@ router.post('/send-email', clientMiddleware, async (req, resp) => {
       Your booking has been confirmed,
       Reservation ID: ${req.body.reservationId},
       Resort Name : ${req.body.resortname},
-      Room Type:${req.body.roomType},
-      No of rooms booked: ${req.body.noOfRooms},
       Check-in Date: ${req.body.checkIn},
       Check-out Date: ${req.body.checkOut},
       Special Requests: ${req.body.specialRequest ? req.body.specialRequest : ' If you have any specific preferences or requirements, such as dietary restrictions or room preferences, please inform us in advance, and we will do our best to accommodate them.'},
@@ -311,4 +288,3 @@ router.post('/rejection-mail', adminMiddleware, async (req, res) => {
 
 
 module.exports = router
-
