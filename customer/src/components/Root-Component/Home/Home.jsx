@@ -198,6 +198,12 @@ const Home = () => {
           </div>
         </Box>
       </Modal>
+
+       <button className="button__loader">
+            <span className="button__text">
+                Become a member
+            </span>
+        </button>
       <Footer />
     </div>
   )

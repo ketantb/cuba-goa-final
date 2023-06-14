@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const BookingSchema = {
   name: String,
   email: String,

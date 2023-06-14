@@ -5,6 +5,9 @@ const Booking = require('../models/booking')
 const HotelBook = require('../models/post-property')
 const moment = require('moment')
 const nodemailer = require('nodemailer')
+const User = require('../models/customer-accounts')
+
+
 
 router.post('/booking-form/:resortname/:id', clientMiddleware, async (req, resp) => {
   let checkindate = req.body.checkIn
@@ -279,12 +282,30 @@ router.post('/rejection-mail', adminMiddleware, async (req, res) => {
 
   }
   catch (err) {
-    console.log(error)
+    console.log(err)
     res.status(401).json({ message: err })
   }
 })
 
 
+//coupon email verification based on no of bookings
+router.post('/coupon-verification', async (req, resp) => {
+  try {
+    const userAccount = await User.findOne({ email: req.body.email })
+    if (userAccount) {
+      console.log(userAccount)
+      resp.json({ success: true, message: 'user found' })
+    }
+    else {
+      resp.json({ success: false, message: 'user not found' })
+    }
+  }
+  catch (err) {
+    console.log(err)
+    resp.json({ success: false, message: err })
+  }
+})
 
 
 module.exports = router
+

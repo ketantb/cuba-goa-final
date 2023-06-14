@@ -40,6 +40,8 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
 
     const imgCloudUpload = async (e) => {
         e.preventDefault()
+        // console.log(roomImage)
+        // return
         console.log(updatedResortForm)
         setSaveResortBtnActive(true)
         // console.log(updatedRoomData.imgUrl)
@@ -75,7 +77,9 @@ const EditResort = ({ property, getPropertiesData, showEditResortForm, setShowEd
         else {
             data = { ...updatedResortForm, resortImgURL: property.resortImgURL, rooms: property.rooms }
         }
-        // console.log(data)
+        console.log('data => ', data)
+        // setSaveResortBtnActive(false)
+        // return
         // await axios.put(`http://localhost:4001/entire-hotelbook/${property._id}`, data)
         await axios.put(`/entire-hotelbook/${property._id}`, data, {
             headers: {

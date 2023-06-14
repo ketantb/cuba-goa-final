@@ -79,6 +79,7 @@ router.post('/customer-signin', async (req, resp) => {
 
 //get user
 router.get('/user-details', clientMiddleware, async (req, resp) => {
+  // console.log(req.clientId)
   try {
     const details = await UsersData.findOne({ _id: req.clientId })
     if (details) {
@@ -93,6 +94,10 @@ router.get('/user-details', clientMiddleware, async (req, resp) => {
     resp.json({ success: false, message: err })
   }
 })
+
+
+
+
 
 
 module.exports = router;

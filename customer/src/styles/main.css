@@ -1,9 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-
 }
-
 
 .main {
   width: 100%;
@@ -35,24 +33,18 @@ video {
   padding: 2rem 2rem 1rem 2rem;
   /* border:1px solid red; */
   /* font-family: 'Satisfy', cursive;     */
-
 }
 
 .home-text h1 {
   font-size: 60px;
   text-shadow: 2px 2px 2px black;
-  font-family: 'Geomanist';
-
+  font-family: "Geomanist";
 }
 
 .home-text h4 {
   text-shadow: 2px 2px 2px black;
-  font-family: 'Geomanist';
-
-
-
+  font-family: "Geomanist";
 }
-
 
 .main .content-wrapper {
   /* border:1px solid black; */
@@ -71,9 +63,7 @@ video {
   letter-spacing: 2px;
   text-shadow: 2px 2px 2px rgb(0, 0, 0);
   font-family: "Nunito Sans", Arial, sans-serif;
-
 }
-
 
 /* desktop search filter box */
 .home-search-box-desktop {
@@ -89,18 +79,16 @@ video {
   padding: 0px 25px;
 }
 
-
 .home-search-box-desktop .dates-wrap {
   display: flex;
   flex-direction: column;
   /* border: 1px solid white; */
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .home-search-box-desktop .dates-wrap label {
   color: rgb(227, 227, 227);
   font-size: 1rem;
-
 }
 
 .home-search-box-desktop .dates-wrap .custom-date-input {
@@ -117,14 +105,14 @@ video {
   flex-direction: column;
   color: rgb(227, 227, 227);
   font-size: 1rem;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 
 .home-search-box-desktop .select-btnwrap select {
   background-color: transparent;
   color: rgb(227, 227, 227);
   font-size: 0.8rem;
-  padding: .3rem .5rem 0.2rem .3rem;
+  padding: 0.3rem 0.5rem 0.2rem 0.3rem;
 }
 
 .home-search-box-desktop .select-btnwrap select option {
@@ -136,23 +124,17 @@ video {
   height: fit-content;
   margin-top: 0.5rem;
   width: 11rem;
-  padding: .5rem;
+  padding: 0.5rem;
   text-align: center;
   font-size: 1rem;
   font-family: "calibri";
   word-wrap: break-word;
   color: rgb(227, 227, 227);
-  background-color: #033F91 ;
+  background-color: #033f91;
   box-shadow: 1px 1px 5px 1px rgb(32, 1, 104);
 }
 
-
-
-
-
-
 /* desktop search filter box ends */
-
 
 .home-search-box {
   position: absolute;
@@ -169,7 +151,6 @@ video {
   display: none;
 }
 
-
 .home-search-box .row1 {
   display: flex;
   /* border: 1px solid black; */
@@ -183,8 +164,8 @@ video {
   /* border: 1px solid black; */
 }
 
-.home-search-box .row1 div {}
-
+.home-search-box .row1 div {
+}
 
 .home-search-box .row1 div label {
   padding: 0.5rem;
@@ -192,7 +173,7 @@ video {
   color: black;
 }
 
-.home-search-box .row1 div input[type='date'] {
+.home-search-box .row1 div input[type="date"] {
   height: 3rem;
   padding: 1rem;
   background-color: rgb(242, 238, 233);
@@ -201,19 +182,15 @@ video {
   outline: none;
 }
 
-
-
-
 input[type="date"]::-webkit-calendar-picker-indicator {
   /* Customize the calendar icon */
-  background-image: url('../assets/calendar.png');
+  background-image: url("../assets/calendar.png");
   background-size: cover;
   width: 20px;
   height: 20px;
   cursor: pointer;
+  color: azure;
 }
-
-
 
 .home-search-box .row1 div:last-child {
   width: 20%;
@@ -226,7 +203,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   font-size: 0.9rem;
 }
-
 
 .home-search-box .row1 div:last-child:hover {
   /* background-color: rgb(28, 28, 29); */
@@ -249,14 +225,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-weight: 400;
 }
 
-
-
 .home-search-box .row3 {
   display: none;
 }
 
-
-@media only screen and (max-width:900px) {
+@media only screen and (max-width: 900px) {
   .main {
     width: 100%;
     height: 30rem;
@@ -278,7 +251,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* border: 1px solid red; */
     width: 100%;
     /* font-family: 'Satisfy', cursive;     */
-
   }
 
   .home-text h1 {
@@ -294,11 +266,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   /* desktop search filter box */
   .home-search-box-desktop {
-
     display: none;
-
   }
-
 
   .home-search-box-desktop div {
     height: 70%;
@@ -306,32 +275,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: auto;
     gap: 1.5rem;
     display: none;
-
   }
 
   .home-search-box-desktop div div {
     /* border: 1px solid white; */
     display: none;
-
   }
-
 
   .home-search-box-desktop div div input {
     padding-left: 0.3rem;
     display: none;
-
-
   }
 
-
   .home-search-box-desktop div div:last-child {
-    padding-top: .75rem;
+    padding-top: 0.75rem;
     background-color: white;
     font-weight: bold;
     cursor: pointer;
-    padding: .75rem 0.5rem;
+    padding: 0.75rem 0.5rem;
     display: none;
-
   }
 
   .home-search-box {
@@ -350,11 +312,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: auto;
   }
 
-
   .home-search-box .row1 {
     display: flex;
     /* border: 1px solid black; */
-    gap: .1rem;
+    gap: 0.1rem;
   }
 
   .home-search-box .row1 div {
@@ -362,11 +323,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: column;
     width: 50%;
     /* border: 1px solid black; */
-    margin-top: .1rem;
+    margin-top: 0.1rem;
   }
 
-  .home-search-box .row1 div {}
-
+  .home-search-box .row1 div {
+  }
 
   .home-search-box .row1 div label {
     padding: 0.5rem;
@@ -375,7 +336,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0.7rem;
   }
 
-  .home-search-box .row1 div input[type='date'] {
+  .home-search-box .row1 div input[type="date"] {
     width: 99.5%;
     height: 2.4rem;
     padding: 0.1rem 0.5rem;
@@ -384,19 +345,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: black;
     border: 1px solid grey;
     outline: none;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
-
 
   input[type="date"]::-webkit-calendar-picker-indicator {
     /* Customize the calendar icon */
-    background-image: url('../assets/calendar.png');
+    background-image: url("../assets/calendar.png");
     background-size: cover;
     width: 25px;
     height: 25px;
     cursor: pointer;
   }
-
 
   .home-search-box .row1 div:last-child {
     width: 20%;
@@ -412,7 +371,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
   }
 
-
   .home-search-box .row1 div:last-child:hover {
     background-color: rgb(28, 28, 29);
   }
@@ -425,7 +383,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .home-search-box .row2 select {
     height: 90%;
-    padding: 0.2rem 1rem .1rem 0.5rem;
+    padding: 0.2rem 1rem 0.1rem 0.5rem;
     width: 100%;
   }
 
@@ -450,5 +408,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 0.9rem;
     margin-top: 0rem;
   }
-
 }

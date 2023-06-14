@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
 
 const contactusSchema = new mongoose.Schema({
@@ -9,6 +9,6 @@ const contactusSchema = new mongoose.Schema({
     yourOrganization: String,
     message: String
 })
- 
-const Contactus =  mongoose.model("Contactus", contactusSchema)
+
+const Contactus = mongoose.model("Contactus", contactusSchema)
 module.exports = Contactus;
